@@ -1,0 +1,150 @@
+{
+    "files.autoSave": "onFocusChange",
+    "files.trimFinalNewlines": true,
+    "breadcrumbs.enabled": true,
+    "window.titleBarStyle": "custom",
+    "window.zoomLevel": 0,
+    "window.enableMenuBarMnemonics": false,
+    "search.smartCase": true,
+    "search.showLineNumbers": true,
+    "editor.fontFamily": "MesloLGS NF",
+    "editor.fontLigatures": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.tabSize": 2,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": false,
+    "editor.cursorStyle": "block",
+    "editor.cursorBlinking": "phase",
+    "editor.minimap.showSlider": "always",
+    "explorer.sortOrder": "type",
+    "explorer.compactFolders": true,
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    // 4.5 is recommended for baseline website accessibility
+    "terminal.integrated.minimumContrastRatio": 4.5,
+    "terminal.integrated.rendererType": "experimentalWebgl",
+    "workbench.sideBar.location": "right",
+    "workbench.panel.defaultLocation": "right",
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.colorTheme": "Material Theme Ocean",
+    "materialTheme.accent": "Acid Lime",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBorder": "#C6FF00",
+        "activityBar.activeBackground": "#c8ff00ce",
+        "tab.activeModifiedBorder": "#C6FF00",
+        "tab.inactiveModifiedBorder": "#c8ff00ca",
+        "minimap.selectionHighlight": "#c8ff00e8",
+        "activityBarBadge.background": "#C6FF00",
+        "list.activeSelectionForeground": "#C6FF00",
+        "list.inactiveSelectionForeground": "#C6FF00",
+        "list.highlightForeground": "#C6FF00",
+        "scrollbarSlider.activeBackground": "#c8ff0065",
+        "scrollbarSlider.hoverBackground": "#c8ff0065",
+        "editorSuggestWidget.highlightForeground": "#C6FF00",
+        "textLink.foreground": "#C6FF00",
+        "progressBar.background": "#C6FF00",
+        "pickerGroup.foreground": "#C6FF00",
+        "tab.activeBorder": "#C6FF00",
+        "notificationLink.foreground": "#C6FF00",
+        "editorWidget.resizeBorder": "#C6FF00",
+        "editorWidget.border": "#C6FF00",
+        "settings.modifiedItemIndicator": "#C6FF00",
+        "settings.headerForeground": "#C6FF00",
+        "panelTitle.activeBorder": "#C6FF00",
+        "breadcrumb.activeSelectionForeground": "#C6FF00",
+        "menu.selectionForeground": "#C6FF00",
+        "menubar.selectionForeground": "#C6FF00",
+        "editor.findMatchBorder": "#C6FF00",
+        "selection.background": "#C6FF0040",
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "scm.defaultViewMode": "tree",
+    // Extension Specific Settings
+    // GitLens
+    "gitlens.views.repositories.location": "gitlens",
+    "gitlens.views.fileHistory.location": "gitlens",
+    "gitlens.views.lineHistory.location": "gitlens",
+    "gitlens.views.compare.location": "gitlens",
+    "gitlens.views.search.location": "gitlens",
+    // Python
+    "python.autoComplete.addBrackets": true,
+    // R Extension
+    // The path below is the path for conda r; use it when you want
+    // "r.rterm.linux": "/home/luke/conda/envs/r-latest/bin/R",
+    "r.rterm.linux": "/home/khonsu/.local/bin/radian",
+    "r.bracketedPaste": true,
+    // When radian is used as the R client these options should be radian options 
+    "r.rterm.option": [
+        "--vanilla"
+    ],
+    // Latex Workshop
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.latex.autoBuild.run":"onFileChange",
+    "latex-workshop.latex.recipe.default":"lastUsed",
+    "latex-workshop.chktex.enabled":true,
+    "latex-workshop.chktex.run":"onSave",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "xelatex",
+            "tools": [
+                "xelatex"
+            ]
+        },
+        {
+            "name": "xelatex ➞ biber ➞ xelatex x 2",
+            "tools": [
+                "xelatex",
+                "biber",
+                "xelatex",
+                "xelatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-output-directory=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        }
+    ]
+}
