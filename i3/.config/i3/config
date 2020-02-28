@@ -220,28 +220,31 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 # i3 Bar
-bar {
-    status_command i3status
-
+# bar {
+#     status_command i3status
+# 
     #This part won't work
-    i3bar_command i3bar -t
-
-    position top
-    mode dock
-    colors {
-        statusline #76c2d6
-        background $transparent
-
-        # Type                     border     background    text
-        focused_workspace         #191919      #191919    #bf3f34
-        active_workspace          #191919      #191919    #696f89
-        inactive_workspace        #191919      #191919    #696f89
-        urgent_workspace          #191919      #191919    #c7a551
-    }
-}
+#     i3bar_command i3bar -t
+#
+#    position top
+#    mode dock
+#    colors {
+#        statusline #76c2d6
+#        background $transparent
+#
+#        # Type                     border     background    text
+#        focused_workspace         #191919      #191919    #bf3f34
+#        active_workspace          #191919      #191919    #696f89
+#        inactive_workspace        #191919      #191919    #696f89
+#        urgent_workspace          #191919      #191919    #c7a551
+#    }
+#}
 
 exec --no-startup-id feh --randomize --bg-fill ~/onedrive/wallpapers/* --bg-fill ~/onedrive/wallpapers/*
-exec picom --config ~/.config/picom/picom.conf -b
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
+
+# Run polybar
+exec_always --no-startup-id $HOME/.config/polybar/polybar.sh
 
 ## Plasma Integration
 # Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everythiing)
