@@ -169,11 +169,11 @@ inherit = module/network
 interface = ${env:IFACE_WLAN}
 
 format-connected-padding = 10
-format-connected-prefix = 直 
+format-connected-prefix =  
 label-connected = %essid% %downspeed%
 
 format-disconnected-prefix = 睊
-label-disconnected = オフ
+label-disconnected = ---
 
 
 [module/eth]
@@ -205,8 +205,8 @@ inherit = generic-format-style
 
 interval = 0.5
 
-format = <label> <bar-load>
-label = CPU %percentage% %
+format = <label>
+label = C: %percentage% %
 
 ; Bar
 bar-load-format = ${layout.bar-format}
@@ -227,7 +227,7 @@ type = internal/memory
 inherit = generic-format-style
 
 interval = 3
-label = RAM %gb_used%
+label = M: %percentage_used% %
 
 ;
 ; |\/| _  _|. _

@@ -4,7 +4,7 @@ update_info=kwin.upd:replace-scalein-with-scale
 [Compositing]
 AnimationSpeed=3
 Backend=OpenGL
-Enabled=true
+Enabled=false
 GLCore=true
 GLPreferBufferSwap=a
 GLTextureFilter=2
