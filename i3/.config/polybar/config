@@ -126,13 +126,15 @@ pin-workspaces = true
 strip-wsnumbers = true
 
 
-format = <label-state><label-mode>
+format = <label-state> <label-mode>
 ; Active workspace on focused monitor
 label-focused = %name%
 ; Inactive workspace on any monitor
 label-unfocused = ${self.label-focused}
 ; Active workspace on unfocused monitor
 label-visible = ${self.label-focused}
+
+label-mode-foreground = ${color.orange}
 
 ; Separator in between workspaces
 label-separator = |
