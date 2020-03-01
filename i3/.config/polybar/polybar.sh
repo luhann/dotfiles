@@ -45,12 +45,12 @@ for screen in $(xrandr --query | grep -w connected); do
   case ${screen} in
     *primary*)
       printf "Launching primary bar(s) on ${BLUE}%s${NC}\\n" "${output}"
-      launch_bar HDMI-A-0 top-primary
+      launch_bar ${output} top-primary
       # launch_bar "${output}" bottom-primary
       ;;
     *)
       printf "Launching secondary bar(s) on ${BLUE}%s${NC}\\n" "${output}"
-      launch_bar DisplayPort-0 top-secondary
+      launch_bar ${output} top-secondary
       # launch_bar "${output}" bottom-secondary
       ;;
   esac

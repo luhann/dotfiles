@@ -28,18 +28,26 @@ colors:
     white:   '0xECEFF4'
 
 font:
+  size: 11.0
   normal:
-    family: MesloLGS NF
+    family: Iosevka Term
     style: Regular
-
+    
   bold:
-    family: MesloLGS NF
+    family: Iosevka Term
     style: Bold
 
   italic:
-    family: MesloLGS NF
+    family: Iosevka Term
     style: Italic
 
   bold_italic:
-    family: MesloLGS NF
+    family: Iosevka Term
     style: Bold Italic
+
+# Specifying a `duration` of `0` will disable the visual bell.
+visual_bell:
+  animation: EaseOutExpo
+  duration: 0
+  color: '0xffffff'
+
