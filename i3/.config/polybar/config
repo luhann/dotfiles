@@ -50,7 +50,8 @@ bar-fill-icon = ﭳ
 [bar/base]
 monitor = ${env:MONITOR}
 width = 100%
-height = 28
+height = 24
+wm-restack = i3
 fixed-center = true
 
 padding = 3 
@@ -64,16 +65,16 @@ line-size = 1
 cursor-click = pointer
 cursor-scroll = ns-resize
 
- font-0 = Hurmit Nerd Font:style=medium:size=10;3
+ font-0 = Iosevka Term:style=Regular:size=10;3
  ; Material Design Icons
- font-1 = Hurmit Nerd Font:style=medium:size=11;3
+ font-1 = Iosevka Term:style=Regular:size=11;3
  ; Powerline Glyphs
- font-2 = Hurmit Nerd Font:style=medium:size=16;3
+ font-2 = Iosevka Term:style=Regular:size=16;3
  
  ; Larger font size for bar fill icons
- font-3 = Hurmit Nerd Font:style=medium:size=12;3
+ font-3 = Iosevka Term:style=Regular:size=12;3
  ; Smaller font size for shorter spaces
- font-4 = Hurmit Nerd Font:style=medium:size=7;3
+ font-4 = Iosevka Term:style=Regular:size=7;3
 
 ; ___        __
 ;  | _  _   |__) _  _

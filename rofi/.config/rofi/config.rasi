@@ -3,7 +3,7 @@ configuration {
   width: 40;
   lines: 10;
 /*	columns: 1;*/
-  font: "Hurmit Nerd Font 10";
+  font: "Iosevka Term 12";
 /*	bw: 1;*/
 /*	location: 0;*/
 /*	padding: 5;*/
