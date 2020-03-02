@@ -78,9 +78,8 @@
     // "r.rterm.linux": "/home/luke/conda/envs/r-latest/bin/R",
     "r.rterm.linux": "/home/khonsu/.local/bin/radian",
     "r.bracketedPaste": true,
-    // When radian is used as the R client these options should be radian options 
     "r.rterm.option": [
-        "--vanilla"
+        "--no-history"
     ],
     // Latex Workshop
     "latex-workshop.view.pdf.viewer": "tab",

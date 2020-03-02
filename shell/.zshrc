@@ -30,9 +30,6 @@ alias top="htop"
 
 source /etc/zsh_completion.d/fzf-key-bindings
 
-# Set R library location
-export R_LIBS_USER="${HOME}/rlibrary/"
-
 # Set GPU driver for hardware encoding
 export LIBVA_DRIVER_NAME=radeonsi
 
