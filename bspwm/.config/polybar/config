@@ -49,13 +49,16 @@ bar-fill-icon = ﭳ
 
 [bar/base]
 monitor = ${env:MONITOR}
-width = 100%
-height = 24
 wm-restack = bspwm
+
+width = 94% 
+height = 16
+offset-x = 3%
+offset-y = 1%
 
 fixed-center = true
 
-padding = 3 
+padding = 2
 
 background = ${color.background}
 foreground = ${color.text-fg}
@@ -124,7 +127,7 @@ pin-workspaces = true
 
 format = <label-state> <label-mode>
 ; Active workspace on focused monitor
-label-focused = %name%
+label-focused-foreground = #ffb52a
 ; Inactive workspace on any monitor
 label-unfocused = ${self.label-focused}
 ; Active workspace on unfocused monitor
@@ -132,9 +135,8 @@ label-visible = ${self.label-focused}
 
 ; Separator in between workspaces
 label-separator = |
-label-separator-padding = 1
+label-separator-padding = 2
 label-separator-foreground = #ffb52a
-
 ;
 ; |\ | _ _|_    _  _|
 ; | \|(/_ | \|/(_)| |<
