@@ -1,4 +1,6 @@
 configuration {
+  # Dark theme.
+  theme: "~/.cache/wal/colors-rofi-dark.rasi";
   modi: "combi,run,ssh";
   width: 40;
   lines: 10;

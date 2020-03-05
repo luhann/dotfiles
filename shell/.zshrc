@@ -23,7 +23,7 @@ fi
 alias preview="fzf --preview 'bat --color \"always\" {}'"
 alias ls="exa --long --header --git --color=auto --group-directories-first"
 alias please="sudo"
-alias wallpaper="feh --bg-fill --randomize ~/onedrive/wallpapers/*"
+alias wallpaper="wal -i ~/onedrive/wallpapers/"
 alias top="htop"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -36,5 +36,9 @@ export LIBVA_DRIVER_NAME=radeonsi
 # Ignore duplicate history
 export HISTCONTROL=ignoreboth:erasedups
 
+(cat ~/.cache/wal/sequences &)
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
