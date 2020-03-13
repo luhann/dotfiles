@@ -12,9 +12,9 @@ configuration {
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
   show-icons: false;
-/*	terminal: "xdg-terminal";*/
-/*	ssh-client: "ssh";*/
-/*	ssh-command: "{terminal} {ssh-client} {host} [-p {port}]";*/
+terminal: "alacritty";
+ssh-client: "ssh";
+ssh-command: "{terminal} {ssh-client} {host} [-p {port}]";
   run-command: "zsh -c '{cmd}'";
   run-list-command: ". ~/.config/rofi/scripts/alias.sh";
   run-shell-command: "zsh -c '{cmd} | rofi -dmenu'";
