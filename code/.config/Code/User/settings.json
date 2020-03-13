@@ -84,10 +84,11 @@
     // Latex Workshop
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.latex.autoClean.run": "onBuilt",
-    "latex-workshop.latex.autoBuild.run":"onFileChange",
-    "latex-workshop.latex.recipe.default":"lastUsed",
-    "latex-workshop.chktex.enabled":true,
-    "latex-workshop.chktex.run":"onSave",
+    "latex-workshop.latex.autoBuild.run": "onFileChange",
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.chktex.enabled": true,
+    "latex-workshop.chktex.run": "onSave",
+    "latex-workshop.chktex.path": "lacheck",
     "latex-workshop.latex.recipes": [
         {
             "name": "xelatex",
