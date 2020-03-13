@@ -1,5 +1,5 @@
 library: library.db
-directory: ~/Music
+directory: ~/music
 
 import:
     write: yes
@@ -149,4 +149,4 @@ match:
 
 
 play:
-    command: mpv --no-audio-display $args --playlist
+    command: mpv --no-audio-display $args
