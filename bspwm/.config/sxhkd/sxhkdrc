@@ -30,6 +30,10 @@ super + r
 super + z
   zotero
 
+# lock screen
+super + l
+  i3lock -t -i $(find ~/onedrive/wallpapers/ -name "*.png" | shuf -n1)
+
 #
 # bspwm hotkeys
 #

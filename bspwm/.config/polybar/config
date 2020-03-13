@@ -98,7 +98,7 @@ tray-position = right
 [bar/top-secondary]
 inherit = bar/top-primary
 
-modules-center = wlan eth ping
+modules-center = wlan eth
 modules-left = bspwm
 modules-right = volume date
 
@@ -125,6 +125,7 @@ type = internal/bspwm
 ; Only show workspaces on the same output as the bar
 pin-workspaces = true
 
+label-empty = -
 format = <label-state> <label-mode>
 ; Active workspace on focused monitor
 label-focused-foreground = #ffb52a
