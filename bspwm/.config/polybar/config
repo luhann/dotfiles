@@ -14,14 +14,17 @@
 
 
 [color]
-background = #00000000
+background = #D9222222
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #888
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
 glyph-bg    = #de0a0a0a
 module-bg   = #f00a0a0a
 selected-bg = #dc1a1a1a
 icon-fg = #c8c8c8
-bar-fg = #c8c8c8
-text-fg = #c8c8c8
-
 red     = #821717
 orange  = #824517
 
@@ -50,18 +53,19 @@ bar-fill-icon = ﭳ
 [bar/base]
 monitor = ${env:MONITOR}
 wm-restack = bspwm
+bottom = false
 
-width = 94% 
-height = 16
-offset-x = 3%
-offset-y = 1%
-
-fixed-center = true
+width = 98%
+height = 2.5%
+offset-x = 1%
+offset-y = 0.5%
+radius = 5
+fixed-center = false
 
 padding = 2
 
 background = ${color.background}
-foreground = ${color.text-fg}
+foreground = ${color.foreground}
 
 ; Size of under-/overlines
 line-size = 1
@@ -91,7 +95,7 @@ modules-center = cpu memory
 modules-left = bspwm
 modules-right = volume date
 
-tray-background = ${color.module-bg}
+tray-background = ${color.background}
 tray-padding = ${layout.module-padding}
 tray-position = right
 
@@ -202,7 +206,7 @@ click-left = kill -USR1 %pid%
 type = internal/cpu
 inherit = generic-format-style
 
-interval = 0.5
+interval = 2
 
 format = <label>
 label = C: %percentage% %
