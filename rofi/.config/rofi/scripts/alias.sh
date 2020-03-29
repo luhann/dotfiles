@@ -1,2 +1,2 @@
 # fetch all zsh aliases 
-alias | awk -F'[ =]' '{print $1}'
+alias | awk '{print $2}'

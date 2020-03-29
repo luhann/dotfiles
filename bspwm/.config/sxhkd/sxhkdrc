@@ -2,6 +2,25 @@
 # wm independent hotkeys
 #
 
+# media player keys
+XF86AudioPlay 
+	playerctl play-pause
+XF86AudioStop 
+	playerctl stop
+XF86AudioNext 
+	playerctl next
+XF86AudioPrev
+	playerctl previous
+
+
+XF86AudioRaiseVolume
+  pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+XF86AudioLowerVolume
+  pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+XF86AudioMute
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
 # terminal emulator
 super + Return
 	alacritty
@@ -32,8 +51,13 @@ super + z
 
 # lock screen
 super + l
-  i3lock -t -i $(find ~/onedrive/wallpapers/ -name "*.png" | shuf -n1)
-
+  i3lock -t -n -i $HOME/pictures/locked.jpg \
+    --insidecolor=373445ff --ringcolor=ffffffff --line-uses-inside \
+    --keyhlcolor=d23c3dff --bshlcolor=d23c3dff --separatorcolor=00000000 \
+    --insidevercolor=fecf4dff --insidewrongcolor=d23c3dff --layoutcolor=ffffffff \
+    --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+86:y+1003" \
+    --radius=15 --veriftext="" --wrongtext="" --noinputtext="" \
+    --composite
 #
 # bspwm hotkeys
 #

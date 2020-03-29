@@ -1,8 +1,7 @@
 [$Version]
-update_info=kwin.upd:replace-scalein-with-scale
+update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed
 
 [Compositing]
-AnimationSpeed=3
 Backend=OpenGL
 Enabled=false
 GLCore=true
@@ -30,8 +29,8 @@ cubeslideEnabled=false
 desktopchangeosdEnabled=true
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
+kwin4_effect_squashEnabled=false
 magiclampEnabled=true
-minimizeanimationEnabled=false
 slideEnabled=true
 wobblywindowsEnabled=true
 
@@ -46,9 +45,11 @@ count=0
 [TabBox]
 ActivitiesMode=1
 ApplicationsMode=0
+DesktopLayout=org.kde.breeze.desktop
+DesktopListLayout=org.kde.breeze.desktop
 DesktopMode=1
 HighlightWindows=true
-LayoutName=org.kde.breezedark.desktop
+LayoutName=org.kde.breeze.desktop
 MinimizedMode=0
 MultiScreenMode=0
 ShowDesktopMode=0
@@ -70,3 +71,7 @@ SwitchingMode=0
 [Windows]
 BorderlessMaximizedWindows=true
 RollOverDesktops=true
+
+[org.kde.kdecoration2]
+library=org.kde.breeze
+theme=Breeze

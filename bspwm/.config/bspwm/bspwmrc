@@ -1,12 +1,23 @@
 #! /bin/sh
+pkill sxhkd 
+pkill xsetroot 
+pkill dunst 
+pkill picom 
+pkill redshift
+pkill polybar
+
+xsetroot -cursor_name left_ptr &
+xrdb ~/.Xresources
 sxhkd &
 dunst &
 picom --config ~/.config/picom/picom.conf -b
 wal -q -i ~/onedrive/wallpapers/ &
+redshift -l 33.5:18.2 &
 
 # Run polybar
-$HOME/.config/polybar/polybar.sh &
-
+# $HOME/.config/polybar/polybar.sh &
+polybar top-primary &
+polybar top-secondary &
 
 bspc monitor --swap HDMI-A-0 ^1
 bspc monitor --swap DisplayPort-0 ^2
@@ -17,12 +28,12 @@ bspc config automatic_scheme  longest_side
 bspc config initial_polarity second_child
 
 # Borders and Gaps
-bspc config border_width         2
-bspc config window_gap          6
+bspc config border_width 2
+bspc config window_gap 6
 
 bspc config top_padding 0
-bspc config borderless_monocle   true
-bspc config gapless_monocle      false
+bspc config borderless_monocle true
+bspc config gapless_monocle false
 
 # Focusing behaviour
 bspc config history_aware_focus true
@@ -40,3 +51,5 @@ bspc config presel_feedback_color "$color1"
 
 bspc rule -a plasmashell state=floating border=off layer=normal
 bspc rule -a krunner state=floating border=off
+
+bspc config external_rules_command ~/.config/bspwm/scripts/external_rules.sh
