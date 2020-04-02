@@ -1,38 +1,22 @@
-#! /bin/sh
-pkill sxhkd 
-pkill xsetroot 
-pkill dunst 
-pkill picom 
-pkill redshift
-pkill polybar
+#!/usr/bin/env bash
+# ===== Autostart =====
+. ~/.config/bspwm/scripts/autostart.sh
 
-xsetroot -cursor_name left_ptr &
-xrdb ~/.Xresources
-sxhkd &
-dunst &
-picom --config ~/.config/picom/picom.conf -b
-wal -q -i ~/onedrive/wallpapers/ &
-redshift -l 33.5:18.2 &
-
-# Run polybar
-# $HOME/.config/polybar/polybar.sh &
-polybar top-primary &
-polybar top-secondary &
-
+# ===== Monitor Settings ======
 bspc monitor --swap HDMI-A-0 ^1
 bspc monitor --swap DisplayPort-0 ^2
-bspc monitor HDMI-A-0 -d I II III IV V 
-bspc monitor DisplayPort-0 -d VI VII VIII IX X
+bspc monitor HDMI-A-0 -d main dev term media misc 
+bspc monitor DisplayPort-0 -d web zen term media misc
 
 bspc config automatic_scheme  longest_side
 bspc config initial_polarity second_child
 
 # Borders and Gaps
-bspc config border_width 2
-bspc config window_gap 6
+bspc config border_width  2
+bspc config window_gap  6
 
 bspc config top_padding 0
-bspc config borderless_monocle true
+bspc config borderless_monocle  true
 bspc config gapless_monocle false
 
 # Focusing behaviour
@@ -49,7 +33,11 @@ bspc config active_border_color "$color2"
 bspc config focused_border_color "$color5"
 bspc config presel_feedback_color "$color1"
 
+# ===== BSPC Rules =====
+# Internal Rules
 bspc rule -a plasmashell state=floating border=off layer=normal
 bspc rule -a krunner state=floating border=off
 
+# External rules
+# Used to make some settings windows float properly
 bspc config external_rules_command ~/.config/bspwm/scripts/external_rules.sh
