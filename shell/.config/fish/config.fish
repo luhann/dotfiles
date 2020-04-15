@@ -1,9 +1,8 @@
 if status --is-login
-    set -x PATH $PATH ~/bin ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2019/bin/x86_64-linux
+    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2019/bin/x86_64-linux
     set -x MANPATH ":/home/khonsu/applications/texlive/2019/texmf-dist/doc/man"
     set -x INFOPATH ":/home/khonsu/applications/texlive/2019/texmf-dist/doc/info"
 end
-
 
 set -Ux XDG_CURRENT_DESKTOP KDE
 set -Ux GTK_USE_PORTAL "1"
@@ -20,9 +19,11 @@ source /usr/share/doc/fzf/key-bindings.fish
 alias preview="fzf --preview 'bat --color \"always\" {}'"
 alias ls="exa --long --header --git --color=auto --group-directories-first"
 alias please="sudo"
-alias wallpaper="wal -i ~/onedrive/wallpapers/"
+alias wallpaper="wal -e -i ~/onedrive/wallpapers/"
 alias top="htop"
 alias foliate="com.github.johnfactotum.Foliate"
+alias night="sudo zzz"
+alias code="code-oss"
 
 function fish_greeting
 	echo

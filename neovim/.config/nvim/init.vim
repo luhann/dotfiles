@@ -59,6 +59,9 @@ Plug 'lervag/vimtex'
 
 " vimwiki for notetaking
 Plug 'vimwiki/vimwiki'
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.wiki'}]
+
 
 " Plugin to highlight statusline based on current mode
 Plug 'itchyny/lightline.vim'
@@ -89,7 +92,15 @@ call plug#end()
 " Show matching brackets
 set showmatch
 " Show line number
-set number
+set number relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
+
 " Make tab use spaces
 set expandtab
 " Set tab to use 2 spaces 

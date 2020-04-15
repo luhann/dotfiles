@@ -30,19 +30,19 @@ colors:
 font:
   size: 11.0
   normal:
-    family: Iosevka Term
-    style: Regular
+    family: Iosevka
+    style: Medium
     
   bold:
-    family: Iosevka Term
+    family: Iosevka
     style: Bold
 
   italic:
-    family: Iosevka Term
+    family: Iosevka
     style: Italic
 
   bold_italic:
-    family: Iosevka Term
+    family: Iosevka
     style: Bold Italic
 
 # Specifying a `duration` of `0` will disable the visual bell.
