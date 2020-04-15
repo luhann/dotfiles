@@ -1,0 +1,62 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "alt+l",
+        "command": "editor.action.transformToLowercase"
+    },
+    {
+        "key": "alt+u",
+        "command": "editor.action.transformToUppercase"
+    },
+    {
+        "key": "ctrl+alt+'",
+        "command": "workbench.action.terminal.focusNext"
+    },
+    {
+        "key": "ctrl+alt+;",
+        "command": "workbench.action.terminal.focusPrevious"
+    },
+    {
+        "key": "ctrl+shift+q",
+        "command": "editor.action.joinLines"
+    },
+    {
+        "key": "ctrl+alt+q",
+        "command": "workbench.action.terminal.kill"
+    },
+    {
+        "key": "ctrl+shift+m",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus && editorLangId == 'r'",
+        "args": {
+            "snippet": " %>% "
+        }
+    },
+    {
+        "key": "alt+s",
+        "command": "toggleFindInSelection",
+        "when": "editorFocus"
+    },
+    {
+        // Terminal command tracking on Windows and Linux
+        {
+            "key": "ctrl+up",
+            "command": "workbench.action.terminal.scrollToPreviousCommand",
+            "when": "terminalFocus"
+        },
+        {
+            "key": "ctrl+down",
+            "command": "workbench.action.terminal.scrollToNextCommand",
+            "when": "terminalFocus"
+        },
+        {
+            "key": "ctrl+shift+up",
+            "command": "workbench.action.terminal.selectToPreviousCommand",
+            "when": "terminalFocus"
+        },
+        {
+            "key": "ctrl+shift+down",
+            "command": "workbench.action.terminal.selectToNextCommand",
+            "when": "terminalFocus"
+        }
+]
