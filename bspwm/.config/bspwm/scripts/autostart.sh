@@ -37,8 +37,8 @@ xsetroot -cursor_name left_ptr
 run picom --config ~/.config/picom/picom.conf
 
 # redshift
-pkill -x redshift
-run redshift -l 33.5:18.2
+pkill -f '^redshift'
+run redshift -l 33.5:18.2 -b 1.0:0.6
 
 # sxhkd
 run sxhkd
@@ -47,7 +47,7 @@ run sxhkd
 run dunst
 
 # polybars
-pkill -x polybar
+pkill -f '^polybar'
 polybar top-primary &
 polybar top-secondary &
 

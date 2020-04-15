@@ -5,7 +5,7 @@
 # ===== Monitor Settings ======
 bspc monitor --swap HDMI-A-0 ^1
 bspc monitor --swap DisplayPort-0 ^2
-bspc monitor HDMI-A-0 -d main dev term media misc 
+bspc monitor HDMI-A-0 -d main dev term media misc
 bspc monitor DisplayPort-0 -d web zen term media misc
 
 bspc config automatic_scheme  longest_side

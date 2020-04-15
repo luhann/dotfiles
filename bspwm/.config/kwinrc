@@ -73,5 +73,7 @@ BorderlessMaximizedWindows=true
 RollOverDesktops=true
 
 [org.kde.kdecoration2]
+ButtonsOnLeft=MIAX
+ButtonsOnRight=HS
 library=org.kde.breeze
 theme=Breeze

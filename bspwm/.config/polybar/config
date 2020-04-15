@@ -72,16 +72,16 @@ line-size = 1
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-font-0 = Iosevka Term:style=Regular:size=10;3
+font-0 = Iosevka:style=Bold:size=10;5
 ; Material Design Icons
-font-1 = Iosevka Term:style=Regular:size=11;3
+font-1 = Iosevka:style=Bold:size=11;5
 ; Powerline Glyphs
-font-2 = Iosevka Term:style=Regular:size=16;3
+font-2 = Iosevka:style=Bold:size=16;5
  
 ; Larger font size for bar fill icons
-font-3 = Iosevka Term:style=Regular:size=12;3
+font-3 = Iosevka:style=Bold:size=12;3
 ; Smaller font size for shorter spaces
-font-4 = Iosevka Term:style=Regular:size=7;3
+font-4 = Iosevka:style=Bold:size=7;3
 
 ; ___        __
 ;  | _  _   |__) _  _
@@ -107,7 +107,7 @@ inherit = bar/base
 radius = 5
 modules-center = wlan eth
 modules-left = bspwm
-modules-right = volume date
+modules-right = cpu_temp gpu_temp volume date
 
 tray-background = ${color.background}
 tray-padding = ${layout.module-padding}
@@ -135,7 +135,10 @@ type = internal/bspwm
 pin-workspaces = true
 
 label-empty = -
-format = <label-state> <label-mode>
+format = <label-state><label-mode>
+label-focused = %name%
+label-occupied = %name%
+
 ; Active workspace on focused monitor
 label-focused-foreground = #ffb52a
 ; Inactive workspace on any monitor
@@ -144,8 +147,8 @@ label-unfocused = ${self.label-focused}
 label-visible = ${self.label-focused}
 
 ; Separator in between workspaces
-label-separator = |
-label-separator-padding = 2
+label-separator =|
+label-separator-padding = 1
 label-separator-foreground = #ffb52a
 ;
 ; |\ | _ _|_    _  _|
@@ -214,7 +217,7 @@ inherit = generic-format-style
 interval = 2
 
 format = <label>
-label = C: %percentage% %
+label = cpu: %percentage% %
 
 ; Bar
 bar-load-format = ${layout.bar-format}
@@ -235,7 +238,70 @@ type = internal/memory
 inherit = generic-format-style
 
 interval = 3
-label = M: %percentage_used% %
+label = ram: %percentage_used% %
+
+[module/cpu_temp]
+type = internal/temperature
+inherit = generic-format-style
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 2
+
+; Thermal zone to use
+; To list all the zone types, run 
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+
+; Base temperature for where to start the ramp (in degrees celsius)
+; Default: 0
+base-temperature = 20
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 60
+label =  cpu: %temperature-c% 
+format =  <label> 
+
+[module/gpu_temp]
+type = internal/temperature
+inherit = generic-format-style
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 2
+
+; Thermal zone to use
+; To list all the zone types, run
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basena    me ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/hwmon/hwmon0/temp1_input
+
+; Base temperature for where to start the ramp (in degrees celsius)
+; Default: 0
+base-temperature = 20
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 60
+
+label =  gpu: %temperature-c% 
+format =  <label> |
 
 ;
 ; |\/| _  _|. _
@@ -279,4 +345,4 @@ time = %H:%M
 date-alt = %A, %d %B %Y
 time-alt = %H:%M:%S
 
-label = %time% | %date%
+label = %time% - %date%
