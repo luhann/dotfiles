@@ -9,10 +9,9 @@
     "window.titleBarStyle": "custom",
     "search.smartCase": true,
     "search.showLineNumbers": true,
-    "editor.fontFamily": "Iosevka Term",
+    "editor.fontFamily": "Iosevka",
     "editor.fontLigatures": true,
     "editor.renderWhitespace": "boundary",
-    "editor.multiCursorModifier": "ctrlCmd",
     "editor.tabSize": 2,
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
@@ -23,10 +22,11 @@
     "editor.wordWrap": "on",
     "explorer.sortOrder": "type",
     "explorer.compactFolders": true,
-    "terminal.integrated.fontFamily": "Iosevka Term",
+    "terminal.integrated.fontFamily": "Iosevka",
     // 4.5 is recommended for baseline website accessibility
-    "terminal.integrated.minimumContrastRatio": 4.5,
+    "terminal.integrated.minimumContrastRatio": 7,
     "terminal.integrated.rendererType": "experimentalWebgl",
+    "terminal.integrated.cursorBlinking": true,
     "workbench.sideBar.location": "right",
     "workbench.panel.defaultLocation": "right",
     "workbench.editor.highlightModifiedTabs": true,
@@ -35,9 +35,14 @@
     "workbench.colorCustomizations": {
         "contrastBorder": "#440d0d8e",
         "minimapSlider.background": "#440d0d42",
-        "minimapSlider.hoverBackground": "#440d0d8e"
+        "minimapSlider.hoverBackground": "#440d0d8e",
+        "minimapSlider.activeBackground": "#440d0d8e",
+        "editorRuler.foreground": "#79131367"
     },
     // Language specific vscode settings
+     "[r]": {
+        "editor.rulers": [120, 240],
+    },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
@@ -61,6 +66,12 @@
     // The path below is the path for conda r; use it when you want
     // "r.rterm.linux": "/home/luke/conda/envs/r-latest/bin/R",
     "r.rterm.linux": "/bin/radian",
+    // only works on unix/mac, connects to lsp through stdio pipe
+    "r.lsp.use_stdio": true,
+    // this experimental feature allows vscode to open plots/View windows inside vscode rather than an X-window
+    "r.sessionWatcher": false,
+    // this is need when your rterminal is radian
+    // https://github.com/randy3k/radian
     "r.bracketedPaste": true,
     "r.rterm.option": [
         "--no-history"
