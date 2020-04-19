@@ -19,6 +19,7 @@
     "editor.cursorBlinking": "phase",
     "editor.minimap.showSlider": "always",
     "editor.minimap.renderCharacters":false,
+    "editor.lineNumbers": "relative",
     "editor.wordWrap": "on",
     "explorer.sortOrder": "type",
     "explorer.compactFolders": true,
