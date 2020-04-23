@@ -1,10 +1,6 @@
-if(interactive()) 
-  try(fortunes::fortune(), silent=TRUE)
+# Set options for Rscript -e calls
+if (requireNamespace("lumisc", quietly = TRUE)) {
+  # Call here if needed
+  lumisc::set_startup_options()
+}
 
-options(warnPartialMatchArgs = TRUE)
-options(warnPartialMatchDollar = TRUE)
-options(languageserver.formatting_style = function(options) {
-        style = styler::tidyverse_style(indent_by = options$tabSize)
-        style$token$force_assignment_op = NULL
-        style
-})
