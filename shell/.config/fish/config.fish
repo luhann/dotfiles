@@ -10,20 +10,43 @@ set -Ux LIBVA_DRIVER_NAME radeonsi
 set -Ux HISTCONTROL ignoreboth:erasedups
 set -Ux EDITOR nvim
 
+# load the currently set wal colour scheme
 cat ~/.cache/wal/sequences &
 
+# autojump keybindings
 source /usr/share/autojump/autojump.fish
+# fzf keybindings for voidlinux
 source /usr/share/doc/fzf/key-bindings.fish
 
-# Customize to your needs...
+# All my aliases
+# system aliases
 alias preview="fzf --preview 'bat --color \"always\" {}'"
 alias ls="exa --long --header --git --color=auto --group-directories-first"
 alias please="sudo"
-alias wallpaper="wal -e -i ~/onedrive/wallpapers/"
 alias top="htop"
-alias foliate="com.github.johnfactotum.Foliate"
 alias night="sudo zzz"
+alias off="sudo poweroff"
+
+# editor aliases
+alias vim="nvim"
 alias code="code-oss"
+
+# PS aliases.
+alias psa='ps aux'
+alias psg='ps aux | grep -i'
+
+# Make cp & mv to be verbose.
+alias cp='cp -v'
+alias mv='mv -v'
+
+# Updates.
+alias update_os='sudo xbps-install -Su'
+
+# theming aliases
+alias wallpaper="wal -e -i ~/onedrive/wallpapers/"
+
+# application aliases
+alias foliate="com.github.johnfactotum.Foliate"
 
 function fish_greeting
 	echo
