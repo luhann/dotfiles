@@ -301,7 +301,10 @@ base-temperature = 20
 warn-temperature = 60
 
 label =  gpu: %temperature-c% 
-format =  <label> |
+format = <label>
+
+label-warn = gpu: %temperature-c% 
+format-warn = <label-warn>
 
 ;
 ; |\/| _  _|. _
