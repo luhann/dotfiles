@@ -4,3 +4,4 @@ if (requireNamespace("lumisc", quietly = TRUE)) {
   lumisc::set_startup_options()
 }
 
+grDevices::X11.options(type = "cairo")
