@@ -38,7 +38,7 @@ run picom --config ~/.config/picom/picom.conf
 
 # redshift
 pkill -f '^redshift'
-run redshift -l 33.5:18.2 -b 1.0:0.6
+run redshift -l 33.5:18.2 -b 1.0:0.3
 
 # sxhkd
 run sxhkd
