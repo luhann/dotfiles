@@ -21,9 +21,6 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
 " let g:deoplete#disable_auto_complete = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -50,6 +47,8 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 " Nvim-R editor plugin for neovim
 Plug 'jalvesaq/Nvim-R'
 
+" fzf for files searching in vim
+Plug 'junegunn/fzf'
 
 " Asynchronous linting
 Plug 'w0rp/ale'
@@ -93,6 +92,7 @@ call plug#end()
 set showmatch
 " Show line number
 set number relativenumber
+set spell
 
 augroup numbertoggle
   autocmd!
