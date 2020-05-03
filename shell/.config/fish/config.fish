@@ -1,7 +1,7 @@
 if status --is-login
-    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2019/bin/x86_64-linux
-    set -x MANPATH ":/home/khonsu/applications/texlive/2019/texmf-dist/doc/man"
-    set -x INFOPATH ":/home/khonsu/applications/texlive/2019/texmf-dist/doc/info"
+    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2020/bin/x86_64-linux
+    set -x MANPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/man"
+    set -x INFOPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/info"
 end
 
 set -Ux XDG_CURRENT_DESKTOP KDE
