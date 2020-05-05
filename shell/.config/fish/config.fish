@@ -40,7 +40,7 @@ alias cp='cp -v'
 alias mv='mv -v'
 
 # Updates.
-alias update_os='sudo xbps-install -Su'
+alias xup='sudo xbps-install -Su'
 
 # theming aliases
 alias wallpaper="wal -e -i ~/onedrive/wallpapers/"
