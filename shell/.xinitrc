@@ -18,4 +18,4 @@ export SXHKD_SHELL='/usr/bin/sh'
 numlockx &
 setxkbmap -option caps:super
 xrandr --output HDMI-A-0 --primary --right-of DisplayPort-0
-exec dbus-launch --sh-syntax --exit-with-session bspwm
+exec dbus-run-session bspwm
