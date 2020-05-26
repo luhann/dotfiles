@@ -1,146 +1,136 @@
 {
-    "files.autoSave": "onFocusChange",
-    "files.trimFinalNewlines": true,
-    "breadcrumbs.enabled": true,
-    "window.zoomLevel": 0,
-    "window.enableMenuBarMnemonics": false,
-    "window.menuBarVisibility": "hidden",
-    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
-    "window.titleBarStyle": "custom",
-    "search.smartCase": true,
-    "search.showLineNumbers": true,
-    "editor.fontFamily": "Iosevka",
-    "editor.fontLigatures": true,
-    "editor.renderWhitespace": "boundary",
-    "editor.tabSize": 2,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.cursorStyle": "block",
-    "editor.cursorBlinking": "phase",
-    "editor.minimap.showSlider": "always",
-    "editor.minimap.renderCharacters":false,
-    "editor.lineNumbers": "relative",
-    "editor.wordWrap": "on",
-    "explorer.sortOrder": "type",
-    "explorer.compactFolders": true,
-    "terminal.integrated.fontFamily": "Iosevka",
-    // 4.5 is recommended for baseline website accessibility
-    "terminal.integrated.minimumContrastRatio": 7,
-    "terminal.integrated.rendererType": "experimentalWebgl",
-    "terminal.integrated.cursorBlinking": true,
-    "workbench.sideBar.location": "right",
-    "workbench.panel.defaultLocation": "right",
-    "workbench.editor.highlightModifiedTabs": true,
-    "workbench.colorTheme": "Horizon",
-    "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorCustomizations": {
-        "contrastBorder": "#440d0d8e",
-        "minimapSlider.background": "#440d0d42",
-        "minimapSlider.hoverBackground": "#440d0d8e",
-        "minimapSlider.activeBackground": "#440d0d8e",
-        "editorRuler.foreground": "#79131367"
+  "files.autoSave": "onFocusChange",
+  "files.trimFinalNewlines": true,
+  "breadcrumbs.enabled": true,
+  "window.zoomLevel": 0,
+  "window.enableMenuBarMnemonics": false,
+  "window.menuBarVisibility": "hidden",
+  "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+  "window.titleSeparator": " | ",
+  "window.titleBarStyle": "custom",
+  "search.smartCase": true,
+  "search.showLineNumbers": true,
+  "editor.fontFamily": "Iosevka",
+  "editor.fontLigatures": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.tabSize": 2,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.cursorStyle": "block",
+  "editor.cursorBlinking": "phase",
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.renderCharacters": false,
+  "editor.lineNumbers": "relative",
+  "editor.rulers": [80, 240],
+  "editor.wordWrap": "on",
+  "explorer.sortOrder": "type",
+  "explorer.compactFolders": true,
+  "terminal.integrated.fontFamily": "Iosevka",
+  // 4.5 is recommended for baseline website accessibility
+  "terminal.integrated.minimumContrastRatio": 7,
+  "terminal.integrated.rendererType": "experimentalWebgl",
+  "terminal.integrated.cursorBlinking": true,
+  "workbench.sideBar.location": "right",
+  "workbench.panel.defaultLocation": "right",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.colorTheme": "Horizon",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorCustomizations": {
+    "contrastBorder": "#440d0d8e",
+    "minimapSlider.background": "#440d0d42",
+    "minimapSlider.hoverBackground": "#440d0d8e",
+    "minimapSlider.activeBackground": "#440d0d8e",
+    "editorRuler.foreground": "#79131367"
+  },
+  // Language specific vscode settings
+  "[r]": {
+    "editor.rulers": [120, 240]
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[latex]": {
+    "editor.formatOnSave": false
+  },
+  "scm.defaultViewMode": "tree",
+  // Extension Specific Settings
+  // GitLens
+  "gitlens.views.repositories.location": "gitlens",
+  "gitlens.views.fileHistory.location": "gitlens",
+  "gitlens.views.lineHistory.location": "gitlens",
+  "gitlens.views.compare.location": "gitlens",
+  "gitlens.views.search.location": "gitlens",
+  // Python
+  "python.autoComplete.addBrackets": true,
+  // R Extension
+  // The path below is the path for conda r; use it when you want
+  // "r.rterm.linux": "/home/luke/conda/envs/r-latest/bin/R",
+  "r.rterm.linux": "/home/khonsu/.local/bin/radian",
+  // only works on unix/mac, connects to lsp through stdio pipe
+  "r.lsp.use_stdio": true,
+  "r.lsp.path": "/bin/R",
+  // this experimental feature allows vscode to open plots/View windows inside vscode rather than an X-window
+  "r.sessionWatcher": false,
+  // this is need when your rterminal is radian
+  // https://github.com/randy3k/radian
+  "r.bracketedPaste": true,
+  "r.rterm.option": ["--no-history"],
+  // Latex Workshop
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.latex.autoBuild.run": "onFileChange",
+  "latex-workshop.latex.recipe.default": "lastUsed",
+  "latex-workshop.chktex.enabled": true,
+  "latex-workshop.chktex.run": "onSave",
+  "latex-workshop.chktex.path": "lacheck",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "xelatex",
+      "tools": ["xelatex"]
     },
-    // Language specific vscode settings
-     "[r]": {
-        "editor.rulers": [120, 240],
+    {
+      "name": "xelatex ➞ biber ➞ xelatex x 2",
+      "tools": ["xelatex", "biber", "xelatex", "xelatex"]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
     },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ],
+      "env": {}
     },
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": ["%DOCFILE%"],
+      "env": {}
     },
-    "[latex]": {
-        "editor.formatOnSave": false
-    },
-    "scm.defaultViewMode": "tree",
-    // Extension Specific Settings
-    // GitLens
-    "gitlens.views.repositories.location": "gitlens",
-    "gitlens.views.fileHistory.location": "gitlens",
-    "gitlens.views.lineHistory.location": "gitlens",
-    "gitlens.views.compare.location": "gitlens",
-    "gitlens.views.search.location": "gitlens",
-    // Python
-    "python.autoComplete.addBrackets": true,
-    // R Extension
-    // The path below is the path for conda r; use it when you want
-    // "r.rterm.linux": "/home/luke/conda/envs/r-latest/bin/R",
-    "r.rterm.linux": "/bin/radian",
-    // only works on unix/mac, connects to lsp through stdio pipe
-    "r.lsp.use_stdio": true,
-    // this experimental feature allows vscode to open plots/View windows inside vscode rather than an X-window
-    "r.sessionWatcher": false,
-    // this is need when your rterminal is radian
-    // https://github.com/randy3k/radian
-    "r.bracketedPaste": true,
-    "r.rterm.option": [
-        "--no-history"
-    ],
-    // Latex Workshop
-    "latex-workshop.view.pdf.viewer": "tab",
-    "latex-workshop.latex.autoClean.run": "onBuilt",
-    "latex-workshop.latex.autoBuild.run": "onFileChange",
-    "latex-workshop.latex.recipe.default": "lastUsed",
-    "latex-workshop.chktex.enabled": true,
-    "latex-workshop.chktex.run": "onSave",
-    "latex-workshop.chktex.path": "lacheck",
-    "latex-workshop.latex.recipes": [
-        {
-            "name": "xelatex",
-            "tools": [
-                "xelatex"
-            ]
-        },
-        {
-            "name": "xelatex ➞ biber ➞ xelatex x 2",
-            "tools": [
-                "xelatex",
-                "biber",
-                "xelatex",
-                "xelatex"
-            ]
-        }
-    ],
-    "latex-workshop.latex.tools": [
-        {
-            "name": "xelatex",
-            "command": "xelatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-output-directory=%OUTDIR%",
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "pdflatex",
-            "command": "pdflatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "bibtex",
-            "command": "bibtex",
-            "args": [
-                "%DOCFILE%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "biber",
-            "command": "biber",
-            "args": [
-                "%DOCFILE%"
-            ],
-            "env": {}
-        }
-    ]
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": ["%DOCFILE%"],
+      "env": {}
+    }
+  ]
 }
