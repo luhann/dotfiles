@@ -3,12 +3,16 @@
 . ~/.config/bspwm/scripts/autostart.sh
 
 # ===== Monitor Settings ======
-bspc monitor --swap HDMI-A-0 ^1
-bspc monitor --swap DisplayPort-0 ^2
+# bspc monitor --swap HDMI-A-0 ^1
+# bspc monitor --swap DisplayPort-0 ^2
 bspc monitor HDMI-A-0 -d main dev term media misc
 bspc monitor DisplayPort-0 -d web zen term media misc
 
-bspc config automatic_scheme  longest_side
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
+
+
+bspc config automatic_scheme longest_side
 bspc config initial_polarity second_child
 
 # Borders and Gaps
@@ -41,3 +45,4 @@ bspc rule -a krunner state=floating border=off
 # External rules
 # Used to make some settings windows float properly
 bspc config external_rules_command ~/.config/bspwm/scripts/external_rules.sh
+enforce_monitor_position HDMI-A-0 '^1' &
