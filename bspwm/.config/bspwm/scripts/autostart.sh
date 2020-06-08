@@ -34,7 +34,7 @@ xsetroot -cursor_name left_ptr
 # fi
 
 # Desktop effects
-run picom --config ~/.config/picom/picom.conf
+run picom --config ~/.config/picom/picom.conf --experimental-backends
 
 # redshift
 pkill -f '^redshift'
