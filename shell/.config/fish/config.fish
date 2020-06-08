@@ -9,19 +9,21 @@ set -Ux GTK_USE_PORTAL "1"
 set -Ux LIBVA_DRIVER_NAME radeonsi
 set -Ux HISTCONTROL ignoreboth:erasedups
 set -Ux EDITOR nvim
-
-# load the currently set wal colour scheme
-cat ~/.cache/wal/sequences &
+set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
+set -gx FZF_DEFAULT_OPTS "--ansi"
 
 # autojump keybindings
 source /usr/share/autojump/autojump.fish
 # fzf keybindings for voidlinux
 source /usr/share/doc/fzf/key-bindings.fish
 
+source ~/.cache/wal/colors.fish
+
 # All my aliases
 # system aliases
-alias preview="fzf --preview 'bat --color \"always\" {}'"
+alias preview="fzf --preview 'bat --color=always {}'"
 alias ls="exa --long --header --git --color=auto --group-directories-first"
+alias find="fd"
 alias please="sudo"
 alias top="htop"
 alias night="sudo zzz"
@@ -43,7 +45,7 @@ alias mv='mv -v'
 alias xup='sudo xbps-install -Su'
 
 # theming aliases
-alias wallpaper="wal -e -i ~/onedrive/wallpapers/"
+alias wallpaper="wal -s -e -i ~/onedrive/wallpapers/"
 
 # application aliases
 alias foliate="com.github.johnfactotum.Foliate"
