@@ -4,11 +4,10 @@ if status --is-login
     set -x INFOPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/info"
 end
 
-set -Ux XDG_CURRENT_DESKTOP KDE
-set -Ux GTK_USE_PORTAL "1"
-set -Ux LIBVA_DRIVER_NAME radeonsi
-set -Ux HISTCONTROL ignoreboth:erasedups
-set -Ux EDITOR nvim
+set -gx XDG_CURRENT_DESKTOP KDE
+set -gx GTK_USE_PORTAL "1"
+set -gx HISTCONTROL ignoreboth:erasedups
+set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 set -gx FZF_DEFAULT_OPTS "--ansi"
 
