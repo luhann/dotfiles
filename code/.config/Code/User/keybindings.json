@@ -64,5 +64,11 @@
     "key": "ctrl+shift+down",
     "command": "workbench.action.terminal.selectToNextCommand",
     "when": "terminalFocus"
+  },
+  // Latex Workshop
+  {
+    "key": "ctrl+alt+c",
+    "command": "latex-workshop.wordcount",
+    "when": "editorFocus && editorLangId == 'latex'"
   }
 ]
