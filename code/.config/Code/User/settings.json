@@ -14,7 +14,6 @@
   "editor.fontLigatures": true,
   "editor.renderWhitespace": "boundary",
   "editor.tabSize": 2,
-  "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.cursorStyle": "block",
   "editor.cursorBlinking": "phase",
@@ -81,7 +80,7 @@
   // Latex Workshop
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.latex.autoClean.run": "onBuilt",
-  "latex-workshop.latex.autoBuild.run": "onFileChange",
+  "latex-workshop.latex.autoBuild.run": "never",
   "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.chktex.enabled": true,
   "latex-workshop.chktex.run": "onSave",
@@ -132,5 +131,8 @@
       "args": ["%DOCFILE%"],
       "env": {}
     }
-  ]
+  ],
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
