@@ -105,7 +105,7 @@ monitor = DisplayPort-0
 inherit = bar/base
 
 radius = 5
-modules-center = wlan eth
+modules-center = eth
 modules-left = bspwm
 modules-right = cpu_temp gpu_temp volume date
 
@@ -189,10 +189,12 @@ label-disconnected = ---
 
 [module/eth]
 inherit = module/network
-interface = ${env:IFACE_ETH}
+interface = enp3s0
 
+format-connected-padding = 10
 format-connected-prefix = 
-label-connected = %local_ip%
+label-connected = %local_ip% %downspeed%
+label-disconnected = ---
 
 format-disconnected =
 

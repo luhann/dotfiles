@@ -30,7 +30,7 @@ super + Return
 
 # program launcher
 super + d
-	rofi -i -show combi
+	rofi -i -show combi -icon-theme "Papirus-Dark" -show-icons
 
 # krunner
 super + @space
@@ -136,7 +136,7 @@ super + {_,shift + }{1-5}
        bspc {desktop -f,node -d} '^{1-5}'
 
 super + alt + {_,shift + }{1-5}
-       bspc {desktop -f,node -d} '^{6-9,10}'
+       bspc {desktop -f,node -d} '^{6-9, 10}'
 
 #
 # preselect
