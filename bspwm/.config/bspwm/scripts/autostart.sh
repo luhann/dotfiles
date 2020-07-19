@@ -34,7 +34,7 @@ xsetroot -cursor_name left_ptr
 # fi
 
 # Desktop effects
-run picom --config ~/.config/picom/picom.conf --experimental-backends
+picom --config ~/.config/picom/picom.conf --experimental-backends -b
 
 # redshift
 pkill -f '^redshift'
@@ -63,4 +63,4 @@ polybar top-secondary &
 
 # Wallpaper
 # (Already set to run in rc.lua)
-run wal -q -i ~/onedrive/wallpapers/
+run feh --bg-fill --randomize ~/onedrive/wallpapers/
