@@ -16,17 +16,14 @@ source /usr/share/autojump/autojump.fish
 # fzf keybindings for voidlinux
 source /usr/share/doc/fzf/key-bindings.fish
 
-source ~/.cache/wal/colors.fish
-
 # All my aliases
 # system aliases
 alias preview="fzf --preview 'bat --color=always {}'"
 alias ls="exa --long --header --git --color=auto --group-directories-first"
 alias find="fd"
-alias please="sudo"
 alias top="htop"
-alias night="sudo zzz"
-alias off="sudo poweroff"
+alias night="doas zzz"
+alias off="doas poweroff"
 
 # editor aliases
 alias vim="nvim"
@@ -41,13 +38,16 @@ alias cp='cp -v'
 alias mv='mv -v'
 
 # Updates.
-alias xup='sudo xbps-install -Su'
+alias xup='doas xbps-install -Su'
 
 # theming aliases
-alias wallpaper="wal -s -e -i ~/onedrive/wallpapers/"
+alias wallpaper="feh --bg-fill --randomize ~/onedrive/wallpapers/"
 
 # application aliases
 alias foliate="com.github.johnfactotum.Foliate"
+
+# Curl aliases
+alias weather="curl -4 wttr.in/Cape+Town"
 
 function fish_greeting
 	echo
