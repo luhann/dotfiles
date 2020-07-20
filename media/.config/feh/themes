@@ -1,0 +1,6 @@
+feh -B black \
+-x \
+-d \
+-N \
+--auto-rotate --info "identify -ping -format '%w - %h' %F" \
+--scale-down
