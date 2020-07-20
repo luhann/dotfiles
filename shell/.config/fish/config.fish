@@ -40,9 +40,6 @@ alias mv='mv -v'
 # Updates.
 alias xup='doas xbps-install -Su'
 
-# theming aliases
-alias wallpaper="feh --bg-fill --randomize ~/onedrive/wallpapers/"
-
 # application aliases
 alias foliate="com.github.johnfactotum.Foliate"
 

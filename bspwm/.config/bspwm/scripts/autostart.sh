@@ -63,4 +63,4 @@ polybar top-secondary &
 
 # Wallpaper
 # (Already set to run in rc.lua)
-run feh --bg-fill --randomize ~/onedrive/wallpapers/
+run wallpaper
