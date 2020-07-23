@@ -1,6 +1,6 @@
 configuration {
   theme: "~/.config/rofi/slate.rasi";
-  modi: "combi,run,ssh";
+  modi: "combi,drun,calc";
   width: 40;
   lines: 10;
   font: "Iosevka 12";
