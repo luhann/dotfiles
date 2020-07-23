@@ -2,5 +2,5 @@ feh -B black \
 -x \
 -d \
 -N \
---auto-rotate --info "identify -ping -format '%w - %h' %F" \
+--auto-rotate --info "identify -ping -format '%w - %h | %S' %F" \
 --scale-down
