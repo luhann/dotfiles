@@ -4,6 +4,7 @@ if status --is-login
     set -x INFOPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/info"
 end
 
+set -gx GPG_TTY (tty)
 set -gx XDG_CURRENT_DESKTOP KDE
 set -gx GTK_USE_PORTAL "1"
 set -gx HISTCONTROL ignoreboth:erasedups
