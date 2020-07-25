@@ -154,6 +154,31 @@ label-separator-foreground = #ffb52a
 ; |\ | _ _|_    _  _|
 ; | \|(/_ | \|/(_)| |<
 ;
+[module/github]
+type = internal/github
+
+; Accessing an access token stored in file
+token = ${file:~/secrets/github_access.token}
+
+; Accessing an access token stored in an environment variable
+; token = ${env:GITHUB_ACCESS_TOKEN}
+
+; The github user for the token (unreleased)
+; If not specified, this module uses the deprecated method of accessing your
+; notifications, which may stop working at some point.
+user = luhann
+
+; Whether empty notifications should be displayed or not
+empty-notifications = false
+
+label =  %notifications%
+
+; Number of seconds in between requests
+interval = 300
+
+; Github API URL (unreleased)
+; Default: https://api.github.com/
+api-url = https://api.github.com/
 
 [module/network]
 type = internal/network
