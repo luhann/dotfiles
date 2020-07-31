@@ -25,6 +25,7 @@ alias find="fd"
 alias top="htop"
 alias night="doas zzz"
 alias off="doas poweroff"
+alias sudo="doas"
 
 # editor aliases
 alias vim="nvim"
@@ -35,7 +36,7 @@ alias psa='ps aux'
 alias psg='ps aux | grep -i'
 
 # Make cp & mv to be verbose.
-alias cp='cp -v'
+alias cp='cp -v --reflink=auto'
 alias mv='mv -v'
 
 # Updates.
