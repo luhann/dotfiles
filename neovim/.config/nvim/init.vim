@@ -24,15 +24,18 @@ Plug 'w0rp/ale'
 " vimtex for neovim
 Plug 'lervag/vimtex'
 
+" Set nvr to allow vimtex to work for Neovim
+let g:vimtex_compiler_progname = 'nvr'
+
+" Set vimtex viewer to zathura
+let g:vimtex_view_method = 'zathura'
+
 " Plugin to highlight statusline based on current mode
 Plug 'itchyny/lightline.vim'
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ }
-
-" Set nvr to allow vimtex to work for Neovim 
-let g:vimtex_compiler_progname = 'nvr'
 
 command RStart let oldft=&ft | set ft=r | exe 'set ft='.oldft | let b:IsInRCode = function("DefaultIsInRCode") | normal <LocalLeader>rf
 
