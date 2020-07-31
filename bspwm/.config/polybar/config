@@ -55,10 +55,10 @@ bar-fill-icon = ﭳ
 wm-restack = bspwm
 bottom = false
 
-width = 98%
-height = 2.5%
-offset-x = 1%
-offset-y = 0.5%
+width = 100%
+height = 3%
+# offset-x = 1%
+# offset-y = 0.5%
 fixed-center = true
 
 padding = 2
@@ -72,16 +72,16 @@ line-size = 1
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-font-0 = Iosevka:style=Bold:size=10;5
+font-0 = "Iosevka Nerd Font:style=Bold:size=10;5"
 ; Material Design Icons
-font-1 = Iosevka:style=Bold:size=11;5
+font-1 = "Iosevka Nerd Font:style=Bold:size=11;5"
 ; Powerline Glyphs
-font-2 = Iosevka:style=Bold:size=16;5
+font-2 = "Iosevka Nerd Font:style=Bold:size=16;5"
  
 ; Larger font size for bar fill icons
-font-3 = Iosevka:style=Bold:size=12;3
+font-3 = "Iosevka Nerd Font:style=Bold:size=12;3"
 ; Smaller font size for shorter spaces
-font-4 = Iosevka:style=Bold:size=7;3
+font-4 = "Iosevka Nerd Font:style=Bold:size=7;3"
 
 ; ___        __
 ;  | _  _   |__) _  _
@@ -91,10 +91,10 @@ font-4 = Iosevka:style=Bold:size=7;3
 monitor = HDMI-A-0
 inherit = bar/base
 
-radius = 5
+# radius = 5
 modules-center = cpu memory
 modules-left = bspwm
-modules-right = volume date
+modules-right = github volume date
 
 tray-background = ${color.background}
 tray-padding = ${layout.module-padding}
@@ -104,8 +104,8 @@ tray-position =
 monitor = DisplayPort-0
 inherit = bar/base
 
-radius = 5
-modules-center = eth
+# radius = 5
+modules-center = eth wlan
 modules-left = bspwm
 modules-right = cpu_temp gpu_temp volume date
 
@@ -158,7 +158,7 @@ label-separator-foreground = #ffb52a
 type = internal/github
 
 ; Accessing an access token stored in file
-token = ${file:~/secrets/github_access.token}
+token = ${file:/home/khonsu/secrets/github_access.token}
 
 ; Accessing an access token stored in an environment variable
 ; token = ${env:GITHUB_ACCESS_TOKEN}
@@ -182,7 +182,7 @@ api-url = https://api.github.com/
 
 [module/network]
 type = internal/network
-interval = 2
+interval = 5
 
 ; Connected
 format-connected-padding = ${layout.module-padding}
@@ -209,6 +209,7 @@ format-connected-prefix =
 label-connected = %essid% %downspeed%
 
 format-disconnected-prefix = 睊
+format-disconnected =
 label-disconnected = ---
 
 
@@ -217,9 +218,9 @@ inherit = module/network
 interface = enp3s0
 
 format-connected-padding = 10
-format-connected-prefix = 
+format-connected-prefix = 
 label-connected = %local_ip% %downspeed%
-label-disconnected = ---
+label-disconnected = 
 
 format-disconnected =
 
