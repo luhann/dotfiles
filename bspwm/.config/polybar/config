@@ -7,11 +7,7 @@
 ; Author: Luke Hannan
 ; License: MIT
 
-;  __
-; /   _ |  _  _ _
-; \__(_)|_(_)| _)
-;
-
+; Colours
 
 [color]
 background = #D9222222
@@ -29,11 +25,7 @@ red     = #821717
 orange  = #824517
 
 
-;
-; |  _    _    _|_
-; |_(_|\/(_)|_| |
-;      /
-
+; Layout
 [layout]
 icon-font = 2
 
@@ -45,11 +37,7 @@ bar-fill-icon = ﭳ
 
 
 
-;  __            __
-; |__) _  _ _   |__) _  _
-; |__)(_|_)(/_  |__)(_||
-;
-
+; Base Bar
 [bar/base]
 ; monitor = ${env:MONITOR}
 wm-restack = bspwm
@@ -83,10 +71,7 @@ font-3 = "Iosevka Nerd Font:style=Bold:size=12;3"
 ; Smaller font size for shorter spaces
 font-4 = "Iosevka Nerd Font:style=Bold:size=7;3"
 
-; ___        __
-;  | _  _   |__) _  _
-;  |(_)|_)  |__)(_||
-;      |
+; Top Bar
 [bar/top-primary]
 monitor = HDMI-A-0
 inherit = bar/base
@@ -123,21 +108,32 @@ format-prefix-font = ${layout.icon-font}
 format-prefix-foreground = ${color.icon-fg}
 format-prefix-padding-right = ${layout.icon-padding}
 
-;   __
-; |  _)
-; | __)spwm
-;
+; BSPWM
 
 [module/bspwm]
 type = internal/bspwm
 
 ; Only show workspaces on the same output as the bar
 pin-workspaces = true
+inline-mode = false
 
 label-empty = -
-format = <label-state><label-mode>
+format = <label-state> <label-mode>
 label-focused = %name%
 label-occupied = %name%
+
+label-monocle = " "
+label-tiled = " "
+label-fullscreen = " "
+label-floating = " "
+label-pseudotiled = " "
+label-locked = " "
+label-locked-foreground = #bd2c40
+label-sticky = " "
+label-sticky-foreground = #fba922
+label-private = " "
+label-private-foreground = #bd2c40
+label-marked = "M"
 
 ; Active workspace on focused monitor
 label-focused-foreground = #ffb52a
@@ -150,10 +146,9 @@ label-visible = ${self.label-focused}
 label-separator =|
 label-separator-padding = 1
 label-separator-foreground = #ffb52a
-;
-; |\ | _ _|_    _  _|
-; | \|(/_ | \|/(_)| |<
-;
+
+; Network
+
 [module/github]
 type = internal/github
 
@@ -224,19 +219,7 @@ label-disconnected = 
 
 format-disconnected =
 
-[module/ping]
-type = custom/script
-inherit = generic-format-style
-
-exec = $HOME/.config/polybar/modules/measure_ping.py
-tail = true
-click-left = kill -USR1 %pid%
-
-
-;
-; |__| _  _ _|    _  _ _
-; |  |(_|| (_|\|/(_|| (/_
-;
+; Hardware
 
 [module/cpu]
 type = internal/cpu
@@ -296,8 +279,11 @@ base-temperature = 20
 ; Threshold temperature to display warning label (in degrees celsius)
 ; Default: 80
 warn-temperature = 60
-label =  cpu: %temperature-c% 
+label = cpu - %temperature-c% 
 format =  <label> 
+
+label-warn = cpu - %temperature-c%
+label-warn-foreground = #f00
 
 [module/gpu_temp]
 type = internal/temperature
@@ -328,16 +314,14 @@ base-temperature = 20
 ; Default: 80
 warn-temperature = 60
 
-label =  gpu: %temperature-c% 
+label = gpu - %temperature-c% 
 format = <label>
 
-label-warn = gpu: %temperature-c% 
+label-warn = gpu - %temperature-c% 
 format-warn = <label-warn>
+label-warn-foreground = #f00
 
-;
-; |\/| _  _|. _
-; |  |(/_(_||(_|
-;
+: Media
 
 [module/volume]
 type = internal/pulseaudio
@@ -351,10 +335,7 @@ format-muted-padding = ${layout.module-padding}
 label-muted = silence
 format-muted-prefix-padding-right = ${layout.icon-padding}
 
-; ___
-;  | . _ _  _
-;  | || | |(/_
-;
+; Time
 
 [module/date]
 type = internal/date
