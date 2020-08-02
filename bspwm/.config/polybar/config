@@ -228,7 +228,7 @@ inherit = generic-format-style
 interval = 2
 
 format = <label>
-label = cpu: %percentage% %
+label =   %percentage% %
 
 ; Bar
 bar-load-format = ${layout.bar-format}
@@ -248,8 +248,8 @@ bar-load-empty = ${layout.bar-fill-icon}
 type = internal/memory
 inherit = generic-format-style
 
-interval = 3
-label = ram: %percentage_used% %
+interval = 2
+label =   %percentage_used% %
 
 [module/cpu_temp]
 type = internal/temperature
@@ -279,10 +279,10 @@ base-temperature = 20
 ; Threshold temperature to display warning label (in degrees celsius)
 ; Default: 80
 warn-temperature = 60
-label = cpu - %temperature-c% 
+label =   %temperature-c% 
 format =  <label> 
 
-label-warn = cpu - %temperature-c%
+label-warn =   %temperature-c%
 label-warn-foreground = #f00
 
 [module/gpu_temp]
@@ -314,10 +314,10 @@ base-temperature = 20
 ; Default: 80
 warn-temperature = 60
 
-label = gpu - %temperature-c% 
+label =   %temperature-c% 
 format = <label>
 
-label-warn = gpu - %temperature-c% 
+label-warn =   %temperature-c% 
 format-warn = <label-warn>
 label-warn-foreground = #f00
 
@@ -327,13 +327,19 @@ label-warn-foreground = #f00
 type = internal/pulseaudio
 
 ; Not Muted
+format-volume = <ramp-volume>  <label-volume>
 format-volume-padding = ${layout.module-padding}
 
 ; Muted
-format-muted-prefix = 
 format-muted-padding = ${layout.module-padding}
 label-muted = silence
-format-muted-prefix-padding-right = ${layout.icon-padding}
+label-muted-foreground = ${color.red}
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 =  
+ramp-volume-1 =  
+ramp-volume-2 =  
+
 
 ; Time
 
@@ -357,4 +363,4 @@ time = %H:%M
 date-alt = %A, %d %B %Y
 time-alt = %H:%M:%S
 
-label = %time% - %date%
+label =   %time% - %date%
