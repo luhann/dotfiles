@@ -29,7 +29,6 @@ bspc config focus_by_distance true
 bspc config focus_follows_pointer true
 
 # source the colors.
-. "${HOME}/.cache/wal/colors.sh"
 
 # Set the border colors.
 bspc config normal_border_color "$color1"
