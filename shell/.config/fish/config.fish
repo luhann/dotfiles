@@ -23,6 +23,7 @@ alias preview="fzf --preview 'bat --color=always {}'"
 alias ls="exa --long --header --git --color=auto --group-directories-first"
 alias find="fd"
 alias top="htop"
+alias grep="rg"
 alias night="doas zzz"
 alias off="doas poweroff"
 alias sudo="doas"
@@ -33,7 +34,7 @@ alias code="code-oss"
 
 # PS aliases.
 alias psa='ps aux'
-alias psg='ps aux | grep -i'
+alias psg='ps aux | rg -i'
 
 # Make cp & mv to be verbose.
 alias cp='cp -v --reflink=auto'
