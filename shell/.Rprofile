@@ -4,4 +4,7 @@ if (requireNamespace("lumisc", quietly = TRUE)) {
   lumisc::set_startup_options()
 }
 
-grDevices::X11.options(type = "cairo")
+grDevices::X11.options(family = "Iosevka", type = "cairo")
+
+options(usethis.full_name = "Luke Hannan")
+options(bitmapType = "cairo")

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+site=$(echo "" | rofi -dmenu -lines 0 -p "search:")
+case "$site" in
+        ("") exit 1 ;;
+        ("!"[Gg][Hh]) xdg-open https://github.com ;;
+        ("!"[Rr]) xdg-open https://reddit.com ;;
+        ("!"[Tt]) xdg-open https://twitch.tv ;;
+        ("!irc") xdg-open https://irc.neuraldroid.com ;;
+        (*) xdg-open https://www.google.com/search?q="$site" ;;
+esac
