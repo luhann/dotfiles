@@ -47,6 +47,7 @@ replace:
   \s+$: ""
   ^\s+: ""
   ^-: _
+
 path_sep_replace: _
 asciify_paths: no
 art_filename: cover
@@ -61,7 +62,7 @@ overwrite_null:
   album: []
   track: []
 
-plugins: [play, random, info, duplicates, fetchart, zero]
+plugins: [play, random, info, duplicates, fetchart, lastgenre, zero]
 pluginpath: []
 threaded: yes
 timeout: 5.0
@@ -153,3 +154,9 @@ play:
 zero:
   fields: comments
   update_database: true
+
+fetchart:
+  auto: yes
+
+lastgenre:
+  count: 2
