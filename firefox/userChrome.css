@@ -1,0 +1,17 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); /* only needed once */
+
+/* Create some padding around context menu so bspwm doesn't right click automatically */
+#contentAreaContextMenu{ margin: 5px 0 0 5px }
+
+/* Set the bookmark bar font size */
+#PlacesToolbarItems *{font-size: 12px !important;}
+
+/* Move status text to the right of the window */
+#statuspanel {
+    border-radius: 10px !important;
+    margin: 0 !important;
+    bottom: 6px !important;
+    right: 2px !important;
+    z-index: 2 !important;
+}
+
