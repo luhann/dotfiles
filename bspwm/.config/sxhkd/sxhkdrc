@@ -2,9 +2,6 @@
 # wm independent hotkeys
 #
 
-# change wallpaper to random
-
-
 # media player keys
 XF86AudioPlay 
 	playerctl play-pause
@@ -26,15 +23,15 @@ XF86AudioMute
 
 # terminal emulator
 super + {_,shift +}Return
-  {alacritty, bspc rule -a \* -o state=floating && alacritty}
+  {alacritty --class terminal, bspc rule -a \* -o state=floating && alacritty --class terminal}
 
 # program launcher
 super + d
 	rofi -i -show combi -icon-theme "Papirus-Dark" -show-icons
 
 # krunner
-super + @space
-  krunner
+super + space
+  rofi_search
 
 # dolphin
 super + e
@@ -72,6 +69,10 @@ super + alt + {q,r}
 # close and kill
 super + {_,shift + }w
 	bspc node -{c,k}
+
+# Hide node
+super + {_,shift +}v
+  {bspc node --flag hidden=on,hwid}
 
 # alternate between the tiled and monocle layout
 super + m
