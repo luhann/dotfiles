@@ -1,6 +1,10 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
   {
+    "key": "alt+t",
+    "command":"editor.action.transformToTitlecase"
+  },
+  {
     "key": "alt+l",
     "command": "editor.action.transformToLowercase"
   },
