@@ -2,19 +2,23 @@
   "files.autoSave": "onFocusChange",
   "files.trimFinalNewlines": true,
   "breadcrumbs.enabled": true,
+
   "window.zoomLevel": 0,
   "window.enableMenuBarMnemonics": false,
   "window.menuBarVisibility": "hidden",
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
   "window.titleSeparator": " | ",
   "window.titleBarStyle": "custom",
+
   "search.smartCase": true,
   "search.showLineNumbers": true,
+
   "editor.fontFamily": "Iosevka",
   "editor.fontLigatures": true,
   "editor.renderWhitespace": "boundary",
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modifications",
   "editor.cursorStyle": "block",
   "editor.cursorBlinking": "phase",
   "editor.minimap.showSlider": "always",
@@ -22,18 +26,21 @@
   "editor.lineNumbers": "relative",
   "editor.rulers": [80, 240],
   "editor.wordWrap": "on",
+
   "explorer.sortOrder": "type",
   "explorer.compactFolders": true,
+
   "terminal.integrated.fontFamily": "Iosevka",
   // 4.5 is recommended for baseline website accessibility
   "terminal.integrated.minimumContrastRatio": 7,
   "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.cursorBlinking": true,
+
   "workbench.sideBar.location": "right",
   "workbench.panel.defaultLocation": "right",
   "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.openPositioning":"right",
   "workbench.colorTheme": "Horizon",
-  "workbench.iconTheme": "material-icon-theme",
   "workbench.colorCustomizations": {
     "contrastBorder": "#440d0d8e",
     "minimapSlider.background": "#440d0d42",
@@ -45,6 +52,9 @@
   "[r]": {
     "editor.rulers": [120, 240]
   },
+  "[rsweave]": {
+    "editor.fontFamily": "Iosevka Aile"
+  },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -52,16 +62,14 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[latex]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "editor.fontFamily": "Iosevka Aile"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "scm.defaultViewMode": "tree",
   // Extension Specific Settings
-  // GitLens
-  "gitlens.views.repositories.location": "gitlens",
-  "gitlens.views.fileHistory.location": "gitlens",
-  "gitlens.views.lineHistory.location": "gitlens",
-  "gitlens.views.compare.location": "gitlens",
-  "gitlens.views.search.location": "gitlens",
   // Python
   "python.autoComplete.addBrackets": true,
   // R Extension
@@ -131,8 +139,5 @@
       "args": ["%DOCFILE%"],
       "env": {}
     }
-  ],
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  }
+  ]
 }
