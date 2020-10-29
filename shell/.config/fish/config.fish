@@ -24,8 +24,8 @@ alias ls="exa --long --header --git --color=auto --group-directories-first"
 alias find="fd"
 alias top="htop"
 alias grep="rg"
-alias night="doas zzz"
-alias off="doas poweroff"
+alias night="sudo zzz"
+alias off="sudo poweroff"
 alias sudo="doas"
 
 # editor aliases
@@ -41,7 +41,7 @@ alias cp='cp -v --reflink=auto'
 alias mv='mv -v'
 
 # Updates.
-alias xup='doas xbps-install -Su'
+alias xup='sudo xbps-install -Su'
 
 # application aliases
 alias foliate="com.github.johnfactotum.Foliate"
@@ -54,3 +54,6 @@ function fish_greeting
 	echo -e (uname -ro | awk '{print " \\\\e[1mOS: \\\\e[0;32m"$0"\\\\e[0m"}')
 	echo -e (uname -n | awk '{print " \\\\e[1mHostname: \\\\e[0;32m"$0"\\\\e[0m"}')
 end
+
+gh completion --shell fish | source
+starship init fish | source
