@@ -5,6 +5,6 @@ if (requireNamespace("lumisc", quietly = TRUE)) {
 }
 
 grDevices::X11.options(family = "Iosevka", type = "cairo")
+options(bitmapType = "cairo")
 
 options(usethis.full_name = "Luke Hannan")
-options(bitmapType = "cairo")
