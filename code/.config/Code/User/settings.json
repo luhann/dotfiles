@@ -23,8 +23,9 @@
   "editor.cursorBlinking": "phase",
   "editor.minimap.showSlider": "always",
   "editor.minimap.renderCharacters": false,
+  "editor.suggest.statusBar.visible": true,
   "editor.lineNumbers": "relative",
-  "editor.rulers": [80, 240],
+  "editor.rulers": [120, 240],
   "editor.wordWrap": "on",
 
   "explorer.sortOrder": "type",
