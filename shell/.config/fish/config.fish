@@ -5,6 +5,7 @@ if status --is-login
 end
 
 set -gx GPG_TTY (tty)
+set -gx MOZ_X11_EGL 1
 set -gx XDG_CURRENT_DESKTOP KDE
 set -gx GTK_USE_PORTAL "1"
 set -gx HISTCONTROL ignoreboth:erasedups
