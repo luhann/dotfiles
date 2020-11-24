@@ -1,9 +1,6 @@
 configuration {
   theme: "~/.config/rofi/slate.rasi";
   modi: "combi,drun,calc";
-  width: 40;
-  lines: 10;
-  font: "Iosevka 12";
   show-icons: false;
   terminal: "alacritty";
   ssh-client: "ssh";
@@ -15,8 +12,8 @@ configuration {
   sorting-method: "fzf";
   combi-modi: "window,drun";
   matching: "fuzzy";
-/*	separator-style: "dash";*/
-	hide-scrollbar: true;
-  dpi: 1;
+/*  separator-style: "dash";*/
+  hide-scrollbar: true;
   scroll-method: 1;
+  dpi: 1;
 }
