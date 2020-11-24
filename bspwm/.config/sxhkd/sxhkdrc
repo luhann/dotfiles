@@ -27,7 +27,7 @@ super + {_,shift +}Return
 
 # program launcher
 super + d
-	rofi -i -show combi -icon-theme "Papirus-Dark" -show-icons
+	rofi -i -show combi -icon-theme "Papirus-Dark" -show-icons -no-fixed-num-lines
 
 # krunner
 super + space
