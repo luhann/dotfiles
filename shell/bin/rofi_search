@@ -1,11 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-site=$(echo "" | rofi -dmenu -lines 0 -p "search:")
+read -r site search <<< $(echo "" | rofi -no-fixed-num-lines -dmenu -p "search:" | cut -d " " -f 1,2-)
 case "$site" in
         ("") exit 1 ;;
         ("!"[Gg][Hh]) xdg-open https://github.com ;;
         ("!"[Rr]) xdg-open https://reddit.com ;;
         ("!"[Tt]) xdg-open https://twitch.tv ;;
+        ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com/?q="$search" ;;
         ("!irc") xdg-open https://irc.neuraldroid.com ;;
-        (*) xdg-open https://www.google.com/search?q="$site" ;;
+        (*) xdg-open https://www.google.com/search?q="$site $search" ;;
 esac
