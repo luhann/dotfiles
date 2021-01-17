@@ -83,7 +83,7 @@ modules-right = github volume date
 
 tray-background = ${color.background}
 tray-padding = ${layout.module-padding}
-tray-position = 
+tray-position = "right"
 
 [bar/top-secondary]
 monitor = DisplayPort-0
@@ -96,7 +96,7 @@ modules-right = cpu_temp gpu_temp volume date
 
 tray-background = ${color.background}
 tray-padding = ${layout.module-padding}
-tray-position =
+tray-position = "right"
 
 ; A generic format for any modules that support it. Unfortunately, this
 ; doesn't apply to all modules since some use different names for their
@@ -166,7 +166,7 @@ user = luhann
 ; Whether empty notifications should be displayed or not
 empty-notifications = false
 
-label =  %notifications%
+label = gh: %notifications%
 
 ; Number of seconds in between requests
 interval = 300
@@ -213,9 +213,9 @@ inherit = module/network
 interface = enp3s0
 
 format-connected-padding = 10
-format-connected-prefix = 
+format-connected-prefix = 
 label-connected = %local_ip% %downspeed%
-label-disconnected = 
+label-disconnected = -dc-
 
 format-disconnected =
 
@@ -279,10 +279,10 @@ base-temperature = 20
 ; Threshold temperature to display warning label (in degrees celsius)
 ; Default: 80
 warn-temperature = 60
-label =   %temperature-c% 
+label =   %temperature-c% 
 format =  <label> 
 
-label-warn =   %temperature-c%
+label-warn =   %temperature-c%
 label-warn-foreground = #f00
 
 [module/gpu_temp]
@@ -321,13 +321,13 @@ label-warn =   %temperature-c%
 format-warn = <label-warn>
 label-warn-foreground = #f00
 
-: Media
+; Media
 
 [module/volume]
 type = internal/pulseaudio
 
 ; Not Muted
-format-volume = <ramp-volume>  <label-volume>
+format-volume = <label-volume>
 format-volume-padding = ${layout.module-padding}
 
 ; Muted
@@ -363,4 +363,4 @@ time = %H:%M
 date-alt = %A, %d %B %Y
 time-alt = %H:%M:%S
 
-label =   %time% - %date%
+label = %time% - %date%

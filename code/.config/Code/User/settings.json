@@ -14,7 +14,8 @@
   "search.showLineNumbers": true,
 
   "editor.fontFamily": "Iosevka",
-  "editor.fontLigatures": true,
+  "editor.fontSize": 15,
+  "editor.fontLigatures": false,
   "editor.renderWhitespace": "boundary",
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
@@ -64,7 +65,8 @@
   },
   "[latex]": {
     "editor.formatOnSave": false,
-    "editor.fontFamily": "Iosevka Aile"
+    "editor.fontFamily": "Iosevka Aile",
+    "editor.rulers": [85, 240]
   },
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
@@ -79,7 +81,7 @@
   "r.rterm.linux": "/home/khonsu/.local/bin/radian",
   // only works on unix/mac, connects to lsp through stdio pipe
   "r.lsp.use_stdio": true,
-  "r.lsp.path": "/bin/R",
+  "r.rpath.linux": "/bin/R",
   // this experimental feature allows vscode to open plots/View windows inside vscode rather than an X-window
   "r.sessionWatcher": false,
   // this is need when your rterminal is radian
