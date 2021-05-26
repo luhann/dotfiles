@@ -1,13 +1,11 @@
 if status --is-login
-    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2020/bin/x86_64-linux
+    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2021/bin/x86_64-linux
     set -x MANPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/man"
     set -x INFOPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/info"
 end
 
 set -gx GPG_TTY (tty)
-set -gx MOZ_X11_EGL 1
 set -gx XDG_CURRENT_DESKTOP KDE
-set -gx GTK_USE_PORTAL "1"
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
@@ -43,6 +41,8 @@ alias mv='mv -v'
 
 # Updates.
 alias xup='sudo xbps-install -Su'
+alias xrm='sudo xbps-remove -R'
+alias xinstall='sudo xbps-install -S'
 
 # application aliases
 alias foliate="com.github.johnfactotum.Foliate"
