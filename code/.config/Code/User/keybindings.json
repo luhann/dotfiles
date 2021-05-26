@@ -41,7 +41,7 @@
     "command": "editor.action.insertSnippet",
     "when": "editorTextFocus && editorLangId == 'r'",
     "args": {
-      "snippet": " %>%"
+      "snippet": " |>"
     }
   },
   {
