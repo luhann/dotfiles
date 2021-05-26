@@ -1,9 +1,10 @@
 {
+  "telemetry.enableTelemetry": false,
+  "telemetry.enableCrashReporter": false,
+
   "files.autoSave": "onFocusChange",
   "files.trimFinalNewlines": true,
   "breadcrumbs.enabled": true,
-
-  "window.zoomLevel": 0,
   "window.enableMenuBarMnemonics": false,
   "window.menuBarVisibility": "hidden",
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
@@ -12,6 +13,7 @@
 
   "search.smartCase": true,
   "search.showLineNumbers": true,
+  "search.mode": "newEditor",
 
   "editor.fontFamily": "Iosevka",
   "editor.fontSize": 15,
@@ -24,13 +26,14 @@
   "editor.cursorBlinking": "phase",
   "editor.minimap.showSlider": "always",
   "editor.minimap.renderCharacters": false,
-  "editor.suggest.statusBar.visible": true,
   "editor.lineNumbers": "relative",
   "editor.rulers": [120, 240],
   "editor.wordWrap": "on",
 
   "explorer.sortOrder": "type",
   "explorer.compactFolders": true,
+  "explorer.incrementalNaming": "smart",
+
 
   "terminal.integrated.fontFamily": "Iosevka",
   // 4.5 is recommended for baseline website accessibility
@@ -40,8 +43,11 @@
 
   "workbench.sideBar.location": "right",
   "workbench.panel.defaultLocation": "right",
+  "workbench.editor.decorations.colors": true,
+  "workbench.editor.decorations.badges": true,
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.editor.openPositioning":"right",
+  "workbench.editor.openPositioning": "right",
+  "workbench.editor.wrapTabs": true,
   "workbench.colorTheme": "Horizon",
   "workbench.colorCustomizations": {
     "contrastBorder": "#440d0d8e",
@@ -87,7 +93,6 @@
   // this is need when your rterminal is radian
   // https://github.com/randy3k/radian
   "r.bracketedPaste": true,
-  "r.rterm.option": ["--no-history"],
   // Latex Workshop
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.latex.autoClean.run": "onBuilt",
@@ -100,6 +105,10 @@
     {
       "name": "xelatex",
       "tools": ["xelatex"]
+    },
+    {
+      "name": "xelatex x 2",
+      "tools": ["xelatex", "xelatex"]
     },
     {
       "name": "xelatex ➞ biber ➞ xelatex x 2",
