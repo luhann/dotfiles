@@ -40,7 +40,7 @@ bspc config presel_feedback_color "$color1"
 # Internal Rules
 bspc rule -a plasmashell state=floating border=off layer=normal
 bspc rule -a krunner state=floating border=off
-bspc rule -a Zathura state=floating rectangle=500x500+0+0
+bspc rule -a Zathura state=floating
 
 # External rules
 # Used to make some settings windows float properly

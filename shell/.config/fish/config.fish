@@ -8,8 +8,13 @@ set -gx GPG_TTY (tty)
 set -gx XDG_CURRENT_DESKTOP KDE
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
+set -gx BROWSER /bin/firefox/
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 set -gx FZF_DEFAULT_OPTS "--ansi"
+set -gx XSECURELOCK_SAVER saver_mpv
+set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
+set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/'"
+set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
 
 # autojump keybindings
 source /usr/share/autojump/autojump.fish
@@ -23,7 +28,6 @@ alias ls="exa --long --header --git --color=auto --group-directories-first"
 alias find="fd"
 alias top="htop"
 alias grep="rg"
-alias night="sudo zzz"
 alias off="sudo poweroff"
 alias sudo="doas"
 
