@@ -51,6 +51,10 @@ pkill -f '^polybar'
 polybar top-primary &
 polybar top-secondary &
 
+# lock screen
+xset s 1500
+run xss-lock -- xsecurelock
+
 # Enable numlock on login
 # Required numlockx to be installed
 # run numlockx
@@ -64,3 +68,5 @@ polybar top-secondary &
 # Wallpaper
 # (Already set to run in rc.lua)
 run wallpaper
+
+run float_focus
