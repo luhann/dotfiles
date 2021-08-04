@@ -19,6 +19,7 @@
   "editor.fontSize": 15,
   "editor.fontLigatures": false,
   "editor.renderWhitespace": "boundary",
+  "editor.suggest.preview": true,
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "modifications",
@@ -38,11 +39,10 @@
   "terminal.integrated.fontFamily": "Iosevka",
   // 4.5 is recommended for baseline website accessibility
   "terminal.integrated.minimumContrastRatio": 7,
-  "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.cursorBlinking": true,
 
   "workbench.sideBar.location": "right",
-  "workbench.panel.defaultLocation": "right",
+  "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.decorations.colors": true,
   "workbench.editor.decorations.badges": true,
   "workbench.editor.highlightModifiedTabs": true,
@@ -56,12 +56,16 @@
     "minimapSlider.activeBackground": "#440d0d8e",
     "editorRuler.foreground": "#79131367"
   },
+  "workbench.editorAssociations": {
+    "*.pdf": "default"
+  },
   // Language specific vscode settings
   "[r]": {
     "editor.rulers": [120, 240]
   },
   "[rsweave]": {
-    "editor.fontFamily": "Iosevka Aile"
+    "editor.fontFamily": "Iosevka Aile",
+    "editor.formatOnSave": false,
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
