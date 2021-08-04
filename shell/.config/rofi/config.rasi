@@ -17,3 +17,7 @@ configuration {
   scroll-method: 1;
   dpi: 1;
 }
+
+window {
+  border-radius: 8px;
+}
