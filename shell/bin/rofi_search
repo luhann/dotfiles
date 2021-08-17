@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -r site search <<< $(echo "" | rofi -no-fixed-num-lines -dmenu -p "search:" | cut -d " " -f 1,2-)
+read -r site search <<< $(rofi -no-fixed-num-lines -dmenu -p "search:" | cut -d " " -f 1,2-)
 case "$site" in
         ("") exit 1 ;;
         ("!"[Gg][Hh]) xdg-open https://github.com ;;
