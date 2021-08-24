@@ -1,12 +1,25 @@
 #!/bin/bash
 
-read -r site search <<< $(rofi -no-fixed-num-lines -dmenu -p "search:" | cut -d " " -f 1,2-)
-case "$site" in
-        ("") exit 1 ;;
-        ("!"[Gg][Hh]) xdg-open https://github.com ;;
-        ("!"[Rr]) xdg-open https://reddit.com ;;
-        ("!"[Tt]) xdg-open https://twitch.tv ;;
-        ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com/?q="$search" ;;
-        ("!irc") xdg-open https://irc.neuraldroid.com ;;
-        (*) xdg-open https://www.google.com/search?q="$site $search" ;;
-esac
+read -r site search <<< "$(rofi -no-fixed-num-lines -dmenu -p "Search:" | cut -d " " -f 1,2-)"
+if [ -n "$search" ]
+then
+        case "$site" in
+                ("") exit 1 ;;
+                ("!"[Gg][Hh]) xdg-open https://github.com/search?q="$search" ;;
+                ("!"[Rr]) xdg-open https://reddit.com/search?q="$search"&sort=relevance&t=all ;;
+                ("!"[Tt]) xdg-open https://twitch.tv/search?term="$search" ;;
+                ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com/?q="$search" ;;
+                ("!irc") xdg-open https://irc.neuraldroid.com ;;
+                (*) xdg-open https://www.google.com/search?q="$site $search" ;;
+        esac
+else                
+        case "$site" in
+                ("") exit 1 ;;
+                ("!"[Gg][Hh]) xdg-open https://github.com ;;
+                ("!"[Rr]) xdg-open https://reddit.com ;;
+                ("!"[Tt]) xdg-open https://twitch.tv ;;
+                ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com ;;
+                ("!irc") xdg-open https://irc.neuraldroid.com ;;
+                (*) xdg-open https://www.google.com/search?q="$site $search" ;;
+        esac
+fi
