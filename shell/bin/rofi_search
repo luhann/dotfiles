@@ -6,6 +6,7 @@ then
         case "$site" in
                 ("") exit 1 ;;
                 ("!"[Gg][Hh]) xdg-open https://github.com/search?q="$search" ;;
+                ("!"[Rr][Dd]) xdg-open https://www.rdocumentation.org/search?q="$search" ;;
                 ("!"[Rr]) xdg-open https://reddit.com/search?q="$search"&sort=relevance&t=all ;;
                 ("!"[Tt]) xdg-open https://twitch.tv/search?term="$search" ;;
                 ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com/?q="$search" ;;
@@ -17,6 +18,7 @@ else
         case "$site" in
                 ("") exit 1 ;;
                 ("!"[Gg][Hh]) xdg-open https://github.com ;;
+                ("!"[Rr][Dd]) xdg-open https://www.rdocumentation.org ;;
                 ("!"[Rr]) xdg-open https://reddit.com ;;
                 ("!"[Tt]) xdg-open https://twitch.tv ;;
                 ("!"[Ww]) xdg-open https://www.wikipedia.org ;;
