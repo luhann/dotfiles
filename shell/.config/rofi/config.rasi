@@ -1,7 +1,6 @@
 configuration {
-  theme: "~/.config/rofi/slate.rasi";
   modi: "combi,drun,calc";
-  show-icons: false;
+  theme: "~/.config/rofi/material-red.rasi";
   terminal: "alacritty";
   ssh-client: "ssh";
   ssh-command: "{terminal} {ssh-client} {host} [-p {port}]";
@@ -13,7 +12,6 @@ configuration {
   combi-modi: "window,drun";
   matching: "fuzzy";
 /*  separator-style: "dash";*/
-  hide-scrollbar: true;
   scroll-method: 1;
   dpi: 1;
 }
