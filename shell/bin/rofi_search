@@ -8,6 +8,7 @@ then
                 ("!"[Gg][Hh]) xdg-open https://github.com/search?q="$search" ;;
                 ("!"[Rr][Dd]) xdg-open https://www.rdocumentation.org/search?q="$search" ;;
                 ("!"[Rr]) xdg-open https://reddit.com/search?q="$search"&sort=relevance&t=all ;;
+                ("!"[Yy][Tt]) xdg-open https://www.youtube.com/results?search_query="$search" ;;
                 ("!"[Tt]) xdg-open https://twitch.tv/search?term="$search" ;;
                 ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com/?q="$search" ;;
                 ("!"[Ww]) xdg-open https://www.wikipedia.org/wiki/"$search" ;;
@@ -20,6 +21,7 @@ else
                 ("!"[Gg][Hh]) xdg-open https://github.com ;;
                 ("!"[Rr][Dd]) xdg-open https://www.rdocumentation.org ;;
                 ("!"[Rr]) xdg-open https://reddit.com ;;
+                ("!"[Yy][Tt]) xdg-open https://www.youtube.com ;;
                 ("!"[Tt]) xdg-open https://twitch.tv ;;
                 ("!"[Ww]) xdg-open https://www.wikipedia.org ;;
                 ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com ;;
