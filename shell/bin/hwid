@@ -9,6 +9,6 @@ then
         dunstify -r 77 -u low -a "BSPWM" "no hidden nodes"
         exit 1
 else
-        index="$(for i in "${!windows[@]}"; do printf "%s \t %s\n" $i "$(xtitle ${windows[i]})"; done | rofi --levenshtein-sort -dmenu -i)" &&
+        index="$(for i in "${!windows[@]}"; do printf "%s \t %s\n" $i "$(xtitle ${windows[i]})"; done | rofi -dmenu -i)" &&
         bspc node "${windows[${index%% *}]}" -g hidden=off
 fi
