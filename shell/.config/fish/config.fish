@@ -1,7 +1,7 @@
 if status --is-login
     set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2021/bin/x86_64-linux
-    set -x MANPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/man"
-    set -x INFOPATH ":/home/khonsu/applications/texlive/2020/texmf-dist/doc/info"
+    set -x MANPATH $MANPATH ~/applications/texlive/2021/texmf-dist/doc/man
+    set -x INFOPATH $INFOPATH ~/applications/texlive/2021/texmf-dist/doc/info
 end
 
 set -gx GPG_TTY (tty)
@@ -10,7 +10,6 @@ set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
 set -gx BROWSER /bin/firefox/
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
-set -gx FZF_DEFAULT_OPTS "--ansi"
 set -gx XSECURELOCK_SAVER saver_mpv
 set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
 set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/'"
@@ -19,7 +18,7 @@ set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
 # autojump keybindings
 source /usr/share/autojump/autojump.fish
 # fzf keybindings for voidlinux
-source /usr/share/doc/fzf/key-bindings.fish
+fzf_configure_bindings --git_log=\cg
 
 # All my aliases
 # system aliases
