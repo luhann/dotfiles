@@ -1,6 +1,5 @@
 {
-  "telemetry.enableTelemetry": false,
-  "telemetry.enableCrashReporter": false,
+  "telemetry.telemetryLevel": "error",
 
   "files.autoSave": "onFocusChange",
   "files.trimFinalNewlines": true,
@@ -10,11 +9,13 @@
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
   "window.titleSeparator": " | ",
   "window.titleBarStyle": "custom",
+  "window.zoomLevel": 0,
 
   "search.smartCase": true,
   "search.showLineNumbers": true,
   "search.mode": "newEditor",
 
+  "editor.hover.above": false,
   "editor.fontFamily": "Iosevka",
   "editor.fontSize": 15,
   "editor.fontLigatures": false,
@@ -27,6 +28,7 @@
   "editor.cursorBlinking": "phase",
   "editor.minimap.showSlider": "always",
   "editor.minimap.renderCharacters": false,
+  "editor.guides.bracketPairs": true,
   "editor.lineNumbers": "relative",
   "editor.rulers": [120, 240],
   "editor.wordWrap": "on",
@@ -34,7 +36,6 @@
   "explorer.sortOrder": "type",
   "explorer.compactFolders": true,
   "explorer.incrementalNaming": "smart",
-
 
   "terminal.integrated.fontFamily": "Iosevka",
   // 4.5 is recommended for baseline website accessibility
@@ -48,7 +49,7 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.openPositioning": "right",
   "workbench.editor.wrapTabs": true,
-  "workbench.colorTheme": "Horizon",
+  "workbench.colorTheme": "Ayu Dark",
   "workbench.colorCustomizations": {
     "contrastBorder": "#440d0d8e",
     "minimapSlider.background": "#440d0d42",
@@ -61,11 +62,11 @@
   },
   // Language specific vscode settings
   "[r]": {
-    "editor.rulers": [120, 240]
+    "editor.rulers": [120, 240],
   },
   "[rsweave]": {
     "editor.fontFamily": "Iosevka Aile",
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": false
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -83,8 +84,6 @@
   },
   "scm.defaultViewMode": "tree",
   // Extension Specific Settings
-  // Python
-  "python.autoComplete.addBrackets": true,
   // R Extension
   // The path below is the path for conda r; use it when you want
   // "r.rterm.linux": "/home/luke/conda/envs/r-latest/bin/R",
@@ -94,6 +93,7 @@
   "r.rpath.linux": "/bin/R",
   // this experimental feature allows vscode to open plots/View windows inside vscode rather than an X-window
   "r.sessionWatcher": false,
+  "r.plot.useHttpgd": false,
   // this is need when your rterminal is radian
   // https://github.com/randy3k/radian
   "r.bracketedPaste": true,
@@ -107,6 +107,14 @@
   "latex-workshop.chktex.path": "lacheck",
   "latex-workshop.latex.recipes": [
     {
+      "name": "pdflatex",
+      "tools": ["pdflatex"]
+    },
+    {
+      "name": "pdflatex ➞ bibtex",
+      "tools": ["pdflatex", "pdflatex", "bibtex", "pdflatex", "pdflatex"]
+    },
+    {
       "name": "xelatex",
       "tools": ["xelatex"]
     },
@@ -115,7 +123,7 @@
       "tools": ["xelatex", "xelatex"]
     },
     {
-      "name": "xelatex ➞ biber ➞ xelatex x 2",
+      "name": "xelatex ➞ biber",
       "tools": ["xelatex", "biber", "xelatex", "xelatex"]
     }
   ],
