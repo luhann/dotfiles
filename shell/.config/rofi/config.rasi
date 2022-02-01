@@ -1,6 +1,5 @@
 configuration {
   modi: "combi,drun,calc";
-  theme: "~/.config/rofi/material-red.rasi";
   terminal: "alacritty";
   ssh-client: "ssh";
   ssh-command: "{terminal} {ssh-client} {host} [-p {port}]";
@@ -15,6 +14,8 @@ configuration {
   scroll-method: 1;
   dpi: 1;
 }
+
+@theme "~/.config/rofi/material-red.rasi"
 
 window {
   border-radius: 8px;
