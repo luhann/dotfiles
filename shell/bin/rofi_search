@@ -10,6 +10,7 @@ then
                 ("!"[Rr]) xdg-open https://reddit.com/search?q="$search"&sort=relevance&t=all ;;
                 ("!"[Yy][Tt]) xdg-open https://www.youtube.com/results?search_query="$search" ;;
                 ("!"[Tt]) xdg-open https://twitch.tv/search?term="$search" ;;
+                ("!"[Ss][Pp]) xdg-open https://open.spotify.com/search/"$search" ;;
                 ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com/?q="$search" ;;
                 ("!"[Ww]) xdg-open https://www.wikipedia.org/wiki/"$search" ;;
                 ("!irc") xdg-open https://irc.neuraldroid.com ;;
@@ -23,6 +24,7 @@ else
                 ("!"[Rr]) xdg-open https://reddit.com ;;
                 ("!"[Yy][Tt]) xdg-open https://www.youtube.com ;;
                 ("!"[Tt]) xdg-open https://twitch.tv ;;
+                ("!"[Ss][Pp]) xdg-open https://open.spotify.com ;;
                 ("!"[Ww]) xdg-open https://www.wikipedia.org ;;
                 ("!"[Dd][Dd][Gg]) xdg-open https://duckduckgo.com ;;
                 ("!irc") xdg-open https://irc.neuraldroid.com ;;
