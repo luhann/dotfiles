@@ -52,8 +52,8 @@ polybar top-primary &
 polybar top-secondary &
 
 # lock screen
-xset s 1500
-run xss-lock -- xsecurelock
+xset s 600 30
+run xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock
 
 # Enable numlock on login
 # Required numlockx to be installed
@@ -69,4 +69,3 @@ run xss-lock -- xsecurelock
 # (Already set to run in rc.lua)
 run wallpaper
 
-run float_focus
