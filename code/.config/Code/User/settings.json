@@ -22,6 +22,8 @@
   "editor.renderWhitespace": "boundary",
   "editor.suggest.preview": true,
   "editor.tabSize": 2,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "modifications",
   "editor.cursorStyle": "block",
@@ -41,7 +43,7 @@
   // 4.5 is recommended for baseline website accessibility
   "terminal.integrated.minimumContrastRatio": 7,
   "terminal.integrated.cursorBlinking": true,
-
+  "terminal.integrated.persistentSessionReviveProcess": "never",
   "workbench.sideBar.location": "right",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.decorations.colors": true,
