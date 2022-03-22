@@ -1,7 +1,5 @@
 if status --is-login
     set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2021/bin/x86_64-linux
-    set -x MANPATH $MANPATH ~/applications/texlive/2021/texmf-dist/doc/man
-    set -x INFOPATH $INFOPATH ~/applications/texlive/2021/texmf-dist/doc/info
 end
 
 set -gx GPG_TTY (tty)
