@@ -7,8 +7,7 @@ XF86Audio{Play,Stop,Next,Prev}
   playerctl {play-pause,stop,next,previous}
 
 XF86Audio{RaiseVolume,LowerVolume,Mute}
-  playerctl {next,previous,play-pause}
-  # pactl set-sink-volume @DEFAULT_SINK@ +5%
+  {pactl set-sink-volume @DEFAULT_SINK@ +5%, pactl set-sink-volume @DEFAULT_SINK@ -5%, pactl set-sink-mute @DEFAULT_SINK@ toggle}
 
 
 # terminal emulator

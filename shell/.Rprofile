@@ -26,5 +26,6 @@ if (interactive()) {
     # fancy r prompt
     # prompt::set_prompt(prompt::prompt_fancy)
     options(width = 120)
+    rownames = row.names
 }
 
