@@ -1,0 +1,8 @@
+#!/bin/sh
+
+grep -m 1 "Writeback" /proc/meminfo | awk '$3 == "kB" {
+  if ($2 > 1024^2){$2 = $2/1024^2; $3 = "GB";}
+  else if ($2 > 1024){$2 = $2/1024; $3 = "MB";}
+  printf("%d", $2); 
+  print $3
+  }'
