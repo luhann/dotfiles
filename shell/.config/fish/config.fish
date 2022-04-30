@@ -1,12 +1,12 @@
 if status --is-login
-    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2021/bin/x86_64-linux
+    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2022/bin/x86_64-linux
 end
 
 set -gx GPG_TTY (tty)
 set -gx XDG_CURRENT_DESKTOP KDE
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
-set -gx BROWSER /bin/firefox/
+set -gx BROWSER /bin/firefox
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 set -gx XSECURELOCK_SAVER saver_mpv
 set -gx XSECURELOCK_PASSWORD_PROMPT time_hex

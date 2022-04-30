@@ -4,6 +4,8 @@ set selection-clipboard clipboard
 # Open document in fit-width mode by default
 set adjust-open "best-fit"
 
+# shorten home path
+set statusbar-home-tilde "true"
 
 # zathurarc-dark
 

@@ -1,4 +1,4 @@
-// Place your key bindings in this file to override the defaultsauto[]
+// Place your key bindings in this file to override the defaults
 [
   {
     "key": "alt+t",
@@ -67,6 +67,24 @@
   {
     "key": "ctrl+shift+down",
     "command": "workbench.action.terminal.selectToNextCommand",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+c",
+    "command": "workbench.action.terminal.copySelection",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+v",
+    "command": "workbench.action.terminal.paste",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u0003"
+    },
     "when": "terminalFocus"
   },
   // Latex Workshop
