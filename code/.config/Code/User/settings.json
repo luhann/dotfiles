@@ -89,7 +89,7 @@
   "scm.defaultViewMode": "tree",
   // Extension Specific Settings
   // Rewrap
-  "rewrap.autoWrap.enabled": true
+  "rewrap.autoWrap.enabled": false
   ,
   // Settings Sync settings
   "sync.autoDownload": true,
@@ -103,12 +103,14 @@
   "r.rterm.linux": "/home/khonsu/.local/bin/radian",
   // @sync host=gestalt
   // "r.rterm.linux": "/home/jian/.local/bin/radian",
+  "r.alwaysUseActiveTerminal": true,
+  "r.rmarkdown.knit.focusOutputChannel": false,
   // only works on unix/mac, connects to lsp through stdio pipe
   "r.lsp.use_stdio": true,
   "r.rpath.linux": "/bin/R",
   // this experimental feature allows vscode to open plots/View windows inside vscode rather than an X-window
-  "r.sessionWatcher": false,
-  "r.plot.useHttpgd": false,
+  "r.sessionWatcher": true,
+  "r.plot.useHttpgd": true,
   // this is need when your rterminal is radian
   // https://github.com/randy3k/radian
   "r.bracketedPaste": true,
