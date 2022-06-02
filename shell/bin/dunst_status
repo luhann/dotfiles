@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DUNST="$(dunstctl is-paused)"
+
+
+case $DUNST in
+  ("true") echo "%{F#f00}◉%{F-}" ;;
+  ("false") echo "◉" ;;
+esac
