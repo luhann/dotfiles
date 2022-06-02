@@ -5,8 +5,8 @@
 # ===== Monitor Settings ======
 # bspc monitor --swap HDMI-A-0 ^1
 # bspc monitor --swap DisplayPort-0 ^2
-bspc monitor HDMI-A-0 -d main dev term media misc
-bspc monitor DisplayPort-0 -d web zen term media misc
+bspc monitor HDMI-1 -d main dev term media misc
+bspc monitor DP-1 -d web zen term media misc
 
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
@@ -45,4 +45,4 @@ bspc rule -a Zathura state=floating
 # External rules
 # Used to make some settings windows float properly
 bspc config external_rules_command ~/.config/bspwm/scripts/external_rules.sh
-enforce_monitor_position HDMI-A-0 '^1' &
+enforce_monitor_position HDMI-1 '^1' &
