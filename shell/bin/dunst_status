@@ -4,6 +4,6 @@ DUNST="$(dunstctl is-paused)"
 
 
 case $DUNST in
-  ("true") echo "%{F#f00}◉%{F-}" ;;
-  ("false") echo "◉" ;;
+  ("true") echo "%{F#f00}%{F-}" ;;
+  ("false") echo "" ;;
 esac
