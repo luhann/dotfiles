@@ -9,10 +9,13 @@
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
   "window.titleSeparator": " | ",
   "window.titleBarStyle": "custom",
+  "window.commandCenter": true,
 
   "search.smartCase": true,
   "search.showLineNumbers": true,
   "search.mode": "newEditor",
+
+  "diffEditor.ignoreTrimWhitespace": false,
 
   "editor.hover.above": false,
   "editor.fontFamily": "Iosevka",
@@ -43,6 +46,11 @@
   "terminal.integrated.minimumContrastRatio": 7,
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.persistentSessionReviveProcess": "never",
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.commandsToSkipShell": [
+    "language-julia.interrupt"
+  ],
+
   "workbench.sideBar.location": "right",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.decorations.colors": true,
@@ -50,7 +58,7 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.openPositioning": "right",
   "workbench.editor.wrapTabs": true,
-  "workbench.colorTheme": "One Dark Pro Darker",
+  "workbench.colorTheme": "Tokyo Night",
   "workbench.colorCustomizations": {
     "contrastBorder": "#440d0d8e",
     "minimapSlider.background": "#440d0d42",
@@ -76,7 +84,7 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[latex]": {
     "editor.formatOnSave": false,
@@ -131,9 +139,9 @@
   "latex-workshop.latex.autoClean.run": "onBuilt",
   "latex-workshop.latex.autoBuild.run": "never",
   "latex-workshop.latex.recipe.default": "lastUsed",
-  "latex-workshop.chktex.enabled": true,
-  "latex-workshop.chktex.run": "onSave",
-  "latex-workshop.chktex.path": "lacheck",
+  "latex-workshop.linting.chktex.enabled": true,
+  "latex-workshop.linting.run": "onSave",
+  "latex-workshop.linting.chktex.exec.path": "lacheck",
   "latex-workshop.latex.recipes": [
     {
       "name": "pdflatex",
