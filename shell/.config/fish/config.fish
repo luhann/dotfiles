@@ -1,5 +1,5 @@
 if status --is-login
-    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2022/bin/x86_64-linux
+    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2022/bin/x86_64-linux ~/applications/cmdstan/bin/
 end
 
 set -gx GPG_TTY (tty)

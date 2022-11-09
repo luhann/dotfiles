@@ -2,6 +2,10 @@
 # wm independent hotkeys
 #
 
+# screenshot utility
+Print
+  flameshot gui
+
 # media player keys
 XF86Audio{Play,Stop,Next,Prev}
   playerctl {play-pause,stop,next,previous}
