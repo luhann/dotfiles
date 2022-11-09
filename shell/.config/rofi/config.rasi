@@ -12,7 +12,6 @@ configuration {
   matching: "fuzzy";
 /*  separator-style: "dash";*/
   scroll-method: 1;
-  dpi: 1;
 }
 
 @theme "~/.config/rofi/material-red.rasi"

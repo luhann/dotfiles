@@ -51,19 +51,8 @@ pkill -f '^polybar'
 polybar top-primary &
 polybar top-secondary &
 
-# lock screen
-xset s 600 30
-run xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock
-
-# Enable numlock on login
-# Required numlockx to be installed
-# run numlockx
-
 # Network manager tray icon
-# run nm-applet
-
-# Kill redshift processes
-# pkill redshift
+run nm-applet
 
 # Wallpaper
 # (Already set to run in rc.lua)

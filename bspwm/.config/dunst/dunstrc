@@ -97,6 +97,9 @@
     # Draw a line of 'separatpr_height' pixel height between two notifications.
     # Set to 0 to disable
     separator_height = 2
+    
+    # rounded corners
+    corner_radius = 7
 
     # padding between text and separator
     padding = 8

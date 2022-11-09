@@ -14,16 +14,20 @@ fi
 # exec gnome-session
 # exec startkde
 # exec startxfce4
-numlockx &
-# setxkbmap -option caps:super
-# xrandr --output HDMI-A-0 --primary --right-of DisplayPort-0
-xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-D-1 --off --output DVI-D-2 --off
+
+xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 165 --pos 0x0 --rotate normal --output DisplayPort-1 --mode 2560x1440 --rate 165 --left-of DisplayPort-0 --rotate normal
+
+# lock screen
+xset s on
+xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock &
+
 pipewire &
 pipewire-pulse &
 
 case "$2" in
         bspwm)
                 export SXHKD_SHELL='/usr/bin/sh'
+                /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
                 /usr/lib/libexec/polkit-kde-authentication-agent-1 &
                 exec dbus-run-session bspwm
                 ;;
