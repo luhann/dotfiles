@@ -28,7 +28,7 @@ case "$2" in
         bspwm)
                 export SXHKD_SHELL='/usr/bin/sh'
                 /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
-                /usr/lib/libexec/polkit-kde-authentication-agent-1 &
+                /usr/libexec/polkit-kde-authentication-agent-1 &
                 exec dbus-run-session bspwm
                 ;;
         kde)    
@@ -37,7 +37,7 @@ case "$2" in
 
         *) 
                 export SXHKD_SHELL='/usr/bin/sh'
-                /usr/lib/libexec/polkit-kde-authentication-agent-1 &
+                /usr/libexec/polkit-kde-authentication-agent-1 &
                 exec dbus-run-session bspwm
                 ;;
 esac
