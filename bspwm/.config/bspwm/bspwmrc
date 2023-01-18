@@ -24,7 +24,6 @@ bspc config borderless_monocle  true
 bspc config gapless_monocle false
 
 # Focusing behaviour
-bspc config history_aware_focus true
 bspc config focus_follows_pointer true
 
 # source the colors.
