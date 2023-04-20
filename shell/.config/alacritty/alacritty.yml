@@ -19,7 +19,7 @@ font:
 # Colors (Gruvbox Material Dark Medium)
 colors:
   primary:
-    background: "#282828"
+    background: "#141414"
     foreground: "#dfbf8e"
 
   normal:
