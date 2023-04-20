@@ -62,7 +62,11 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.openPositioning": "right",
   "workbench.editor.wrapTabs": true,
-  "workbench.colorTheme": "Ayu Dark",
+
+  // @sync host=gestalt
+  // "workbench.colorTheme": "Ayu Dark",
+  // @sync host=replicant
+  "workbench.colorTheme": "Tokyo Night",
   "workbench.colorCustomizations": {
     "contrastBorder": "#440d0d8e",
     "minimapSlider.background": "#440d0d42",
