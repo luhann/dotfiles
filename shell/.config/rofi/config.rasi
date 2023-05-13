@@ -1,21 +1,53 @@
 configuration {
-  modi: "combi,drun,calc";
-  terminal: "alacritty";
-  ssh-client: "ssh";
-  ssh-command: "{terminal} {ssh-client} {host} [-p {port}]";
-  run-command: "sh -c '{cmd}'";
-  run-list-command: ". ~/.config/rofi/scripts/alias.sh";
-  run-shell-command: "fish -c '{cmd} | rofi -dmenu'";
-  sort: true;
-  sorting-method: "fzf";
-  combi-modi: "window,drun";
-  matching: "fuzzy";
-/*  separator-style: "dash";*/
-  scroll-method: 1;
+    terminal: "alacritty";
+
+    modes: "combi,drun,calc";
+
+    display-window: "window";
+    display-drun: "run";
+    display-windowcd: "windowcd";
+    display-run: "run";
+    display-ssh: "ssh";
+    display-combi: "combi";
+    display-keys: "keys";
+    display-filebrowser: "filebrowser";
+
+    combi-modes: "window,drun";
+    combi-hide-mode-prefix: false;
+    combi-display-format: "<i>{mode}</i> {text}";
+
+    window-format: "<span fgalpha='65%'>[{w:-1}] </span><b>{c:-1}</b> <span weight='light' fgalpha='65%' size='small'>{t:-1}</span>";
+    window-thumbnail: false;
+
+    drun-url-launcher: "xdg-open";
+    drun-match-fields: "name,generic,exec,categories,keywords";
+    drun-display-format: "<b>{name}</b>[ <span weight='light' size='small'><i>({generic})</i></span>][ <span weight='light' fgalpha='65%' size='small'>{exec}</span>]";
+    drun-show-actions: true;
+    drun {
+        parse-user: true;
+        parse-system: true;
+    }
+
+    run-command: "{cmd}";
+    run-list-command: "";
+    run-shell-command: "{terminal} -e {cmd}";
+
+    filebrowser {
+        directories-first: true;
+        sorting-method: "name";
+    }
+
+    timeout {
+        action: "kb-cancel";
+        delay:  0;
+    }
+
+    matching: "normal";
+    font: "monospace 11";
+    show-icons: true;
+    scroll-method: 0;
+    cycle: false;
+    fixed-num-lines: false;
 }
 
-@theme "~/.config/rofi/material-red.rasi"
-
-window {
-  border-radius: 8px;
-}
+@theme "patroclus"
