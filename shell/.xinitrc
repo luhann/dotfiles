@@ -34,6 +34,11 @@ case "$2" in
         kde)    
                 exec dbus-run-session startplasma-x11
                 ;;
+        awesome)
+                /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
+                /usr/libexec/polkit-kde-authentication-agent-1 &
+                exec dbus-run-session awesome
+                ;;
 
         *) 
                 export SXHKD_SHELL='/usr/bin/sh'
