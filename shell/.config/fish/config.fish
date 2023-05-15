@@ -3,7 +3,6 @@ if status --is-login
 end
 
 set -gx GPG_TTY (tty)
-set -gx XDG_CURRENT_DESKTOP KDE
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
 set -gx BROWSER /bin/firefox
@@ -46,7 +45,7 @@ alias xrm='sudo xbps-remove -R'
 alias xinstall='sudo xbps-install -S'
 
 # application aliases
-alias foliate="com.github.johnfactotum.Foliate"
+alias dolphin="env XDG_CURRENT_DESKTOP=kde dolphin"
 
 # Curl aliases
 alias weather="curl -4 wttr.in/Cape+Town"
