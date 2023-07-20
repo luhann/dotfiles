@@ -29,7 +29,7 @@ theme.notification_icon_size = dpi(60)
 
 -- Colours
 theme.bg_dark     = x.background
-theme.bg_normal     = x.color0 .. "55"
+theme.bg_normal     = x.color0 .. "00"
 theme.bg_focus      = x.background
 theme.bg_urgent     = x.background
 theme.bg_minimize   = x.color8
@@ -86,14 +86,21 @@ theme.hotkeys_border_width = dpi(0)
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
+theme.ram_bar_active_color = focused_color
+theme.ram_bar_background_color = unfocused_color
 
 --theme.taglist_bg_focus = "#ff0000"
 -- You can use your own layout icons like this:
 -- You can use your own layout icons like this:
+theme.icon_size = dpi(15)
+
 theme.layout_fairv = icon_path .. "fairv.svg"
 theme.layout_floating  = icon_path .. "floating.svg"
 theme.layout_tile = icon_path .. "tile.svg"
 theme.layout_spiral  = icon_path .. "spiral.svg"
+
+theme.ram_icon = icon_path .. "ram.svg"
+theme.power_icon = icon_path .. "power.svg"
 
 
 -- Variables set for theming notifications:
