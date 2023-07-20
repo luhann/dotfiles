@@ -17,9 +17,13 @@ fi
 
 xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 165 --pos 0x0 --rotate normal --output DisplayPort-1 --mode 2560x1440 --rate 165 --left-of DisplayPort-0 --rotate normal
 
+xrdb -merge ~/.Xresources
+xsetroot -cursor_name left_ptr
+
 # lock screen
 xset s on
 xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock &
+
 
 pipewire &
 pipewire-pulse &
