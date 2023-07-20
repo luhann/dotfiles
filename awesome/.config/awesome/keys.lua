@@ -127,7 +127,8 @@ keys.globalkeys = gears.table.join(
      awful.util.spawn("playerctl previous", false) end),
 
     -- Laptop Controls
-     awful.key({superkey}, "e", function() awful.spawn.with_shell("dolphin", false) end, {description = "run dolphin", group = "launcher"}),
+     awful.key({superkey}, "e", function() awful.spawn("dolphin", false) end, {description = "run dolphin", group = "launcher"}),
+     awful.key({superkey, "Shift"}, "e", function() awful.spawn("alacritty -e ranger", false) end, {description = "run ranger", group = "launcher"}),
      awful.key({superkey}, "r", function() awful.spawn("firefox", false) end, {description = "run firefox", group = "launcher"}),
      awful.key({superkey}, "z", function() awful.spawn("zotero", false) end, {description = "run zotero", group = "launcher"}),
      awful.key({superkey}, "d", function() awful.spawn("rofi -i -show combi -icon-theme 'Papirus-Dark' -show-icons -no-fixed-num-lines", false) end, {description = "run rofi", group = "launcher"}),
