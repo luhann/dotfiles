@@ -10,6 +10,8 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 local xrdb = beautiful.xresources.get_current_theme()
 x = {
     --           xrdb variable
@@ -44,6 +46,37 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
+
+require("daemon")
+
+
+local function format_progress_bar(bar, icon)
+    icon.forced_height = icon_size
+    icon.forced_width = icon_size
+    icon.resize = true
+    bar.forced_width = dpi(50)
+    bar.shape = gears.shape.rounded_bar
+    bar.bar_shape = gears.shape.rounded_bar
+
+    -- bar.forced_height = dpi(30)
+    -- bar.paddings = dpi(4)
+    -- bar.border_width = dpi(2)
+    -- bar.border_color = x.color8
+
+    local w = wibox.widget{
+        nil,
+        {
+            -- icon,
+            bar,
+            spacing = dpi(10),
+            layout = wibox.layout.fixed.horizontal
+        },
+        expand = "none",
+        layout = wibox.layout.align.horizontal
+    }
+    return w
+end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -118,29 +151,10 @@ clock = wibox.widget {
 }
 
 -- Create a volume widget
-volume = wibox.widget {
-    widget = wibox.widget.textbox,
-    buttons = gears.table.join(
-        awful.button({ }, 1, function() awful.spawn("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") awesome.emit_signal("volume_change") end),
-        awful.button({ }, 4, function() awful.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+") awesome.emit_signal("volume_change") end),
-        awful.button({ }, 5, function() awful.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-") awesome.emit_signal("volume_change") end)
-    )
-}
+volume = require("widgets.volume")
 
-awesome.connect_signal("volume_change",
-  function()
-     -- set new volume value
-     awful.spawn.easy_async_with_shell(
-        "wpctl get-volume @DEFAULT_AUDIO_SINK@",
-        function(stdout)
-            if stdout:match("MUTED") then
-                volume:set_text("silence")
-            else 
-                volume:set_text(stdout:match("%d+%.%d+") .. " dB") 
-            end
-        end
-     ) end
-)
+local ram_bar = require("widgets.ram_bar")
+local ram = format_progress_bar(ram_bar, wibox.widget.imagebox(beautiful.ram_icon))
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -184,8 +198,8 @@ local tasklist_buttons = gears.table.join(
 
 local function set_wallpaper(s)
     -- Wallpaper
-    -- awful.spawn.with_shell("wallpaper)"
-    awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
+    awful.spawn.with_shell("wallpaper")
+    -- awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
@@ -198,7 +212,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     local names = { "main", "alt", "term", "dev", "web", "zen", "media", "misc"}
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.spiral, l.spiral, l.spiral, l.spiral, l.spiral, l.spiral, l.floating, l.spiral}
+    local layouts = { l.spiral, l.spiral, l.tile, l.spiral, l.spiral, l.spiral, l.floating, l.spiral}
     awful.tag(names, s, layouts)
 
     -- Here we define the systray to allow us to always put it on the secondary/last monitor
@@ -300,6 +314,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = 15,
+            ram,
             volume,
             clock,
             wibox.container.place(s.layoutbox),
@@ -333,7 +348,7 @@ awful.rules.rules = {
                      keys = keys.clientkeys,
                      buttons = keys.clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap + awful.placement.no_offscreen
      }
     },
 
@@ -365,8 +380,15 @@ awful.rules.rules = {
           "AlarmWindow",  -- Thunderbird's calendar.
           "ConfigManager",  -- Thunderbird's about:config.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+        },
+        type = {
+          "dialog"
         }
-      }, properties = { floating = true}},
+      }, properties = {
+        floating = true,
+        placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen
+      }
+    },
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
