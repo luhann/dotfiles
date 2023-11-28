@@ -17,6 +17,8 @@ function run {
 # Music
 # run mpd
 # (Alternatively, enable the mpd service so mpd runs on login)
+pipewire &
+pipewire-pulse &
 
 # Emacs daemon
 #run emacs --daemon

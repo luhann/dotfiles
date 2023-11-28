@@ -152,6 +152,7 @@ clock = wibox.widget {
 
 -- Create a volume widget
 volume = require("widgets.volume")
+demo_mode = require("widgets.demo_mode")
 
 local ram_bar = require("widgets.ram_bar")
 local ram = format_progress_bar(ram_bar, wibox.widget.imagebox(beautiful.ram_icon))
@@ -238,7 +239,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
+        buttons = taglist_buttons,
     }
 
     -- -- Create a tasklist widget
@@ -252,14 +253,14 @@ awful.screen.connect_for_each_screen(function(s)
                     forced_width  = 5,
                     forced_height = 15,
                     thickness     = 1,
-                    color         = '#777777',
+                    color         = '#77777700',
                     widget        = wibox.widget.separator
                 },
                 valign = 'center',
                 halign = 'center',
                 widget = wibox.container.place,
             },
-            spacing = 1,
+            spacing = 5,
             layout  = wibox.layout.fixed.horizontal
         },
         -- Notice that there is *NO* wibox.wibox prefix, it is a template,
@@ -314,6 +315,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = 15,
+            wibox.container.place(demo_mode),
             ram,
             volume,
             clock,

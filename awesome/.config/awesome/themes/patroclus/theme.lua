@@ -71,7 +71,7 @@ theme.tasklist_spacing = dpi(5)
 theme.tasklist_align = "center"
 
 theme.taglist_fg_empty = unfocused_color .. "55"
-theme.taglist_bg_focus = x.color0 .. "55"
+theme.taglist_bg_focus = x.color0 .. "00"
 
 theme.hotkeys_opacity = 0.75
 theme.hotkeys_border_width = dpi(0)
@@ -101,6 +101,9 @@ theme.layout_spiral  = icon_path .. "spiral.svg"
 
 theme.ram_icon = icon_path .. "ram.svg"
 theme.power_icon = icon_path .. "power.svg"
+theme.demomode_icon = icon_path .. "bell-solid.svg"
+theme.demomode_norm_icon = icon_path .. "bell-solid.svg"
+theme.demomode_suspend_icon = icon_path .. "bell-solid-red.svg"
 
 
 -- Variables set for theming notifications:
