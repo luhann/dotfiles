@@ -1,9 +1,11 @@
 #!/bin/sh
 
-DUNST="$(dunstctl is-paused)"
 
-
-case $DUNST in
-  ("true") echo "%{F#f00}%{F-}" ;;
-  ("false") echo "" ;;
-esac
+if [ "$DESK_MAN" = 'bspwm' ];
+then
+        DUNST="$(dunstctl is-paused)"
+        case $DUNST in
+                ("true") echo "%{F#821717}%{F-}" ;;
+                ("false") echo "" ;;
+        esac
+fi
