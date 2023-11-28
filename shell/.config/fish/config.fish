@@ -6,6 +6,7 @@ set -gx GPG_TTY (tty)
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
 set -gx BROWSER /bin/firefox
+set -gx XDG_CURRENT_DESKTOP kde
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 set -gx XSECURELOCK_SAVER saver_mpv
 set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
@@ -20,7 +21,7 @@ fzf_configure_bindings --git_log=\cg
 # All my aliases
 # system aliases
 alias preview="fzf --preview 'bat --color=always {}'"
-alias ls="exa --long --header --git --color=auto --group-directories-first"
+alias ls="eza --long --header --git --color=auto --group-directories-first"
 alias find="fd"
 alias top="htop"
 alias grep="rg"
@@ -45,7 +46,6 @@ alias xrm='sudo xbps-remove -R'
 alias xinstall='sudo xbps-install -S'
 
 # application aliases
-alias dolphin="env XDG_CURRENT_DESKTOP=kde dolphin"
 
 # Curl aliases
 alias weather="curl -4 wttr.in/Cape+Town"
