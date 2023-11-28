@@ -14,6 +14,8 @@ function run {
     fi
 }
 
+pipewire &
+pipewire-pulse &
 # Music
 # run mpd
 # (Alternatively, enable the mpd service so mpd runs on login)
