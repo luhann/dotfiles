@@ -1,0 +1,50 @@
+live_config_reload = true
+
+[bell]
+animation = "EaseOutExpo"
+color = "#ffffff"
+duration = 1
+command = {program = "dunstify", args = ["-a Alacritty", "Ring, Ring"]}
+
+[colors.bright]
+black = "#928374"
+blue = "#7daea3"
+cyan = "#89b482"
+green = "#a9b665"
+magenta = "#d3869b"
+red = "#ea6962"
+white = "#dfbf8e"
+yellow = "#e3a84e"
+
+[colors.normal]
+black = "#665c54"
+blue = "#7daea3"
+cyan = "#89b482"
+green = "#a9b665"
+magenta = "#d3869b"
+red = "#ea6962"
+white = "#dfbf8e"
+yellow = "#e78a4e"
+
+[colors.primary]
+background = "#141414"
+foreground = "#dfbf8e"
+
+[window]
+dynamic_title = true
+
+[font]
+size = 10.0
+normal = {family = "Iosevka Nerd Font Mono", style = "Regular"}
+bold = {family = "Iosevka Nerd Font Mono", style = "Bold"}
+bold_italic = {family = "Iosevka Nerd Font Mono", style = "Bold Italic"}
+italic = {family = "Iosevka Nerd Font Mono", style = "Italic"}
+
+[keyboard]
+bindings = [
+{key = "Escape", mods = "Control", action = "ToggleViMode"},
+{key = "Return", mods = "Control|Shift", action = "SpawnNewInstance"},
+]
+
+[mouse]
+hide_when_typing = false
