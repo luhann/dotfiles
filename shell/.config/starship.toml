@@ -1,0 +1,28 @@
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# A minimal left prompt
+format = """$character"""
+
+# move the rest of the prompt to the right
+right_format = """$all"""
+
+[character]
+success_symbol = "[▶](bold green)" 
+error_symbol = "[-](bold red) "
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = false
+
+[cmd_duration]
+min_time = 500
+format = "took [$duration](bold yellow)"
+
+[rlang]
+format = "with [󰟔 $version](blue bold) "
+detect_files = [".R", ".Rd", ".Rmd", ".Rproj", ".Rsx", ".Rproj.user"]
+
+[python]
+symbol = ""
+format = 'via [${symbol} ${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
