@@ -10,6 +10,8 @@ local xresources = require("beautiful.xresources")
 local xrdb = xresources.get_current_theme()
 local dpi = xresources.apply_dpi
 
+local gears = require("gears")
+
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
@@ -74,7 +76,10 @@ theme.taglist_fg_empty = unfocused_color .. "55"
 theme.taglist_bg_focus = x.color0 .. "00"
 
 theme.hotkeys_opacity = 0.75
+theme.hotkeys_bg = x.background
 theme.hotkeys_border_width = dpi(0)
+theme.hotkeys_font = "Lato 10"
+theme.hotkeys_description_font = "Lato 8"
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -104,7 +109,7 @@ theme.power_icon = icon_path .. "power.svg"
 theme.demomode_icon = icon_path .. "bell-solid.svg"
 theme.demomode_norm_icon = icon_path .. "bell-solid.svg"
 theme.demomode_suspend_icon = icon_path .. "bell-solid-red.svg"
-
+theme.demomode_bg = unfocused_color
 
 -- Variables set for theming notifications:
 -- notification_font
