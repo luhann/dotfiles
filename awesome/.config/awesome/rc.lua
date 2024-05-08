@@ -51,33 +51,6 @@ require("awful.hotkeys_popup.keys")
 require("daemon")
 
 
-local function format_progress_bar(bar, icon)
-    icon.forced_height = icon_size
-    icon.forced_width = icon_size
-    icon.resize = true
-    bar.forced_width = dpi(50)
-    bar.shape = gears.shape.rounded_bar
-    bar.bar_shape = gears.shape.rounded_bar
-
-    -- bar.forced_height = dpi(30)
-    -- bar.paddings = dpi(4)
-    -- bar.border_width = dpi(2)
-    -- bar.border_color = x.color8
-
-    local w = wibox.widget{
-        nil,
-        {
-            -- icon,
-            bar,
-            spacing = dpi(10),
-            layout = wibox.layout.fixed.horizontal
-        },
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    }
-    return w
-end
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -143,19 +116,13 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Wibar
--- Create a textclock widget
-clock = wibox.widget {
-    format = "<span foreground='" .. x.color14 .."'> %H:%M - %Y-%m-%d</span>",
-    widget = wibox.widget.textclock,
-    buttons = gears.table.join(),
-}
-
+clock = require("widgets.clock")
 -- Create a volume widget
 volume = require("widgets.volume")
+-- Create demo mode widget
 demo_mode = require("widgets.demo_mode")
-
-local ram_bar = require("widgets.ram_bar")
-local ram = format_progress_bar(ram_bar, wibox.widget.imagebox(beautiful.ram_icon))
+-- Create rambar widget
+ram_bar = require("widgets.ram_bar")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -316,7 +283,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             spacing = 15,
             wibox.container.place(demo_mode),
-            ram,
+            ram_bar,
             volume,
             clock,
             wibox.container.place(s.layoutbox),

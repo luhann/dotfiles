@@ -26,9 +26,9 @@ function()
           if stdout == nil or s == '' then
             volume:set_text("init")
           elseif stdout:match("MUTED") then
-              volume:set_text("silence")
+              volume:set_markup("<span foreground='#a51c30'><b>silence</b></span>")
           else 
-              volume:set_text(stdout:match("%d+%.%d+") .. " dB")
+              volume:set_markup("<b>" .. stdout:match("%d+%.%d+") .. " dB" .. "</b>")
           end
       end
    ) end
