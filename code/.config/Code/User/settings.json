@@ -3,6 +3,8 @@
 
   // @sync host=gestalt
   // "window.zoomLevel": 0,
+  // @sync host=replicant
+  "window.zoomLevel": 0,
 
   "files.autoSave": "onFocusChange",
   "files.trimFinalNewlines": true,
@@ -64,9 +66,9 @@
   "workbench.editor.wrapTabs": true,
 
   // @sync host=gestalt
-  // "workbench.colorTheme": "Tokyo Night",
+  // "workbench.colorTheme": "GitHub Dark",
   // @sync host=replicant
-  "workbench.colorTheme": "Tokyo Night",
+  "workbench.colorTheme": "GitHub Dark",
   "workbench.colorCustomizations": {
     "contrastBorder": "#440d0d8e",
     "minimapSlider.background": "#440d0d42",
@@ -86,6 +88,10 @@
   "sync.autoDownload": true,
   "sync.autoUpload": true,
   "sync.gist": "cf8f99559ae58e7d277ff410456a1828",
+
+  // Python
+  "python.defaultInterpreterPath": "/bin/python",
+
 
   // R Extension
   // The path below is the path for conda r; use it when you want
@@ -211,5 +217,6 @@
   },
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
-  }
+  },
+  "jupyter.themeMatplotlibPlots": true
 }

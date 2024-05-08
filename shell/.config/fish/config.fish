@@ -1,5 +1,5 @@
 if status --is-login
-    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2023/bin/x86_64-linux ~/applications/cmdstan/bin/
+    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/
 end
 
 set -gx GPG_TTY (tty)
@@ -30,7 +30,6 @@ alias sudo="doas"
 
 # editor aliases
 alias vim="nvim"
-alias code="code-oss"
 
 # PS aliases.
 alias psa='ps aux'
