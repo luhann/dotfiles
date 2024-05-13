@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -r site search <<< "$(rofi -no-fixed-num-lines -markup -mesg "Default: Search google&#x0a;!gh: Search github&#x0a;!rd: Search rdocumentation&#x0a;!r: Search reddit&#x0a;!yt: Search youtube&#x0a;!t: Search twitch&#x0a;!sp: Search spotify&#x0a;!ddg: Search duckduckgo&#x0a;!w: Search wikipedia" -dmenu -p "Search:" | cut -d " " -f 1,2-)"
+read -r site search <<< "$(rofi -theme-str 'window {height: 23%;}' -markup -mesg "Default: Search google&#x0a;!gh: Search github&#x0a;!rd: Search rdocumentation&#x0a;!r: Search reddit&#x0a;!yt: Search youtube&#x0a;!t: Search twitch&#x0a;!sp: Search spotify&#x0a;!ddg: Search duckduckgo&#x0a;!w: Search wikipedia" -dmenu -p "Search:" | cut -d " " -f 1,2-)"
 if [ -n "$search" ]
 then
         case "$site" in
