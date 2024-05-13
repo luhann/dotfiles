@@ -1,5 +1,5 @@
 * {
-    font: "Iosevka 11";
+    font: "Iosevka Nerd Font 11";
 
     black: #1d1f21;
     white: #c5c8c6;
@@ -98,8 +98,7 @@ window {
     border: 3;
     border-color: @black-bright;
     border-radius: 16;
-    width: 1024;
-    height: 460;
+    width: 25%;
 }
 
 mainbox {
@@ -184,14 +183,6 @@ listview {
     spacing: 0;
 }
 
-scrollbar {
-    background-color: transparent;
-    padding: 0;
-    margin: 0 0 0 4;
-    handle-width: 8;
-    border: 0;
-    handle-color: #626463; // @white-50
-}
 
 element {
     border: 1;
