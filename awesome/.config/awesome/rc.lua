@@ -123,6 +123,7 @@ volume = require("widgets.volume")
 demo_mode = require("widgets.demo_mode")
 -- Create rambar widget
 ram_bar = require("widgets.ram_bar")
+writeback = require("widgets.writeback")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -282,6 +283,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = 15,
+            writeback,
             wibox.container.place(demo_mode),
             ram_bar,
             volume,

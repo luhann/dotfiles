@@ -46,8 +46,7 @@ picom --config ~/.config/picom/picom.conf -b
 # run dunst
 
 # Network manager tray icon
-run nm-applet
 
 # Wallpaper
 # (Already set to run in rc.lua)
-run wallpaper
+# run wallpaper

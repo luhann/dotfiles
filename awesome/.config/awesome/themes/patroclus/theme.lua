@@ -31,7 +31,7 @@ theme.notification_icon_size = dpi(60)
 
 -- Colours
 theme.bg_dark     = x.background
-theme.bg_normal     = x.color0 .. "00"
+theme.bg_normal     = x.color0
 theme.bg_focus      = x.background
 theme.bg_urgent     = x.background
 theme.bg_minimize   = x.color8
@@ -91,6 +91,9 @@ theme.hotkeys_description_font = "Lato 8"
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
+theme.wibar_bg = x.background .. "00"
+
+
 theme.ram_bar_active_color = focused_color
 theme.ram_bar_background_color = unfocused_color
 
