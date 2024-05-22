@@ -133,7 +133,7 @@ keys.globalkeys = gears.table.join(
      awful.key({superkey}, "z", function() awful.spawn("zotero", false) end, {description = "run zotero", group = "launcher"}),
      awful.key({superkey}, "d", function() awful.spawn("rofi -i -show combi -icon-theme 'Papirus-Dark' -show-icons -no-fixed-num-lines", false) end, {description = "run rofi", group = "launcher"}),
      awful.key({superkey}, "s", function() awful.spawn("rofi_search", false) end, {description = "run rofi_search", group = "launcher"}),
-     awful.key({superkey}, "backslash", function() awful.spawn("wallpaper", false) end, {description = "change wallpaper", group = "os"}),
+     awful.key({superkey}, "backslash", function() awful.spawn.with_shell("wallpaper", false) end, {description = "change wallpaper", group = "os"}),
      awful.key({superkey}, "l", function() awful.spawn("xset s activate", false) end, {description = "lock screen", group = "os"})
 
 )
