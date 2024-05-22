@@ -1,3 +1,6 @@
+.directory
 library.db
 state.pickle
 media/.config/spotifyd/cache/
+shell/.config/nvim/lazy-lock.json
+shell/.config/fish/fish_variables
