@@ -80,6 +80,7 @@ end
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
+awful.util.shell = "fish"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -123,6 +124,7 @@ volume = require("widgets.volume")
 demo_mode = require("widgets.demo_mode")
 -- Create rambar widget
 ram_bar = require("widgets.ram_bar")
+battery = require("widgets.battery")
 writeback = require("widgets.writeback")
 
 -- Create a wibox for each screen and add it
@@ -287,6 +289,7 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.container.place(demo_mode),
             ram_bar,
             volume,
+            battery,
             clock,
             wibox.container.place(s.layoutbox),
             tray,

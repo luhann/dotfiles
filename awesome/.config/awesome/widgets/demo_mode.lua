@@ -18,8 +18,8 @@ local xrdb = xresources.get_current_theme()
 local dpi = xresources.apply_dpi
 
 local demo_mode = wibox.widget {
-  forced_height = dpi(15),
-  forced_width = dpi(15),
+  forced_height = dpi(10),
+  forced_width = dpi(10),
   resize = true,
   image  = beautiful.demomode_icon or iconpath,
   widget = wibox.widget.imagebox

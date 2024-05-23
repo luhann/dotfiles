@@ -1,22 +1,15 @@
-if status --is-login
-    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/
-end
+set -gx PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/
 
 set -gx GPG_TTY (tty)
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
 set -gx BROWSER /bin/firefox
-set -gx XDG_CURRENT_DESKTOP kde
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 set -gx XSECURELOCK_SAVER saver_mpv
 set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
 set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/'"
 set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
-
-# autojump keybindings
-source /usr/share/autojump/autojump.fish
-# fzf keybindings for voidlinux
-fzf_configure_bindings --git_log=\cg
+set -gx MOZ_USE_XINPUT2 "1"
 
 # All my aliases
 # system aliases
@@ -26,7 +19,6 @@ alias find="fd"
 alias top="htop"
 alias grep="rg"
 alias off="sudo poweroff"
-alias sudo="doas"
 
 # editor aliases
 alias vim="nvim"
@@ -56,4 +48,5 @@ function fish_greeting
 end
 
 gh completion --shell fish | source
+zoxide init fish | source
 starship init fish | source

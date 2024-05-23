@@ -6,7 +6,7 @@
 ! ╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝░╚═════╝░░╚═════╝░╚═╝░░╚═╝░╚═════╝╚══════╝╚══════╝
 !
 ! -----------------------------------
-
+Xft.dpi: 120
 Xft.antialias: true
 Xft.hinting: true
 Xft.rgba: rgb
@@ -14,7 +14,8 @@ Xft.autohint: false
 Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 
-Xcursor.theme: Breeze_Obsidian
+Xcursor.theme: phinger-cursors-dark
+Xcursor.size: 24
 
 *background:	#1A2026
 *foreground:	#FFFFFF

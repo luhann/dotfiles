@@ -17,8 +17,6 @@ function run {
 # Music
 # run mpd
 # (Alternatively, enable the mpd service so mpd runs on login)
-pipewire &
-pipewire-pulse &
 
 # Emacs daemon
 #run emacs --daemon
@@ -36,7 +34,7 @@ xsetroot -cursor_name left_ptr
 # fi
 
 # Desktop effects
-picom --config ~/.config/picom/picom.conf -b
+# picom --config ~/.config/picom/picom.conf -b
 
 # redshift
 # pkill -f '^redshift'

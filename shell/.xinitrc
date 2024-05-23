@@ -15,7 +15,10 @@ fi
 # exec startkde
 # exec startxfce4
 
-xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 165 --pos 0x0 --rotate normal --output DisplayPort-1 --mode 2560x1440 --rate 165 --left-of DisplayPort-0 --rotate normal
+# xrandr --output eDP-1 --scale 1.25x1.25
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+xrandr --output eDP-1 --set "PRIME Synchronization" 1
 
 xrdb -merge ~/.Xresources
 xsetroot -cursor_name left_ptr
@@ -24,29 +27,26 @@ xsetroot -cursor_name left_ptr
 xset s on
 xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock &
 
-
+setxkbmap us -variant colemak_dh -option caps:super
+xcape -e 'Shift_L=parenleft;Shift_R=parenright'
 
 case "$2" in
         bspwm)
-                export DESK_MAN="bspwm"
                 export SXHKD_SHELL='/usr/bin/sh'
-                /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
-                /usr/libexec/polkit-kde-authentication-agent-1 &
-                exec dbus-run-session bspwm
+                /usr/lib64/libexec/polkit-kde-authentication-agent-1 &
+                exec bspwm
                 ;;
         kde)    
-                exec dbus-run-session startplasma-x11
+                exec startplasma-x11
                 ;;
         awesome)
-                export DESK_MAN="awesomewm"
-                /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
-                /usr/libexec/polkit-kde-authentication-agent-1 &
-                exec dbus-run-session awesome
+                /usr/lib64/libexec/polkit-kde-authentication-agent-1 &
+                exec awesome
                 ;;
 
         *) 
                 export SXHKD_SHELL='/usr/bin/sh'
-                /usr/libexec/polkit-kde-authentication-agent-1 &
-                exec dbus-run-session bspwm
+                /usr/lib64/libexec/polkit-kde-authentication-agent-1 &
+                exec bspwm
                 ;;
 esac
