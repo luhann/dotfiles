@@ -1,6 +1,4 @@
-if status --is-login
-    set -x PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/
-end
+set -gx PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/
 
 set -gx GPG_TTY (tty)
 set -gx HISTCONTROL ignoreboth:erasedups
@@ -15,8 +13,6 @@ set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
 
 # autojump keybindings
 source /usr/share/autojump/autojump.fish
-# fzf keybindings for voidlinux
-fzf_configure_bindings --git_log=\cg
 
 # All my aliases
 # system aliases
@@ -26,7 +22,6 @@ alias find="fd"
 alias top="htop"
 alias grep="rg"
 alias off="sudo poweroff"
-alias sudo="doas"
 
 # editor aliases
 alias vim="nvim"

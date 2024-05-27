@@ -14,7 +14,8 @@ Xft.autohint: false
 Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 
-Xcursor.theme: Breeze_Obsidian
+Xcursor.theme: phinger-cursors-dark
+Xcursor.size: 24
 
 *background:	#1A2026
 *foreground:	#FFFFFF
