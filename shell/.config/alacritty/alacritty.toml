@@ -1,11 +1,5 @@
 live_config_reload = true
 
-[bell]
-animation = "EaseOutExpo"
-color = "#ffffff"
-duration = 1
-command = {program = "dunstify", args = ["-a Alacritty", "Ring, Ring"]}
-
 [colors.bright]
 black = "#928374"
 blue = "#7daea3"
@@ -35,10 +29,10 @@ dynamic_title = true
 
 [font]
 size = 10.0
-normal = {family = "Iosevka Nerd Font Mono", style = "Regular"}
-bold = {family = "Iosevka Nerd Font Mono", style = "Bold"}
-bold_italic = {family = "Iosevka Nerd Font Mono", style = "Bold Italic"}
-italic = {family = "Iosevka Nerd Font Mono", style = "Italic"}
+normal = {family = "Iosevka Nerd Font", style = "Regular"}
+bold = {family = "Iosevka Nerd Font", style = "Bold"}
+bold_italic = {family = "Iosevka Nerd Font", style = "Bold Italic"}
+italic = {family = "Iosevka Nerd Font", style = "Italic"}
 
 [keyboard]
 bindings = [

@@ -32,21 +32,21 @@ case "$2" in
                 export SXHKD_SHELL='/usr/bin/sh'
                 /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
                 /usr/libexec/polkit-kde-authentication-agent-1 &
-                exec dbus-run-session bspwm
+                exec bspwm
                 ;;
         kde)    
-                exec dbus-run-session startplasma-x11
+                exec startplasma-x11
                 ;;
         awesome)
                 export DESK_MAN="awesomewm"
                 /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
                 /usr/libexec/polkit-kde-authentication-agent-1 &
-                exec dbus-run-session awesome
+                exec awesome
                 ;;
 
         *) 
                 export SXHKD_SHELL='/usr/bin/sh'
                 /usr/libexec/polkit-kde-authentication-agent-1 &
-                exec dbus-run-session bspwm
+                exec bspwm
                 ;;
 esac

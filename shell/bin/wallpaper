@@ -1,4 +1,4 @@
 #!/bin/sh
 
 WALL=$(find "${HOME}/onedrive/wallpapers/" -type f | sort -R | tail -1)
-feh --no-fehbg --bg-fill "$WALL"
+feh --no-fehbg --no-xinerama --bg-fill "$WALL"
