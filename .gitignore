@@ -3,4 +3,9 @@ library.db
 state.pickle
 media/.config/spotifyd/cache/
 shell/.config/nvim/lazy-lock.json
+# fisher and fish plugins
 shell/.config/fish/fish_variables
+shell/.config/fish/conf.d/
+shell/.config/fish/fish_plugins
+shell/.config/fish/functions/
+shell/.config/fish/completions/
