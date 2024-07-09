@@ -1,18 +1,15 @@
-set -gx PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/
+set -gx PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin /home/khonsu/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/ ~/applications/xbps/usr/bin
 
 set -gx GPG_TTY (tty)
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
 set -gx BROWSER /bin/firefox
-set -gx XDG_CURRENT_DESKTOP kde
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 set -gx XSECURELOCK_SAVER saver_mpv
 set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
 set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/'"
 set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
-
-# autojump keybindings
-source /usr/share/autojump/autojump.fish
+set -gx XDG_CURRENT_DESKTOP kde
 
 # All my aliases
 # system aliases
@@ -38,9 +35,12 @@ alias mv='mv -v'
 alias xup='sudo xbps-install -Su'
 alias xrm='sudo xbps-remove -R'
 alias xinstall='sudo xbps-install -S'
+alias einstall="sudo emerge --ask --verbose"
+alias eupdate="sudo emerge --ask --verbose --newuse --update --deep @world"
+alias edepclean="sudo emerge --ask --depclean"
 
 # application aliases
-
+alias obs="env XDG_CURRENT_DESKTOP=awesome obs"
 # Curl aliases
 alias weather="curl -4 wttr.in/Cape+Town"
 
@@ -51,4 +51,5 @@ function fish_greeting
 end
 
 gh completion --shell fish | source
+zoxide init fish | source
 starship init fish | source
