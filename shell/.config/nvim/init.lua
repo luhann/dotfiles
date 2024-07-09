@@ -30,8 +30,8 @@ require("lazy").setup({
     }
   },
   "lervag/vimtex",
-  "itchyny/lightline.vim",
-  "rebelot/kanagawa.nvim",
+  "glepnir/galaxyline.nvim",
+  "nvim-tree/nvim-web-devicons",
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -39,26 +39,51 @@ require("lazy").setup({
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
-          ensure_installed = { "r", "python", "c", "lua", "vim", "vimdoc", "javascript", "html" },
+          ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "javascript"},
           sync_install = false,
           auto_install = true,
-          highlight = { enable = true },
+          highlight = { enable = true, disable = {"latex"} },
           indent = { enable = true },
         })
     end
- }
+ },
+{
+    "R-nvim/R.nvim",
+    lazy = false
+  },
+  {
+    "neovim/nvim-lspconfig",
+    lazy = false,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    -- load cmp on InsertEnter
+    event = "InsertEnter",
+    -- these dependencies will only be loaded when cmp loads
+    -- dependencies are always lazy-loaded unless specified otherwise
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+    },
+  }
 })
 
--- Set colorscheme
-vim.cmd.colorscheme("kanagawa-dragon")
+local cmp = require'cmp'
 
-vim.g.lightline = {
-  colorscheme = "darcula"
+cmp.setup {
+  sources = {
+    { name = 'nvim_lsp' }
+  },
+  mapping = cmp.mapping.preset.insert(),
 }
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+require'lspconfig'.r_language_server.setup{capabilities = capabilities}
 
 -- options for vimtex compilation and viewing
 vim.g.vimtex_compiler_progname = "nvr"
 vim.g.vimtex_view_method = "zathura"
+vim.g.tex_conceal = "abdmg"
 
 vim.opt.showmatch = true
 vim.opt.relativenumber = true
@@ -69,9 +94,15 @@ vim.opt.pumheight = 10
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.autoread = true
 
-vim.opt.syntax = "on"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
+
+vim.api.nvim_command("hi StatusLine guibg=#202328")
+vim.api.nvim_command("hi Normal ctermbg=none guibg=none")
 
 -- set keybindings
 -- remap normal mode command to semi-colon
@@ -111,3 +142,6 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
     vim.opt_local.number = false
   end,
 })
+
+-- galaxyline theme
+require("galactus")
