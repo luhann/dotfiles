@@ -90,18 +90,18 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
     awful.layout.suit.floating,
     awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
     -- awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
+    awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -181,7 +181,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     local names = { "main", "alt", "term", "dev", "web", "zen", "media", "misc"}
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.spiral, l.spiral, l.tile, l.spiral, l.spiral, l.spiral, l.floating, l.spiral}
+    local layouts = { l.spiral.dwindle, l.spiral.dwindle, l.tile, l.spiral.dwindle, l.spiral.dwindle, l.spiral.dwindle, l.floating, l.spiral.dwindle}
     awful.tag(names, s, layouts)
 
     -- Here we define the systray to allow us to always put it on the secondary/last monitor
@@ -297,7 +297,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 3, function() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))

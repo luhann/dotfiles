@@ -105,7 +105,7 @@ theme.icon_size = dpi(15)
 theme.layout_fairv = icon_path .. "fairv.svg"
 theme.layout_floating  = icon_path .. "floating.svg"
 theme.layout_tile = icon_path .. "tile.svg"
-theme.layout_spiral  = icon_path .. "spiral.svg"
+theme.layout_dwindle  = icon_path .. "spiral.svg"
 
 theme.ram_icon = icon_path .. "ram.svg"
 theme.power_icon = icon_path .. "power.svg"
