@@ -9,6 +9,7 @@ set -gx XSECURELOCK_SAVER saver_mpv
 set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
 set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/'"
 set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
+set -gx XSECURELOCK_SHOW_KEYBOARD_LAYOUT 0
 set -gx XDG_CURRENT_DESKTOP kde
 
 # All my aliases
@@ -38,9 +39,11 @@ alias xinstall='sudo xbps-install -S'
 alias einstall="sudo emerge --ask --verbose"
 alias eupdate="sudo emerge --ask --verbose --newuse --update --deep @world"
 alias edepclean="sudo emerge --ask --depclean"
+alias esync="sudo eix-sync"
+alias esearch="eix"
 
 # application aliases
-alias obs="env XDG_CURRENT_DESKTOP=awesome obs"
+alias obs="env XDG_CURRENT_DESKTOP= obs"
 # Curl aliases
 alias weather="curl -4 wttr.in/Cape+Town"
 

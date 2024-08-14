@@ -28,7 +28,6 @@ xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock &
 
 case "$2" in
         bspwm)
-                export DESK_MAN="bspwm"
                 export SXHKD_SHELL='/usr/bin/sh'
                 /usr/bin/xcalib -d :0 /home/khonsu/desktop/dell_s2721.icc
                 /usr/libexec/polkit-kde-authentication-agent-1 &
