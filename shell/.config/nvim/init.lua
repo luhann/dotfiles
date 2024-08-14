@@ -39,7 +39,7 @@ require("lazy").setup({
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
-          ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "javascript"},
+          ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml"},
           sync_install = false,
           auto_install = true,
           highlight = { enable = true, disable = {"latex"} },
@@ -84,6 +84,9 @@ require'lspconfig'.r_language_server.setup{capabilities = capabilities}
 vim.g.vimtex_compiler_progname = "nvr"
 vim.g.vimtex_view_method = "zathura"
 vim.g.tex_conceal = "abdmg"
+
+vim.g.R_app = "radian"
+vim.g.R_cmd = "R"
 
 vim.opt.showmatch = true
 vim.opt.relativenumber = true
