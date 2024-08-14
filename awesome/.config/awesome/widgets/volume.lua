@@ -10,7 +10,7 @@ local dpi = xresources.apply_dpi
 -- Create a volume widget
 local volume = wibox.widget {
   widget = wibox.widget.textbox,
-  markup = "",
+  markup = "---",
   buttons = gears.table.join(
       awful.button({ }, 1, function() awful.spawn("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") awesome.emit_signal("volume_change") end),
       awful.button({ }, 4, function() awful.spawn("wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+") awesome.emit_signal("volume_change") end),
@@ -34,7 +34,5 @@ function()
     end
   ) end
 )
-
-awesome.emit_signal("volume_change")
 
 return volume
