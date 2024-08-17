@@ -14,18 +14,12 @@ function run {
     fi
 }
 
-pipewire &
-pipewire-pulse &
 # Music
 # run mpd
 # (Alternatively, enable the mpd service so mpd runs on login)
 
 # Emacs daemon
 #run emacs --daemon
-
-# Load terminal colorscheme and settings
-xrdb ~/.Xresources
-xsetroot -cursor_name left_ptr
 
 # Urxvt daemon
 # run urxvtd -q -o -f
@@ -54,7 +48,6 @@ polybar top-primary &
 polybar top-secondary &
 
 # Network manager tray icon
-run nm-applet
 
 # Wallpaper
 # (Already set to run in rc.lua)

@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+# Function to check if device is LUKS encrypted
+is_luks_encrypted() {
+  local device="$1"
+  cryptsetup isLuks "$device" 2>/dev/null
+  return $?
+}
+
+# Function to handle errors
+error() {
+  local message="$1"
+  echo "Error: $message" >&2
+  exit 1
+}
+
+# Get arguments
+action="$1"
+luks_file="$2"
+
+# Get name for mapped device
+luks_name=$(basename "$luks_file" .luks)
+
+# Check for required arguments
+if [ -z "$action" ] || [ -z "$luks_file" ]; then
+  error "Usage: $0 (open|close) /path/to/luks_file"
+fi
+
+# Check if luks_file exists
+if [ ! -f "$luks_file" ]; then
+  error "LUKS file '$luks_file' does not exist."
+fi
+
+# Get mount point directory (ensure it's in the home directory)
+mount_point="/home/$(whoami)/$luks_name"
+
+# Open or close LUKS device based on action
+if [ "$action" == "open" ]; then
+  # Check if LUKS encrypted
+  if ! is_luks_encrypted "$luks_file"; then
+    error "LUKS file '$luks_file' is not encrypted."
+  fi
+
+  # Open LUKS device
+  if ! sudo cryptsetup open --type luks "$luks_file" "$luks_name"; then
+    error "Failed to open LUKS device."
+  fi
+
+  # Create mount point directory if it doesn't exist
+  if [ ! -d "$mount_point" ]; then
+    mkdir -p "$mount_point"
+  fi
+
+  # Mount the filesystem
+  if ! sudo mount /dev/mapper/"$luks_name" "$mount_point"; then
+    error "Failed to mount filesystem."
+  fi
+
+  echo "LUKS device '$luks_file' opened and mounted at '$mount_point'."
+
+elif [ "$action" == "close" ]; then
+  # Check if mount point exists
+  if [ ! -d "$mount_point" ]; then
+    error "Mount point '$mount_point' does not exist."
+  fi
+
+  # Unmount the filesystem
+  if ! sudo umount "$mount_point"; then
+    error "Failed to unmount filesystem."
+  fi
+
+  # Close LUKS device
+  if ! sudo cryptsetup close --type luks /dev/mapper/"$luks_name"; then
+    error "Failed to close LUKS device."
+  fi
+
+  # Remove mount point directory
+  if [ -d "$mount_point" ]; then
+    rmdir "$mount_point"
+  fi
+
+  echo "LUKS device '$luks_file' closed."
+
+else
+  error "Invalid action. Please specify 'open' or 'close'."
+fi
+
+
