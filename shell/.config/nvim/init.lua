@@ -17,6 +17,7 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
+  { "rose-pine/neovim", name = "rose-pine" },
   {"folke/which-key.nvim",
   event = "VeryLazy",
   init = function()
@@ -89,6 +90,7 @@ vim.g.R_app = "radian"
 vim.g.R_cmd = "R"
 
 vim.opt.showmatch = true
+vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.spell = true
 vim.opt.spelllang = "en_gb"
@@ -106,6 +108,7 @@ vim.opt.foldenable = false
 
 vim.api.nvim_command("hi StatusLine guibg=#202328")
 vim.api.nvim_command("hi Normal ctermbg=none guibg=none")
+vim.api.nvim_command("colorscheme rose-pine")
 
 -- set keybindings
 -- remap normal mode command to semi-colon
@@ -123,7 +126,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave" }, {
   callback = function(args)
     if (vim.bo.buftype ~= "terminal") then
       vim.opt_local.relativenumber = true
-      vim.opt_local.number = false
+      vim.opt_local.number = true
     end
   end,
 })
