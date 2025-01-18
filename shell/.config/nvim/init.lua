@@ -30,7 +30,6 @@ require("lazy").setup({
     -- refer to the configuration section below
     }
   },
-  "lervag/vimtex",
   "glepnir/galaxyline.nvim",
   "nvim-tree/nvim-web-devicons",
   {
@@ -40,10 +39,10 @@ require("lazy").setup({
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
-          ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml"},
+          ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex"},
           sync_install = false,
           auto_install = true,
-          highlight = { enable = true, disable = {"latex"} },
+          highlight = { enable = true},
           indent = { enable = true },
         })
     end
@@ -80,11 +79,15 @@ cmp.setup {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require'lspconfig'.r_language_server.setup{capabilities = capabilities}
-
--- options for vimtex compilation and viewing
-vim.g.vimtex_compiler_progname = "nvr"
-vim.g.vimtex_view_method = "zathura"
-vim.g.tex_conceal = "abdmg"
+require'lspconfig'.texlab.setup{
+  capabilities = capabilities,
+  filetypes = { "rnoweb", "tex", "plaintex", "bib" },
+  settings = {
+    texlab = {
+      latexFormatter = "latexindent",
+    },
+  },
+}
 
 vim.g.R_app = "radian"
 vim.g.R_cmd = "R"
