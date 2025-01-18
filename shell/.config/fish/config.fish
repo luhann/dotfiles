@@ -11,6 +11,7 @@ set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/
 set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
 set -gx XSECURELOCK_SHOW_KEYBOARD_LAYOUT 0
 set -gx XDG_CURRENT_DESKTOP kde
+set -gx XDG_MENU_PREFIX "plasma-"
 
 # All my aliases
 # system aliases
