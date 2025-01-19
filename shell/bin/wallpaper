@@ -1,4 +1,11 @@
 #!/bin/sh
 
+# Toggle --no-xinerama option based on the first argument
+if [ "$1" = "--no-xinerama" ]; then
+  XINERAMA_FLAG="--no-xinerama"
+else
+  XINERAMA_FLAG=""
+fi
+
 WALL=$(find "${HOME}/onedrive/wallpapers/" -type f | sort -R | tail -1)
-feh --no-fehbg --no-xinerama --bg-fill "$WALL"
+feh --no-fehbg $XINERAMA_FLAG --bg-fill "$WALL"
