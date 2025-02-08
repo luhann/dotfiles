@@ -1,6 +1,7 @@
 .directory
 library.db
 state.pickle
+*.log
 media/.config/spotifyd/cache/
 shell/.config/nvim/lazy-lock.json
 # fisher and fish plugins

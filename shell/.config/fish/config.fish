@@ -10,7 +10,6 @@ set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
 set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/'"
 set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
 set -gx XSECURELOCK_SHOW_KEYBOARD_LAYOUT 0
-set -gx XDG_CURRENT_DESKTOP kde
 set -gx XDG_MENU_PREFIX "plasma-"
 
 # All my aliases
@@ -45,6 +44,7 @@ alias esearch="eix"
 
 # application aliases
 alias obs="env XDG_CURRENT_DESKTOP= obs"
+alias dolphin="env XDG_CURRENT_DESKTOP=kde dolphin"
 # Curl aliases
 alias weather="curl -4 wttr.in/Cape+Town"
 
