@@ -10,7 +10,6 @@ set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
 set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/khonsu/pictures/lockscreen/'"
 set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
 set -gx XSECURELOCK_SHOW_KEYBOARD_LAYOUT 0
-set -gx XDG_MENU_PREFIX "plasma-"
 
 # All my aliases
 # system aliases
@@ -37,13 +36,13 @@ alias xup='sudo xbps-install -Su'
 alias xrm='sudo xbps-remove -R'
 alias xinstall='sudo xbps-install -S'
 alias einstall="sudo emerge --ask --verbose"
+alias eremove="sudo emerge --ask --deselect"
 alias eupdate="sudo emerge --ask --verbose --newuse --update --deep @world"
 alias edepclean="sudo emerge --ask --depclean"
 alias esync="sudo eix-sync"
 alias esearch="eix"
 
 # application aliases
-alias obs="env XDG_CURRENT_DESKTOP= obs"
 alias dolphin="env XDG_CURRENT_DESKTOP=kde dolphin"
 # Curl aliases
 alias weather="curl -4 wttr.in/Cape+Town"
