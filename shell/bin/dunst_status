@@ -1,11 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
+if [ "$XDG_CURRENT_DESKTOP" != 'Hyprland' ]; then
+    DUNST="$(dunstctl is-paused)"
+    case $DUNST in
+    "true") echo "%{F#821717}%{F-}" ;;
+    "false") echo "" ;;
+    esac
+fi
 
-if [ "$DESK_MAN" = 'bspwm' ];
-then
-        DUNST="$(dunstctl is-paused)"
-        case $DUNST in
-                ("true") echo "%{F#821717}%{F-}" ;;
-                ("false") echo "" ;;
-        esac
+if [ "$XDG_CURRENT_DESKTOP" == 'Hyprland' ]; then
+    COUNT=$(dunstctl count waiting)
+    ENABLED=""
+    DISABLED=""
+    if [ "$COUNT" != 0 ]; then DISABLED=" $COUNT"; fi
+    if dunstctl is-paused | grep -q "false"; then echo '{"text": "'"$ENABLED"'"}'; else echo '{"text": "'"$DISABLED"'", "class":"paused"}'; fi
 fi
