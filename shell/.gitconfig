@@ -1,0 +1,26 @@
+[user]
+	email = luke@lukehannan.com
+	name = Luke Hannan
+	signingKey = CD004543DFCA0390
+[gpg]
+	program = /bin/gpg
+[commit]
+  gpgsign = true
+[core]
+  autocrlf = input
+[credential]
+	helper = cache
+[init]
+	defaultBranch = master
+[help]
+	autocorrect = 1
+[rerere]
+	enabled = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[fetch]
+	writeCommitGraph = true
+[rebase]
+	updateRefs = true
