@@ -1,0 +1,220 @@
+{
+    "telemetry.telemetryLevel": "error",
+
+    "files.autoSave": "onFocusChange",
+    "files.trimFinalNewlines": true,
+    "breadcrumbs.enabled": true,
+    "window.enableMenuBarMnemonics": false,
+    "window.menuBarVisibility": "hidden",
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+    "window.titleSeparator": " | ",
+    "window.titleBarStyle": "custom",
+    "window.commandCenter": true,
+
+    "search.smartCase": true,
+    "search.showLineNumbers": true,
+    "search.mode": "newEditor",
+
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    "editor.fontFamily": "Iosevka Nerd Font",
+    "editor.fontSize": 14,
+    "editor.fontWeight": 300,
+    "editor.fontLigatures": "'calt', 'liga', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09'",
+    "editor.fontVariations": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.suggest.preview": true,
+    "editor.tabSize": 2,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modifications",
+    "editor.cursorStyle": "block",
+    "editor.cursorBlinking": "smooth",
+    "editor.minimap.showSlider": "always",
+    "editor.guides.bracketPairs": "active",
+    "editor.lineNumbers": "relative",
+    "editor.rulers": [120, 240],
+    "editor.wordWrap": "on",
+    "editor.linkedEditing": true,
+    "editor.smoothScrolling": true,
+    "editor.cursorSurroundingLines": 1,
+    "editor.find.autoFindInSelection": "multiline",
+    "editor.minimap.renderCharacters": false,
+    "files.autoSaveWhenNoErrors": true,
+
+    "explorer.autoReveal": true,
+    "explorer.sortOrder": "type",
+    "explorer.compactFolders": true,
+    "explorer.incrementalNaming": "smart",
+
+    "terminal.integrated.fontFamily": "Iosevka Nerd Font Mono",
+    // 4.5 is recommended for baseline website accessibility
+    "terminal.integrated.minimumContrastRatio": 7,
+    "terminal.integrated.gpuAcceleration": "on",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.persistentSessionReviveProcess": "never",
+    "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.commandsToSkipShell": [
+      "language-julia.interrupt"
+    ],
+
+    "workbench.sideBar.location": "right",
+    "workbench.panel.defaultLocation": "bottom",
+    "workbench.editor.decorations.colors": true,
+    "workbench.editor.decorations.badges": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.openPositioning": "right",
+    "workbench.editor.wrapTabs": true,
+
+    "workbench.colorTheme": "GitHub Dark",
+    "workbench.colorCustomizations": {
+      "contrastBorder": "#440d0d8e",
+      "minimapSlider.background": "#440d0d42",
+      "minimapSlider.hoverBackground": "#440d0d8e",
+      "minimapSlider.activeBackground": "#440d0d8e",
+      "editorRuler.foreground": "#79131367"
+    },
+    "workbench.editorAssociations": {
+      "*.pdf": "latex-workshop-pdf-hook"
+    },
+    "git.autofetch": true,
+    "git.autofetchPeriod": 300,
+    "git.blame.editorDecoration.enabled": true,
+    "git.suggestSmartCommit": true,
+    "scm.defaultViewMode": "tree",
+
+    "settingsSync.ignoredSettings": [
+      
+    ],
+      // Language specific vscode settings
+      "[r, rmd]": {
+      "editor.rulers": [120, 240],
+      "editor.formatOnPaste": true,
+      "editor.formatOnType": true,
+      "editor.formatOnSave": true
+    },
+    "[rsweave]": {
+      "editor.rulers": [100, 200],
+      "editor.fontFamily": "Iosevka Aile",
+      "editor.formatOnSave": false
+    },
+    "[python]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "[qmd]": {
+      "editor.formatOnSave": false,
+    },
+    "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[latex]": {
+      "editor.rulers": [85, 240],
+      "editor.formatOnSave": false,
+      "editor.fontFamily": "Iosevka Aile"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+
+    // Extension Specific Settings
+    "extensions.experimental.affinity": {
+      "vscodevim.vim": 1
+    },
+    // Vim
+    "vim.enableNeovim": true,
+    "vim.neovimUseConfigFile": true,
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.normal": "block",
+
+    "vim.normalModeKeyBindings": [
+      {
+        "before": [
+          ";"
+        ],
+        "after": [
+          ":"
+        ]
+      }
+    ],
+
+    // Python
+    "python.defaultInterpreterPath": "/bin/python",
+    "python.languageServer": "Pylance",
+    "python.terminal.shellIntegration.enabled": true,
+
+    "notebook.formatOnSave.enabled": true,
+    "jupyter.themeMatplotlibPlots": true,
+
+    // R Extension
+    // The path below is the path for conda r; use it when you want
+    // "r.rterm.linux": "/home/luke/conda/envs/r-latest/bin/R",
+
+    "r.rterm.linux": "/home/khonsu/.local/bin/radian",
+    "r.rmarkdown.knit.focusOutputChannel": false,
+    // only works on unix/mac, connects to lsp through stdio pipe
+    "r.lsp.use_stdio": true,
+    "r.rpath.linux": "/bin/R",
+    // this is need when your rterminal is radian
+    // https://github.com/randy3k/radian
+    "r.bracketedPaste": true,
+    
+    "r.alwaysUseActiveTerminal": true,
+    "r.sessionWatcher": true,
+    "r.plot.useHttpgd": true,
+    "r.session.useWebServer": true,
+    
+    "r.rmarkdown.codeLensCommands": [
+      "r.runCurrentChunk",
+      "r.runAboveChunks",
+      "r.runBelowChunks",
+      "r.selectCurrentChunk",
+      "r.goToNextChunk",
+      "r.goToPreviousChunk"
+    ],
+
+    // Quarto
+    "quarto.render.renderOnSave": true,
+
+    // Latex Workshop
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.linting.chktex.enabled": true,
+    "latex-workshop.linting.run": "onSave",
+    "latex-workshop.linting.chktex.exec.path": "lacheck",
+    "latex-workshop.latex.recipes": [
+      {
+        "name": "latexmk",
+        "tools": ["latexmk"]
+      },
+      {
+        "name": "xelatexmk",
+        "tools": ["xelatexmk"]
+      }
+    ],
+    "latex-workshop.latex.tools": [
+      {
+        "name": "xelatexmk",
+        "command": "latexmk",
+        "args": [
+          "-xelatex",
+          "%DOC%"
+        ],
+        "env": {}
+      },
+      {
+        "name": "latexmk",
+        "command": "latexmk",
+        "args": [
+          "%DOC%"
+        ],
+        "env": {}
+      }
+    ]
+}

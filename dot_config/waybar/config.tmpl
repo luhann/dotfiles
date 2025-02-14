@@ -1,0 +1,112 @@
+{{ if eq .chezmoi.hostname "replicant" -}}
+[
+{
+    "layer": "bottom",
+    "position": "top",
+    "mod": "dock",
+    "output": [
+        "DP-1"
+    ],
+    "include": [
+        "~/.config/waybar/default-modules.json"
+    ],
+    "exclusive": true,
+    "gtk-layer-shell": true,
+    "margin-bottom": 2,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 5,
+    "passthrough": false,
+    "height": 31,
+    "modules-left": [
+        "custom/os_button",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "wlr/taskbar"
+    ],
+    "modules-right": [
+        "cpu",
+        "temperature",
+        "memory",
+        "disk",
+        "wireplumber",
+        "network",
+        "battery",
+        "clock"
+    ]
+},
+{
+    "layer": "bottom",
+    "position": "top",
+    "mod": "dock",
+    "output": [
+        "DP-2"
+    ],
+    "include": [
+        "~/.config/waybar/default-modules.json"
+    ],
+    "exclusive": true,
+    "gtk-layer-shell": true,
+    "margin-bottom": 2,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 5,
+    "passthrough": false,
+    "height": 31,
+    "modules-left": [
+        "custom/os_button",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "wlr/taskbar"
+    ],
+    "modules-right": [
+        "idle_inhibitor",
+        "custom/dunst",
+        "user",
+        "tray",
+        "wireplumber",
+        "clock"
+    ]
+}
+]
+{{ else }}
+{
+    "layer": "bottom",
+    "position": "top",
+    "mod": "dock",
+    "include": [
+        "~/.config/waybar/default-modules.json"
+    ],
+    "exclusive": true,
+    "gtk-layer-shell": true,
+    "margin-bottom": 2,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 5,
+    "passthrough": false,
+    "height": 31,
+    "modules-left": [
+        "custom/os_button",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "wlr/taskbar"
+    ],
+    "modules-right": [
+        "idle_inhibitor",
+        "custom/dunst",
+        "user",
+        "tray",
+        "cpu",
+        "temperature",
+        "memory",
+        "disk",
+        "wireplumber",
+        "network",
+        "battery",
+        "clock"
+    ]
+}
+{{- end }}
