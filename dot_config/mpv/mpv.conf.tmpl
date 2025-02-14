@@ -1,0 +1,69 @@
+[default]
+# ===== Player =====
+border=no
+msg-color=yes
+msg-module=yes
+x11-bypass-compositor=yes
+keep-open=yes                           # keeps the player open after a video/playlist ends
+hls-bitrate=max                         # uses max quality for HLS streams
+pause=yes                               # disables autoplay
+prefetch-playlist=yes                   # prefetches the playlist
+
+# ===== Screenshots =====
+screenshot-template="%F - [%P]v%#01n"
+screenshot-format=png
+screenshot-high-bit-depth=yes
+screenshot-tag-colorspace=yes
+screenshot-png-compression=1
+screenshot-directory="~/pictures/screenshots"
+
+# ===== OSD =====
+osd-font-size=10
+osd-color="#E0F0F0F0"
+osd-bold=no
+osd-border-color="#E0000000"
+osd-border-size=1
+osd-blur=0.2
+osd-spacing=0.2
+
+# ===== Subs =====
+sub-auto=fuzzy
+sub-color="#eaea27"
+demuxer-mkv-subtitle-preroll=yes
+sub-ass-use-video-data=all
+sub-fix-timing=yes
+sub-font-size=22
+sub-border-size=1.0
+sub-margin-x=100
+sub-margin-y=50
+no-sub-visibility
+
+# ===== RAM =====
+cache=yes                               # uses a large seekable RAM cache even for local input.
+cache-secs=300                          # uses extra large RAM cache (needs cache=yes to make it useful).
+demuxer-max-back-bytes=300M              # sets fast seeking
+demuxer-max-bytes=300M                   # sets fast seeking
+
+# ===== Audio =====
+volume=70
+volume-max=100
+audio-file-auto=fuzzy
+audio-samplerate=192000
+audio-format=floatp
+
+# ===== Languages =====
+alang=jpn,jp,eng,en
+slang=eng,en
+
+# ===== Video =====
+profile=high-quality
+{{ if eq .chezmoi.hostname "replicant" -}}
+vo=gpu-next
+saturation=2
+video-sync=display-resample
+interpolation=yes
+
+# ===== Hardware Accel =====
+hwdec=auto
+gpu-api=auto
+{{ end }}

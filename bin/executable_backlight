@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+ddcutil --display 1 setvcp 10 "$1"
+ddcutil --display 2 setvcp 10 "$1"
