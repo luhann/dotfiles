@@ -1,4 +1,7 @@
 sourceDir = "/home/khonsu/dotfiles"
+pager = "bat"
+
+{{ $dot_version := promptStringOnce . "dot_version" "Which dotfiles version to use" "new" -}}
 
 [data]
-  dot_version = "new"
+  dot_version = {{ $dot_version | quote }}
