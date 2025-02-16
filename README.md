@@ -2,6 +2,8 @@
 
 Personal dotfiles for zsh, KDE, Firefox, and more.
 
+Colour Palette: #FEF803, #F7C52D, #7D00B2, #F08A5A
+
 ## OS
 
 [Gentoo](https://wiki.gentoo.org/wiki/Main_Page) ~amd64.
