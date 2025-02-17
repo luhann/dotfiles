@@ -4,24 +4,24 @@
 
 
 /*base background color of selections */
-@define-color bg_hover rgba(200, 200, 200, 0.3);
+@define-color bg_hover rgba(200, 200, 200, 0);
 /*base background color of active elements */
-@define-color bg_active rgba(45, 86, 91, 0.5);
+@define-color bg_active rgba(254, 248, 3, 0.25);
 
 /*base border color*/
 @define-color border_main rgba(255, 255, 255, 0.0);
 
 /*text color for entries, views and content in general */
-@define-color content_main white;
+@define-color content_main rgba(254,248,3, 1);
 /*text color for entries that are unselected */
-@define-color content_inactive rgba(255, 255, 255, 0.25);
+@define-color content_inactive rgba(125, 0, 178, 0.5);
 
 * {
 	text-shadow: none;
 	box-shadow: none;
 	border: none;
 	border-radius: 0;
-	font-family: "Iosevka Aile";
+	font-family: "Play";
 	font-weight: 600;
 	font-size: 12.7px;
 }
@@ -35,13 +35,18 @@ window#waybar {
 tooltip {
 	background: @bg_main_tooltip;
 	border-radius: 5px;
-	border-width: 1px;
+	border-width: 0px;
 	border-style: solid;
 	border-color: @border_main;
 }
 
 tooltip label {
 	color: @content_main;
+}
+
+#user {
+  font-weight: bold;
+  color: @content_inactive;
 }
 
 #custom-os_button {
@@ -63,7 +68,11 @@ tooltip label {
 }
 
 #custom-dunst.paused {
-	color: #821717
+	color: @content_inactive;
+}
+
+#idle_inhibitor.activated {
+	color: @content_inactive;
 }
 
 #workspaces {
@@ -80,7 +89,7 @@ tooltip label {
 
 #workspaces button.active {
 	color: @content_main;
-	border-bottom: 3px solid white;
+	border-bottom: 3px solid @content_main;
 }
 
 #workspaces button.focused {
@@ -101,7 +110,7 @@ tooltip label {
 #taskbar {}
 
 #taskbar button {
-	border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+	border-bottom: 3px solid rgba(125, 0, 178, 0.3);
 	margin-left: 2px;
 	margin-right: 2px;
 	padding-left: 8px;
@@ -111,12 +120,12 @@ tooltip label {
 }
 
 #taskbar button.active {
-	border-bottom: 3px solid white;
+	border-bottom: 3px solid @content_main;
 	background: @bg_active;
 }
 
 #taskbar button:hover {
-	border-bottom: 3px solid white;
+	border-bottom: 3px solid @content_inactive;
 	background: @bg_hover;
 	color: @content_main;
 }
@@ -180,7 +189,7 @@ tooltip label {
 }
 
 #wireplumber.muted {
-	color: #821717;
+	color: @content_inactive;
 	font-weight: bold;
 }
 
@@ -208,6 +217,3 @@ tooltip label {
 	background: @bg_hover;
 }
 
-#idle_inhibitor.activated {
-	color: #a51c30;
-}

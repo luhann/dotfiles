@@ -12,7 +12,7 @@
         "tooltip": false
     },
     "user": {
-        "format": "<span foreground='#a51c30'><b>{user}</b></span> (up {work_H}h)",
+        "format": "{user} (up {work_H}h)",
         "interval": 60,
         "height": 30,
         "width": 30,
