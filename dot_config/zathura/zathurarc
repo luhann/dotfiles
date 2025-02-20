@@ -27,9 +27,6 @@ set notification-error-fg "#151515" #00
 set notification-warning-bg "#AC4142" #08
 set notification-warning-fg "#151515" #00
 
-set highlight-color "#F4BF750A" #0A
-set highlight-active-color "#6A9FB50D" #0D
-
 set completion-highlight-fg "#151515" #02
 set completion-highlight-bg "#90A959" #0C
 
@@ -48,4 +45,3 @@ set recolor-keephue "true"
 
 set render-loading "false"
 set scroll-step 50
-set sandbox none
