@@ -1,128 +1,130 @@
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {
-        "source": "~/.config/fastfetch/xero.png",
-        "type": "kitty",
-        "height": 15,
-        "width": 30,
-        "padding": {
-            "top": 5,
-            "left": 3
+        "type": "none"
+    },
+    "display": {
+        "separator": "->   ",
+        "color": {
+            "separator": "1" // Bold
+        },
+        "constants": [
+            "───────────────────────────"
+        ],
+        "key": {
+            "type": "both",
+            "paddingLeft": 4
         }
     },
     "modules": [
-        "break",
         {
-            "type": "custom",
-            "format": "\u001b[90m┌──────────────────────Hardware──────────────────────┐"
-        },
-        {
-            "type": "host",
-            "key": " PC",
-            "keyColor": "green"
-        },
-        {
-            "type": "cpu",
-            "key": "│ ├",
-            "showPeCoreCount": true,
-            "keyColor": "green"
-        },
-        {
-            "type": "gpu",
-            "key": "│ ├󰍛",
-            "keyColor": "green"
-        },
-        {
-            "type": "memory",
-            "key": "│ ├󰍛",
-            "keyColor": "green"
-        },
-        {
-            "type": "disk",
-            "key": "└ └",
-            "keyColor": "green"
-        },
-        {
-            "type": "custom",
-            "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+            "type": "title",
+            "format": "                             {user-name-colored}{at-symbol-colored}{host-name-colored}"
         },
         "break",
         {
             "type": "custom",
-            "format": "\u001b[90m┌──────────────────────Software──────────────────────┐"
-        },
-        {
-            "type": "os",
-            "key": " OS",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "kernel",
-            "key": "│ ├",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "packages",
-            "key": "│ ├󰏖",
-            "keyColor": "yellow"
-        },
-        {
-            "type": "shell",
-            "key": "└ └",
-            "keyColor": "yellow"
+            "format": "┌{$1} {#1}System Information{#} {$1}┐"
         },
         "break",
         {
-            "type": "de",
-            "key": " DE",
-            "keyColor": "blue"
+            "key": "OS           ",
+            "keyColor": "red",
+            "type": "os"
         },
         {
-            "type": "lm",
-            "key": "│ ├",
-            "keyColor": "blue"
+            "key": "Machine      ",
+            "keyColor": "green",
+            "type": "host"
         },
         {
-            "type": "wm",
-            "key": "│ ├",
-            "keyColor": "blue"
-        },
-        {
-            "type": "wmtheme",
-            "key": "│ ├󰉼",
-            "keyColor": "blue"
-        },
-        {
-            "type": "gpu",
-            "key": "└ └󰍛",
-            "format": "{3}",
-            "keyColor": "blue"
-        },
-        {
-            "type": "custom",
-            "format": "\u001b[90m└────────────────────────────────────────────────────┘"
-        },
-        "break",
-        {
-            "type": "custom",
-            "format": "\u001b[90m┌────────────────────Uptime / Age────────────────────┐"
-        },
-        {
-            "type": "command",
-            "key": "  OS Age ",
+            "key": "Kernel       ",
             "keyColor": "magenta",
-            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+            "type": "kernel"
         },
         {
-            "type": "uptime",
-            "key": "  Uptime ",
-            "keyColor": "magenta"
+            "key": "Uptime       ",
+            "keyColor": "red",
+            "type": "uptime"
         },
         {
-            "type": "custom",
-            "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+            "key": "Resolution   ",
+            "keyColor": "yellow",
+            "type": "display",
+            "compactType": "original-with-refresh-rate"
+        },
+        {
+            "key": "WM           ",
+            "keyColor": "blue",
+            "type": "wm"
+        },
+        {
+            "key": "DE           ",
+            "keyColor": "green",
+            "type": "de"
+        },
+        {
+            "key": "Shell        ",
+            "keyColor": "cyan",
+            "type": "shell"
+        },
+        {
+            "key": "Terminal     ",
+            "keyColor": "red",
+            "type": "terminal"
+        },
+        {
+            "key": "CPU          ",
+            "keyColor": "yellow",
+            "type": "cpu"
+        },
+        {
+            "key": "GPU          ",
+            "keyColor": "blue",
+            "type": "gpu"
+        },
+        {
+            "key": "Memory       ",
+            "keyColor": "magenta",
+            "type": "memory"
+        },
+        {
+            "key": "Disk         ",
+            "keyColor": "green",
+            "type": "disk"
+        },
+        {
+            "key": "Local IP     ",
+            "keyColor": "red",
+            "type": "localip",
+            "showIpv4": true,
+            "showIpv6": true,
+            "format": "{?ipv6}{ipv6}{?}{/ipv6}{ipv4}{/}"
+        },
+        {
+            "key": "Public IP    ",
+            "keyColor": "cyan",
+            "type": "publicip",
+            "ipv6": false,
+            "timeout": 1000
+        },
+        {
+            "key": "Public IP    ",
+            "keyColor": "cyan",
+            "type": "publicip",
+            "ipv6": true,
+            "timeout": 1000
         },
         "break",
+        {
+            "type": "custom",
+            "format": "└{$1}────────────────────{$1}┘"
+        },
+        "break",
+        {
+            "type": "colors",
+            "paddingLeft": 34,
+            "symbol": "circle"
+        }
     ]
 }
-
