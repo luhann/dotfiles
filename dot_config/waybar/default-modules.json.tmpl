@@ -24,8 +24,12 @@
         "max-length": 10
     },
     "temperature": {
+        {{- if eq .chezmoi.hostname "replicant"}}
         "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
         "input-filename": "temp1_input",
+        {{- else}}
+        "thermal_zone": "/sys/class/thermal/thermal_zone0",
+        {{- end}}
         "interval": 3,
         "critical-threshold": 75,
         "tooltip": false,
