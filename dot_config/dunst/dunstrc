@@ -1,4 +1,6 @@
 [global]
+follow = mouse
+layer = overlay
 frame_color = "#89b4fa00"
 separator_color = frame
 highlight = "#89b4fa"
