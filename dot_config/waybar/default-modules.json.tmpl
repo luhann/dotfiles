@@ -130,9 +130,9 @@
     "wireplumber": {
         "format": "{volume}%",
         "format-muted": "silence",
-        "on-click": "",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "max-volume": 100,
-        "scroll-step": 0.2
+        "scroll-step": 5
     },
     "idle_inhibitor": {
         "format": "{icon} ",
