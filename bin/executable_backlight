@@ -1,4 +1,11 @@
-#!/usr/bin/env bash
+#!/usr/bin/env fish
 
-ddcutil --display 1 setvcp 10 "$1"
-ddcutil --display 2 setvcp 10 "$1"
+if test (count $argv) -ne 1
+    echo "Usage: $argv0 <brightness_value>" >&2
+    exit 1
+end
+
+set brightness $argv[1]
+
+ddcutil --display 1 setvcp 10 $brightness
+ddcutil --display 2 setvcp 10 $brightness

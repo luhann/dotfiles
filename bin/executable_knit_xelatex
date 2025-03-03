@@ -1,48 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env fish
 
-# Parse command-line options
+# Parse command-line options using argparse
+argparse "c/clean" "f/file:" -- $argv
 
-SHORT=cf:
-LONG=clean,file:
+if test $status -ne 0
+    echo "Failed to parse options...exiting." >&2
+    exit 1
+end
 
-# read the options
-OPTS=$(getopt --options $SHORT --long $LONG --name "$0" -- "$@")
+# Set initial values
+set clean false
 
-if [ $? != 0 ] ; then echo "Failed to parse options...exiting." >&2 ; exit 1 ; fi
+if set -q _flag_c
+    set clean true
+end
 
-eval set -- "$OPTS"
+if set -q _flag_f
+    set file $_flag_f
+else
+    echo "File option is required." >&2
+    exit 1
+end
 
-# set initial values
-CLEAN=false
+# Run R command to knit the file
+Rscript -e "knitr::knit('$file')"
 
-# extract options and their arguments into variables.
-while true ; do
-  case "$1" in
-    -c | --clean )
-      CLEAN=true
-      shift
-      ;;
-    -f | --file )
-      file="$2"
-      shift 2
-      ;;
-    -- )
-      shift
-      break
-      ;;
-    *)
-      echo "Internal error!"
-      exit 1
-      ;;
-  esac
-done
+# Remove the file extension for further processing
+set file (echo $file | cut -f 1 -d .)
 
-R -e "knitr::knit('$file')"
-
-file=$(echo "$file" | cut -f 1 -d .)
-
-# xelatex -interaction=nonstopmode "$file"
-# biber "$file"
-# xelatex -interaction=nonstopmode "$file"
-# xelatex -interaction=nonstopmode "$file"
-latexmk -xelatex -interaction=nonstopmode -synctex=1 "$file"
+# Run latexmk for processing the file
+latexmk -xelatex -interaction=nonstopmode -synctex=1 $file
