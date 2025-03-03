@@ -1,34 +1,55 @@
+# Safe require function to avoid errors when packages aren't available
+safe_require = function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    message(paste("Package", pkg, "not available. Some functionality may be limited."))
+    return(FALSE)
+  }
+  TRUE
+}
+
 # Set options for Rscript -e calls
-if (requireNamespace("lumisc", quietly = TRUE)) {
-    # Call here if needed
-    lumisc::set_startup_options()
+if (safe_require("lumisc")) {
+  # Call here if needed
+  lumisc::set_startup_options()
 }
 
 grDevices::X11.options(family = "Iosevka", type = "cairo")
 
+# Global options
 options(
-    repos = c(
-        CRAN = "https://cran.rstudio.org"
-    ),
-    bitmapType = "cairo",
-    usethis.full_name = "Luke Hannan"
-    # remember that this option is active it changes the default contrast option
-    # contrasts = c("contr.sum", "contr.poly")
+  repos = c(CRAN = "https://cran.rstudio.org"),
+  bitmapType = "cairo",
+  usethis.full_name = "Luke Hannan",
+  max.print = 1000, # Limit console output
+  warnPartialMatchDollar = TRUE, # Warn about partial $ matches
+  width = ifelse(interactive(), 120, 80), # Set width conditionally
+  # radian options
+  radian.global_history_file = "~/.config/.radian_history",
+  radian.history_size = 20000,
+  radian.highlight_matching_bracket = TRUE,
+  radian.completion_timeout = 0.05
 )
 
 
 if (interactive()) {
-    # Code that will only run in interactive sessions goes here
+  # Code that will only run in interactive sessions goes here
+
+  # Use functions from my package if available
+  if (safe_require("lumisc")) {
     # This replaces the default quit with the quit without save from my package
     q = lumisc::q
     # adds view as an alias for View
     view = lumisc::view
-    # fancy r prompt
-    # prompt::set_prompt(prompt::prompt_fancy)
-    options(width = 120)
-    rownames = row.names
+  }
+
+  # Add convenient alias
+  rownames = row.names
 }
 
+# VSCode R integration
 if (interactive() && Sys.getenv("RSTUDIO") == "") {
-  source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))
+  vscode_init_file = file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R")
+  if (file.exists(vscode_init_file)) {
+    source(vscode_init_file)
+  }
 }
