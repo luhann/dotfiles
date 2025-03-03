@@ -1,17 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env fish
 
-if [ "$XDG_SESSION_TYPE" != 'wayland' ]; then
-    DUNST="$(dunstctl is-paused)"
-    case $DUNST in
-    "true") echo "%{F#821717}%{F-}" ;;
-    "false") echo "" ;;
-    esac
-fi
+# Check if dunstctl is available
+if not command -v dunstctl >/dev/null
+    echo "Error: dunstctl not available" >&2
+    exit 1
+end
 
-if [ "$XDG_SESSION_TYPE" == 'wayland' ]; then
-    COUNT=$(dunstctl count waiting)
-    ENABLED=""
-    DISABLED=""
-    if [ "$COUNT" != 0 ]; then DISABLED=" $COUNT"; fi
-    if dunstctl is-paused | grep -q "false"; then echo '{"text": "'"$ENABLED"'"}'; else echo '{"text": "'"$DISABLED"'", "class":"paused"}'; fi
-fi
+# Get dunst pause status
+set -l is_paused (dunstctl is-paused)
+set -l waiting_count (dunstctl count waiting)
+
+# Determine output format based on session type
+if test "$XDG_SESSION_TYPE" = "wayland"
+    # Waybar format (JSON)
+    set -l enabled_icon " "
+    set -l disabled_icon " "
+    
+    if test "$is_paused" = "true"
+        # Notifications are paused
+        set output_text "$disabled_icon"
+        if test "$waiting_count" -gt 0
+            set output_text "$disabled_icon $waiting_count"
+        end
+        echo '{"text": "'"$output_text"'", "class": "paused"}'
+    else
+        # Notifications are active
+        echo '{"text": "'"$enabled_icon"'", "alt": "active"}'
+    end
+else
+    # Polybar format (plain text with formatting)
+    if test "$is_paused" = "true"
+        echo "%{F#821717} %{F-}"
+    else
+        echo ""
+    end
+end

@@ -1,8 +1,20 @@
-#!/bin/sh
+#!/usr/bin/env fish
 
-grep -m 1 "Writeback" /proc/meminfo | awk '$3 == "kB" {
-  if ($2 > 1024^2){$2 = $2/1024^2; $3 = "GB";}
-  else if ($2 > 1024){$2 = $2/1024; $3 = "MB";}
-  printf("%d", $2); 
-  print $3
-  }'
+# Get the Writeback value from /proc/meminfo and format it appropriately
+grep -m 1 "Writeback" /proc/meminfo | awk '
+{
+    # Extract the value in kB
+    size_kb = $2
+    
+    # Convert to appropriate unit
+    if (size_kb >= 1048576) {
+        # Convert to GB (1024^2 = 1048576)
+        printf "%.1f GB", size_kb / 1048576
+    } else if (size_kb >= 1024) {
+        # Convert to MB
+        printf "%.1f MB", size_kb / 1024
+    } else {
+        # Keep as kB
+        printf "%d kB", size_kb
+    }
+}'

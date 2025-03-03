@@ -1,11 +1,38 @@
-#!/bin/sh
+#!/usr/bin/env fish
 
-# Toggle --no-xinerama option based on the first argument
-if [ "$1" = "--no-xinerama" ]; then
-  XINERAMA_FLAG="--no-xinerama"
+# Check for the --no-xinerama flag among all arguments
+set -l XINERAMA_FLAG ""
+if contains -- "--no-xinerama" $argv
+    set XINERAMA_FLAG "--no-xinerama"
+end
+
+# Wallpaper directory
+set -l WALLPAPER_DIR "$HOME/onedrive/wallpapers/"
+
+# Randomly select a wallpaper from the specified directory
+set -l WALL (find "."  $WALLPAPER_DIR --type file -e jpg -e jpeg -e png -e webp | sort -R | head -n 1)
+
+# Check if we found a wallpaper
+if test -z "$WALL" 
+    echo "Error: No wallpaper files found in $WALLPAPER_DIR" >&2
+    exit 1
+end
+
+# Set the wallpaper based on the session type
+if test "$XDG_SESSION_TYPE" != "wayland"
+    # Check if feh is available
+    if not command -q feh
+        echo "Error: feh is not installed" >&2
+        exit 1
+    end
+    feh --no-fehbg $XINERAMA_FLAG --bg-fill "$WALL"
+    echo "Set X11 wallpaper to: $WALL"
 else
-  XINERAMA_FLAG=""
-fi
-
-WALL=$(find "${HOME}/onedrive/wallpapers/" -type f | sort -R | tail -1)
-feh --no-fehbg $XINERAMA_FLAG --bg-fill "$WALL"
+    # Check if hyprctl is available
+    if not command -q hyprctl
+        echo "Error: hyprctl is not installed" >&2
+        exit 1
+    end
+    hyprctl hyprpaper reload , "$WALL"
+    echo "Set Wayland wallpaper to: $WALL"
+end
