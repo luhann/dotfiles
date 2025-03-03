@@ -1,55 +1,83 @@
-set -gx PATH ~/bin $PATH ~/.cargo/bin ~/.local/bin ~/applications/texlive/2024/bin/x86_64-linux ~/applications/cmdstan/bin/ ~/applications/xbps/usr/bin
+if status --is-login; or not set -q __fish_path_initialized
+    # Using fish_add_path instead of manually modifying PATH
+    fish_add_path --global ~/bin
+    fish_add_path --global ~/.cargo/bin
+    fish_add_path --global ~/.local/bin
+    fish_add_path --global ~/applications/texlive/2024/bin/x86_64-linux
+    fish_add_path --global ~/applications/cmdstan/bin
+    fish_add_path --global ~/applications/xbps/usr/bin
+     
+     # Mark that we've initialized paths
+    set -g __fish_path_initialized 1
+end
 
+# Environment variables
 set -gx GPG_TTY (tty)
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
 set -gx BROWSER /bin/firefox
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
+
+{{- if ne .dot_version "new" }}
+# XSecureLock settings
 set -gx XSECURELOCK_SAVER saver_mpv
 set -gx XSECURELOCK_PASSWORD_PROMPT time_hex
 set -gx XSECURELOCK_LIST_VIDEOS_COMMAND "fd . '/home/{{.chezmoi.username}}/pictures/lockscreen/'"
 set -gx XSECURELOCK_IMAGE_DURATION_SECONDS 300
 set -gx XSECURELOCK_SHOW_KEYBOARD_LAYOUT 0
+{{- end}}
 
 # All my aliases
-# system aliases
-alias preview="fzf --preview 'bat --color=always {}'"
+# Modern command replacements
 alias ls="eza --long --header --git --color=auto --group-directories-first"
 alias find="fd"
-alias top="htop"
+alias top="btop"
 alias grep="rg"
-alias off="sudo poweroff"
-
-# editor aliases
 alias vim="nvim"
 
-# PS aliases.
-alias psa='ps aux'
-alias psg='ps aux | rg -i'
+# System management
+alias off="sudo poweroff"
+alias cp="cp -v --reflink=auto"
+alias mv="mv -v"
 
-# Make cp & mv to be verbose.
-alias cp='cp -v --reflink=auto'
-alias mv='mv -v'
+# Process management
+alias psa="ps aux"
+alias psg="ps aux | rg -i"
 
-# Updates.
+# Helper utilities
+alias preview="fzf --preview 'bat --color=always {}'"
+alias weather="curl -4 wttr.in/Cape+Town"
+alias dolphin="env XDG_CURRENT_DESKTOP=kde dolphin"
+
+# OS-specific package management
 {{- if eq .chezmoi.osRelease.id "void"}}
-alias xup='sudo xbps-install -Su'
-alias xrm='sudo xbps-remove -R'
-alias xinstall='sudo xbps-install -S'
+abbr --add xup "sudo xbps-install -Su"
+abbr --add xrm "sudo xbps-remove -R"
+abbr --add xinstall "sudo xbps-install -S"
 {{- end}}
 {{- if eq .chezmoi.osRelease.id "gentoo"}}
-alias einstall="sudo emerge --ask --verbose"
-alias eremove="sudo emerge --ask --depclean"
-alias eupdate="sudo emerge --ask --verbose --newuse --update --deep @world"
-alias edepclean="sudo emerge --ask --depclean"
-alias esync="sudo eix-sync"
-alias esearch="eix"
+abbr --add einstall "sudo emerge --ask --verbose"
+abbr --add eremove "sudo emerge --ask --depclean"
+abbr --add eupdate "sudo emerge --ask --verbose --newuse --update --deep @world"
+abbr --add edepclean "sudo emerge --ask --depclean"
+abbr --add esync "sudo eix-sync"
+abbr --add esearch "eix"
 {{- end}}
 
-# application aliases
-alias dolphin="env XDG_CURRENT_DESKTOP=kde dolphin"
-# Curl aliases
-alias weather="curl -4 wttr.in/Cape+Town"
+# Useful abbreviations
+# Git
+abbr --add g git
+abbr --add gst 'git status'
+abbr --add gc 'git commit'
+abbr --add gco 'git checkout'
+abbr --add ga 'git add'
+abbr --add gaa 'git add --all'
+abbr --add gb 'git branch'
+abbr --add gd 'git diff'
+abbr --add gl 'git log'
+abbr --add gp 'git push'
+abbr --add gpf 'git push --force-with-lease'
+abbr --add gpl 'git pull'
 
 function fish_greeting
 	echo
@@ -57,6 +85,15 @@ function fish_greeting
 	echo -e (uname -n | awk '{print " \\\\e[1mHostname: \\\\e[0;32m"$0"\\\\e[0m"}')
 end
 
-gh completion --shell fish | source
-zoxide init fish | source
-starship init fish | source
+# Load completions only if programs exist
+if command -q gh
+    gh completion --shell fish | source
+end
+
+if command -q zoxide
+    zoxide init fish | source
+end
+
+if command -q starship
+    starship init fish | source
+end
