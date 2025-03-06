@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 # Parse command-line options using argparse
-argparse "c/clean" "f/file:" -- $argv
+argparse "c/clean" -- $argv
 
 if test $status -ne 0
     echo "Failed to parse options...exiting." >&2
@@ -11,12 +11,21 @@ end
 set clean false
 if set -q _flag_c
     set clean true
+set clean (set -q _flag_c)
+
+# Check if a file was provided as positional argument
+if test (count $argv) -eq 0
+    echo "Error: No input file specified." >&2
+    echo "Usage: knit_xelatex [-c|--clean] file.Rmd" >&2
+    exit 1
 end
 
-if set -q _flag_f
-    set file $_flag_f
-else
-    echo "File option is required." >&2
+# Get the file from the first positional argument
+set file $argv[1]
+
+# Check if the file exists
+if not test -f $file
+    echo "Error: File '$file' does not exist." >&2
     exit 1
 end
 
@@ -28,3 +37,9 @@ set file (echo $file | cut -f 1 -d .)
 
 # Run latexmk for processing the file
 latexmk -xelatex -interaction=nonstopmode -synctex=1 $file
+
+# Clean auxiliary files if clean option was specified
+if test $clean = true
+    echo "Cleaning auxiliary files..."
+    latexmk -c $file
+end
