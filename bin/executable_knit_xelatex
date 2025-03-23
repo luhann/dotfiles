@@ -11,7 +11,7 @@ end
 set clean false
 if set -q _flag_c
     set clean true
-set clean (set -q _flag_c)
+end
 
 # Check if a file was provided as positional argument
 if test (count $argv) -eq 0
