@@ -18,8 +18,9 @@ listener {
     on-resume = hyprctl dispatch dpms on          # screen on when activity is detected after timeout has fired.
 }
 
-
+{{ if ne .chezmoi.hostname "replicant" -}}
 listener {
     timeout = 1800                                # 30min
     on-timeout = systemctl suspend                # suspend pc
 }
+{{- end}}
