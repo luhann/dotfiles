@@ -30,7 +30,7 @@ require("lazy").setup({
     -- refer to the configuration section below
     }
   },
-  "glepnir/galaxyline.nvim",
+  "nvim-lualine/lualine.nvim",
   "nvim-tree/nvim-web-devicons",
   {
     "nvim-treesitter/nvim-treesitter",
