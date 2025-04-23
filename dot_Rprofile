@@ -17,8 +17,7 @@ grDevices::X11.options(family = "Iosevka", type = "cairo")
 
 # Global options
 options(
-  repos = c(CRAN = "https://cran.rstudio.org"),
-  bitmapType = "cairo",
+  repos = c(CRAN = "https://packagemanager.posit.co/cran/latest"),
   usethis.full_name = "Luke Hannan",
   max.print = 1000, # Limit console output
   warnPartialMatchDollar = TRUE, # Warn about partial $ matches
