@@ -30,10 +30,10 @@ dynamic_title = true
 
 [font]
 size = 10.0
-normal = {family = "Iosevka Nerd Font", style = "Regular"}
-bold = {family = "Iosevka Nerd Font", style = "Bold"}
-bold_italic = {family = "Iosevka Nerd Font", style = "Bold Italic"}
-italic = {family = "Iosevka Nerd Font", style = "Italic"}
+normal = {family = "Monaspace Neon Var", style = "Regular"}
+bold = {family = "Monaspace Neon Var", style = "Bold"}
+bold_italic = {family = "Monaspace Neon Var", style = "Bold Italic"}
+italic = {family = "Monaspace Neon Var", style = "Italic"}
 
 [keyboard]
 bindings = [
