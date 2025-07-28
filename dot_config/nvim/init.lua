@@ -1,3 +1,10 @@
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
 -- Example using a list of specs with the default options
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
@@ -32,6 +39,16 @@ require("lazy").setup({
   },
   "nvim-lualine/lualine.nvim",
   "nvim-tree/nvim-web-devicons",
+  {
+    "nvim-tree/nvim-tree.lua",
+    config = function()
+      require("nvim-tree").setup({
+        view = {
+          width = "15%",
+        }
+      })
+    end
+  },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
