@@ -24,7 +24,7 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
-  { "rose-pine/neovim", name = "rose-pine" },
+  {"rebelot/kanagawa.nvim"},
   {"folke/which-key.nvim",
   event = "VeryLazy",
   init = function()
@@ -144,9 +144,7 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = false
 
-vim.api.nvim_command("hi StatusLine guibg=#202328")
-vim.api.nvim_command("hi Normal ctermbg=none guibg=none")
-vim.api.nvim_command("colorscheme rose-pine")
+vim.api.nvim_command("colorscheme kanagawa")
 
 -- set keybindings
 -- remap normal mode command to semi-colon
