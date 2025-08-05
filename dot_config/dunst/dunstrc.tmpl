@@ -1,0 +1,23 @@
+[global]
+follow = mouse
+layer = overlay
+alignment = center
+frame_color = "{{ .colors.accent }}00"
+separator_color = frame
+highlight = "{{ .colors.accent }}"
+
+icon_theme = Papirus-Dark
+enable_recursive_icon_lookup = true
+
+[urgency_low]
+background = "{{ .colors.base }}"
+foreground = "{{ .colors.subtext0 }}"
+
+[urgency_normal]
+background = "{{ .colors.base }}"
+foreground = "{{ .colors.text }}"
+
+[urgency_critical]
+background = "{{ .colors.cyber_red }}"
+foreground = "{{ .colors.text }}"
+frame_color = "{{ .colors.error }}"

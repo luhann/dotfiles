@@ -1,0 +1,26 @@
+[main]
+font=Monaspace Krypton Var:size=14
+icon-theme=Papirus-Dark
+hide-before-typing = yes
+match-mode = fzf
+
+prompt = "∴ "
+
+lines=10
+width=30
+
+layer = overlay
+exit-on-keyboard-focus-loss = yes
+
+[colors]
+background={{ .colors.base | replace "#" "" }}e6      # Dark base with slight transparency
+text={{ .colors.text | replace "#" "" }}ff           # Normal text
+match={{ .colors.accent | replace "#" "" }}ff         # Cyberpunk red for matches
+selection={{ .colors.surface1 | replace "#" "" }}80   # Surface1 with transparency for selection
+selection-text={{ .colors.text | replace "#" "" }}ff  # Normal text on selection
+selection-match={{ .colors.cyber_red | replace "#" "" }}ff  # Sky blue for selected matches
+
+[border]
+width=1
+radius=8
+color={{ .colors.accent | replace "#" "" }}40         # Subtle blue border with transparency

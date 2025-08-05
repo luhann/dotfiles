@@ -137,7 +137,7 @@ decoration {
     fullscreen_opacity = 1.0
 
     shadow {
-        {{- if eq .chezmoi.hostname "gestalt" }}
+        {{- if eq .chassis_type "laptop" }}
         enabled = false
         {{- else }}
         enabled = true
@@ -149,7 +149,7 @@ decoration {
 
     # https://wiki.hyprland.org/Configuring/Variables/#blur
     blur {
-        {{- if eq .chezmoi.hostname "gestalt" }}
+        {{- if eq .chassis_type "laptop" }}
         enabled = false
         {{- else }}
         enabled = true
@@ -209,7 +209,7 @@ misc {
     force_default_wallpaper = -1 # Set to 0 or 1 to disable the anime mascot wallpapers
     disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
     vrr = 1
-    {{- if eq .chezmoi.hostname "gestalt" }}
+    {{- if eq .chassis_type "laptop" }}
     vfr = true
     {{- end }}
 }

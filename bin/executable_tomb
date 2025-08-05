@@ -3,80 +3,161 @@
 # Function to check if device is LUKS encrypted
 function is_luks_encrypted -a device
     cryptsetup isLuks $device 2>/dev/null
-    return $status
 end
 
-# Function to handle errors
-function error -a message
+# Function to handle errors with cleanup
+function error -a message -a cleanup_action
     echo "Error: $message" >&2
+    if test -n "$cleanup_action"
+        eval $cleanup_action
+    end
     exit 1
 end
 
+# Function to check if device is already open
+function is_device_open -a luks_name
+    test -e "/dev/mapper/$luks_name"
+end
+
+# Function to check if filesystem is mounted
+function is_mounted -a mount_point
+    findmnt -M "$mount_point" >/dev/null 2>&1
+end
+
+# Show usage
+function show_usage
+    echo "Usage: $(status current-command) (open|close|status) /path/to/luks_file [mount_point]"
+    echo ""
+    echo "Commands:"
+    echo "  open    - Open and mount LUKS container"
+    echo "  close   - Unmount and close LUKS container"
+    echo "  status  - Show status of LUKS container"
+    echo ""
+    echo "Arguments:"
+    echo "  luks_file    - Path to LUKS container file"
+    echo "  mount_point  - Optional custom mount point (default: ~/container_name)"
+end
+
 # Validate arguments
+if test (count $argv) -eq 0; or test "$argv[1]" = "-h"; or test "$argv[1]" = "--help"
+    show_usage
+    exit 0
+end
+
 if test (count $argv) -lt 2
-    error "Usage: $(status current-command) (open|close) /path/to/luks_file"
+    error "Insufficient arguments." "show_usage"
 end
 
 # Get arguments
 set -l action $argv[1]
 set -l luks_file $argv[2]
+set -l custom_mount_point $argv[3]
+
+# Validate action
+if not contains $action open close status
+    error "Invalid action '$action'. Use 'open', 'close', or 'status'."
+end
 
 # Get name for mapped device
 set -l luks_name (basename $luks_file .luks)
 
 # Check if luks_file exists
-if not test -f $luks_file
+if not test -f "$luks_file"
     error "LUKS file '$luks_file' does not exist."
 end
 
-# Get mount point directory (ensure it's in the home directory)
-set -l mount_point "$HOME/$luks_name"
+# Get mount point directory
+if test -n "$custom_mount_point"
+    set -l mount_point "$custom_mount_point"
+else
+    set -l mount_point "$HOME/$luks_name"
+end
 
-# Open or close LUKS device based on action
+# Execute action
 switch $action
-    case "open"
-        # Check if LUKS encrypted
-        if not is_luks_encrypted $luks_file
-            error "LUKS file '$luks_file' is not encrypted."
+    case "status"
+        echo "LUKS Container: $luks_file"
+        echo "Device Name: $luks_name"
+        echo "Mount Point: $mount_point"
+        
+        if is_device_open $luks_name
+            echo "Status: Device is OPEN"
+            if is_mounted $mount_point
+                echo "Mount Status: MOUNTED at $mount_point"
+                echo "Available Space:"
+                df -h "$mount_point" 2>/dev/null | tail -n 1
+            else
+                echo "Mount Status: NOT MOUNTED"
+            end
+        else
+            echo "Status: Device is CLOSED"
         end
 
-        # Open LUKS device
-        if not sudo cryptsetup open --type luks $luks_file $luks_name
-            error "Failed to open LUKS device."
+    case "open"
+        # Check if already open
+        if is_device_open $luks_name
+            if is_mounted $mount_point
+                error "LUKS device '$luks_name' is already open and mounted at '$mount_point'."
+            else
+                echo "Device is open but not mounted. Attempting to mount..."
+            end
+        else
+            # Check if LUKS encrypted
+            if not is_luks_encrypted $luks_file
+                error "File '$luks_file' is not a valid LUKS container."
+            end
+
+            # Open LUKS device with better error handling
+            echo "Opening LUKS container..."
+            if not sudo cryptsetup open --type luks "$luks_file" "$luks_name"
+                error "Failed to open LUKS device. Check password and try again."
+            end
         end
 
         # Create mount point directory if it doesn't exist
-        mkdir -p $mount_point 2>/dev/null || error "Failed to create mount point."
-
-        # Mount the filesystem
-        if not sudo mount /dev/mapper/$luks_name $mount_point
-            sudo cryptsetup close $luks_name 2>/dev/null
-            error "Failed to mount filesystem."
+        if not mkdir -p "$mount_point" 2>/dev/null
+            error "Failed to create mount point '$mount_point'." "sudo cryptsetup close '$luks_name' 2>/dev/null"
         end
 
-        echo "LUKS device '$luks_file' opened and mounted at '$mount_point'."
+        # Mount the filesystem with better error handling
+        echo "Mounting filesystem..."
+        if not sudo mount "/dev/mapper/$luks_name" "$mount_point"
+            error "Failed to mount filesystem. Device may be corrupted." "sudo cryptsetup close '$luks_name' 2>/dev/null"
+        end
+
+        echo "✓ LUKS container '$luks_file' opened and mounted at '$mount_point'"
+        echo "Available space:"
+        df -h "$mount_point" | tail -n 1
 
     case "close"
-        # Check if mount point exists
-        if not test -d $mount_point
-            error "Mount point '$mount_point' does not exist."
-        end
-
-        # Unmount the filesystem
-        if not sudo umount $mount_point
-            error "Failed to unmount filesystem."
-        end
-
-        # Close LUKS device
-        if not sudo cryptsetup close $luks_name
-            error "Failed to close LUKS device."
-        end
-
-        # Remove mount point directory
-        rmdir $mount_point 2>/dev/null
+        set -l cleanup_needed false
         
-        echo "LUKS device '$luks_file' closed."
+        # Check if mounted and unmount
+        if is_mounted $mount_point
+            echo "Unmounting filesystem..."
+            if not sudo umount "$mount_point"
+                error "Failed to unmount filesystem. Files may be in use."
+            end
+            set cleanup_needed true
+        end
 
-    case "*"
-        error "Invalid action. Please specify 'open' or 'close'."
+        # Check if device is open and close it
+        if is_device_open $luks_name
+            echo "Closing LUKS device..."
+            if not sudo cryptsetup close "$luks_name"
+                error "Failed to close LUKS device."
+            end
+            set cleanup_needed true
+        end
+
+        # Remove mount point directory if we created it and it's empty
+        if test $cleanup_needed = true; and test -d "$mount_point"
+            rmdir "$mount_point" 2>/dev/null
+        end
+        
+        if test $cleanup_needed = true
+            echo "✓ LUKS container '$luks_file' closed successfully"
+        else
+            echo "LUKS container '$luks_name' was not open"
+        end
 end

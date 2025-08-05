@@ -1,64 +1,61 @@
 * {
     font: "Iosevka Nerd Font 11";
 
-    black: #1d1f21;
-    white: #c5c8c6;
-    red: #cc6666;
-    orange: #de935f;
-    yellow: #f0c674;
-    green: #7cb36b;
-    cyan: #78bab9;
-    blue: #81a2be;
-    magenta: #b294bb;
+    // Base colors from patroclus theme
+    base: {{ .colors.base }};
+    mantle: {{ .colors.mantle }};
+    crust: {{ .colors.crust }};
+    surface0: {{ .colors.surface0 }};
+    surface1: {{ .colors.surface1 }};
+    surface2: {{ .colors.surface2 }};
+    text: {{ .colors.text }};
+    subtext1: {{ .colors.subtext1 }};
+    subtext0: {{ .colors.subtext0 }};
+    overlay0: {{ .colors.overlay0 }};
+    overlay1: {{ .colors.overlay1 }};
+    overlay2: {{ .colors.overlay2 }};
+    
+    // Accent colors
+    blue: {{ .colors.blue }};
+    sapphire: {{ .colors.sapphire }};
+    sky: {{ .colors.sky }};
+    teal: {{ .colors.teal }};
+    green: {{ .colors.green }};
+    yellow: {{ .colors.yellow }};
+    peach: {{ .colors.peach }};
+    red: {{ .colors.red }};
+    maroon: {{ .colors.maroon }};
+    pink: {{ .colors.pink }};
+    mauve: {{ .colors.mauve }};
+    lavender: {{ .colors.lavender }};
+    
+    // UI colors
+    selection: {{ .colors.selection }};
+    border: {{ .colors.border }};
+    accent: {{ .colors.accent }};
+    warning: {{ .colors.warning }};
+    error: {{ .colors.error }};
+    success: {{ .colors.success }};
 
-    black-bright: #3c4044;
-    white-bright: #eaeaea;
-    red-bright: #d54e53;
-    orange-bright: #e78c45;
-    yellow-bright: #e7c547;
-    green-bright: #71c464;
-    cyan-bright: #6acdcc;
-    blue-bright: #7aa6da;
-    magenta-bright: #c397d8;
-
-    black-66: #131415;
-    white-66: #828382;
-    red-66: #864343;
-    orange-66: #92613e;
-    yellow-66: #9e824c;
-    green-66: #517646;
-    cyan-66: #4f7a7a;
-    blue-66: #556a7d;
-    magenta-66: #75617b;
-
-    black-33: #090a0a;
-    white-33: #414141;
-    red-33: #432121;
-    orange-33: #49301f;
-    yellow-33: #4f4126;
-    green-33: #283b23;
-    cyan-33: #273d3d;
-    blue-33: #2a353e;
-    magenta-33: #3a303d;
-
-    common-background: @black;
-    common-background-bright: @black-bright;
-    common-background-66: @black-66;
-    common-foreground: @white;
-    common-foreground-bright: @white-bright;
-    common-foreground-66: @white-66;
-    common-primary: @yellow;
-    common-primary-bright: @yellow-bright;
-    common-primary-66: @yellow-66;
-    common-primary-33: @yellow-33;
-    common-secondary: @blue;
-    common-secondary-bright: @blue-bright;
-    common-secondary-66: @blue-66;
-    common-secondary-33: @blue-33;
-    common-urgent: @red;
-    common-urgent-bright: @red-bright;
-    common-urgent-66: @red-66;
-    common-urgent-33: @red-33;
+    // Common mappings for rofi
+    common-background: @base;
+    common-background-bright: @surface1;
+    common-background-66: @surface0;
+    common-foreground: @text;
+    common-foreground-bright: @text;
+    common-foreground-66: @subtext0;
+    common-primary: @accent;        // Blue accent instead of yellow
+    common-primary-bright: @sky;
+    common-primary-66: @sapphire;
+    common-primary-33: @selection;
+    common-secondary: @teal;
+    common-secondary-bright: @sky;
+    common-secondary-66: @sapphire;
+    common-secondary-33: @surface0;
+    common-urgent: @error;
+    common-urgent-bright: @red;
+    common-urgent-66: @maroon;
+    common-urgent-33: @surface0;
 
     background-color: transparent;
 
@@ -94,9 +91,9 @@
 }
 
 window {
-    background-color: #1d1f21d9; // @black + 0.85 alpha
+    background-color: {{ .colors.base | replace "#" "" }}d9; // @base + 85% alpha
     border: 3;
-    border-color: @black-bright;
+    border-color: @surface1;
     border-radius: 16;
     width: 25%;
 }
@@ -107,9 +104,9 @@ mainbox {
 }
 
 inputbar {
-    background-color: #333537; // @black-110
+    background-color: @surface0;
     border: 1;
-    border-color: #606263; // @black-130
+    border-color: @surface2;
     border-radius: 8;
     padding: 12 16;
     spacing: 0;
@@ -165,16 +162,16 @@ num-rows {
 }
 
 message {
-    background-color: @cyan-33;
+    background-color: @surface0;
     border: 1;
-    border-color: @cyan-66;
+    border-color: @teal;
     border-radius: 8;
     padding: 16;
 }
 
 textbox {
     background-color: transparent;
-    text-color: @cyan-bright;
+    text-color: @sky;
 }
 
 listview {
@@ -182,7 +179,6 @@ listview {
     scrollbar: true;
     spacing: 0;
 }
-
 
 element {
     border: 1;

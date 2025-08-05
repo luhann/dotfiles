@@ -5,7 +5,7 @@ general {
 background {
     monitor =
     path = ~/onedrive/wallpapers/arasaka.png
-    color = rgba(25,20,20,1.0)
+    color = rgba({{ .colors.base | replace "#" "" }}ff)  # Full opacity
     blur_passes = 2
 }
 
@@ -13,7 +13,7 @@ background {
 label {
   monitor =
   text = cmd[update:1000] echo "$(date +"%A, %B %d")"
-  color = rgba(254,248,3,0.75)
+  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}e6)  # 90% opacity
   font_size = 22
   font_family = Play
   position = 0, 300
@@ -25,14 +25,13 @@ label {
 label {
   monitor = 
   text = $TIME
-  color = rgba(254,248,3,0.75)
+  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}ff)  # Full opacity
   font_size = 95
   font_family = Play
   position = 0, 200
   halign = center
   valign = center
 }
-
 
 # INPUT FIELD
 input-field {
@@ -41,18 +40,17 @@ input-field {
     outline_thickness = 0
     dots_text_format = *
     dots_size = 0.75
-    inner_color = rgba(10,10,10,0)
-    font_color = rgba(254,248,3,1.0)
+    inner_color = rgba({{ .colors.surface0 | replace "#" "" }}4d)  # 30% opacity
+    font_color = rgba({{ .colors.cyber_yellow | replace "#" "" }}ff)     # Full opacity
     fail_text = <span weight="bold">ACCESS DENIED</span>
-    fail_color = rgba(227,38,54,0.0)
+    fail_color = rgba({{ .colors.error | replace "#" "" }}ff)      # Full opacity
     placeholder_text = 
 }
-
 
 label {
   monitor = 
   text = cmd[update:10000] echo "- $(whoami | sha1sum)"
-  color = rgba(254,248,3,0.75)
+  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}bf)  # 75% opacity
   font_size = 25
   font_family = Play
   position = 0, -200
@@ -63,7 +61,7 @@ label {
 label {
   monitor = 
   text = cmd[update:1000] echo "- $(date | b2sum)"
-  color = rgba(254,248,3,0.75)
+  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}bf)  # 75% opacity
   font_size = 25
   font_family = Play
   position = 0, -45%
