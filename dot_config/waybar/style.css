@@ -14,7 +14,7 @@
 /*text color for entries, views and content in general */
 @define-color content_main rgba(254,248,3, 1);
 /*text color for entries that are unselected */
-@define-color content_inactive rgba(125, 0, 178, 0.5);
+@define-color content_inactive rgba(0, 255, 255, 0.5);
 
 * {
 	text-shadow: none;
@@ -110,7 +110,7 @@ tooltip label {
 #taskbar {}
 
 #taskbar button {
-	border-bottom: 3px solid rgba(125, 0, 178, 0.3);
+	border-bottom: 3px solid rgba(0, 255, 255, 0.3);
 	margin-left: 2px;
 	margin-right: 2px;
 	padding-left: 8px;
@@ -182,7 +182,8 @@ tooltip label {
 }
 
 #wireplumber {
-	font-family: "JetBrainsMono Nerd Font";
+	color: @content_inactive;
+	font-family: "Monaspace Krypton Var";
 	padding-left: 3px;
 	padding-right: 3px;
 	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -194,6 +195,7 @@ tooltip label {
 }
 
 #wireplumber:hover {
+	color: @content_inactive;
 	background: @bg_hover;
 }
 
