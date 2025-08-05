@@ -26,7 +26,8 @@ if test "$XDG_SESSION_TYPE" != 'wayland'
     end
 else
     if command -v fuzzel >/dev/null
-        set selection (echo $menu_text | fuzzel --dmenu --prompt-only "search:")
+        # Use regular dmenu mode, not prompt-only
+        set selection (echo $menu_text | fuzzel --dmenu --prompt "search:")
     else
         echo "Error: fuzzel not found" >&2
         exit 1
@@ -38,15 +39,33 @@ if test -z "$selection"
     exit 0
 end
 
-# Check if the selection starts with a bang command
-set first_word (string split ' ' $selection)[1]
+# Handle different selection formats
+# Check if it's a menu item selection (contains colon)
+if string match -q '*:*' $selection
+    # Extract just the bang command from "!cmd: description"
+    set bang_part (string split ':' $selection)[1]
+    set first_word (string trim $bang_part)
+    set has_search_terms 0
+    set search_terms ""
+else
+    # It's typed input, parse normally
+    set parts (string split ' ' $selection --max 2)
+    set first_word $parts[1]
+    set has_search_terms 0
+    set search_terms ""
+    if test (count $parts) -gt 1
+        # Get everything after the first word (including multiple words)
+        set search_terms (string replace -r "^$first_word " "" $selection)
+        set has_search_terms 1
+    end
+end
 
+# Process the command
 if string match -q '!*' $first_word
     # This is a bang command
     set bang_cmd (string sub -s 2 $first_word)  # Remove the ! prefix
-    set parts (string split ' ' $selection --max 2)
     
-    # Set up search URL based on the bang command
+    # Set up URLs based on the bang command
     switch $bang_cmd
         case "gh"
             set search_url "https://github.com/search?q="
@@ -77,17 +96,28 @@ if string match -q '!*' $first_word
             set home_url "https://www.google.com"
     end
     
-    if test (count $parts) -eq 1
+    if test $has_search_terms -eq 1
+        # Search term provided
+        set encoded_search (url_encode $search_terms)
+        xdg-open $search_url$encoded_search
+    else
         # Just the bang command, open the homepage
         xdg-open $home_url
-    else
-        # Search term provided
-        set search $parts[2]
-        set encoded_search (url_encode $search)
-        xdg-open $search_url$encoded_search
     end
 else
     # No bang command, search Google for the entire input
-    set encoded_search (url_encode $selection)
+    # Handle "Default: google" selection
+    if string match -q "Default:*" $selection
+        set search_text (string replace -r '^Default:\s*' '' $selection)
+        if test -n "$search_text"
+            set encoded_search (url_encode $search_text)
+        else
+            # Just "Default: google" selected, go to Google homepage
+            xdg-open "https://www.google.com"
+            exit 0
+        end
+    else
+        set encoded_search (url_encode $selection)
+    end
     xdg-open "https://www.google.com/search?q=$encoded_search"
 end
