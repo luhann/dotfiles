@@ -1,0 +1,63 @@
+colors:
+  # Base colors (dark cyberpunk foundation inspired by kanagawa)
+  base: "#1f1f28"          # Kanagawa's dark background
+  mantle: "#16161d"        # Slightly darker
+  crust: "#0d0d14"         # Darkest base
+  
+  # Surface colors (subtle gradients)
+  surface0: "#2a2a37"      # Subtle surface
+  surface1: "#363646"      # Mid surface
+  surface2: "#54546d"      # Lighter surface
+  
+  # Text colors (muted cyber palette)
+  text: "#dcd7ba"          # Kanagawa's soft cream text
+  subtext1: "#c8c093"      # Slightly muted cream
+  subtext0: "#a6a69c"      # More muted
+  
+  # Overlay/comment colors
+  overlay0: "#54546d"      # Kanagawa's comment gray
+  overlay1: "#727169"      # Slightly lighter
+  overlay2: "#8a8980"      # Mid gray
+  
+  # Accent colors (cyberpunk with kanagawa inspiration)
+  blue: "#7e9cd8"          # Kanagawa's soft blue
+  sapphire: "#658594"      # Muted cyber blue
+  sky: "#7fb4ca"           # Light cyber blue
+  teal: "#6a9589"          # Kanagawa's teal
+  green: "#98bb6c"         # Kanagawa's green (cyber matrix feel)
+  yellow: "#e6c384"        # Kanagawa's warm yellow (much easier on eyes)
+  peach: "#ff9e3b"         # Warm cyber orange
+  red: "#e82424"           # Kanagawa's red
+  maroon: "#c34043"        # Darker red
+  pink: "#d27e99"          # Soft cyber pink
+  mauve: "#957fb8"         # Kanagawa's purple
+  lavender: "#938aa9"      # Muted lavender
+  
+  # Terminal-specific colors (muted cyberpunk)
+  bright_black: "#54546d"
+  bright_red: "#e82424"
+  bright_green: "#98bb6c"
+  bright_yellow: "#e6c384"
+  bright_blue: "#7e9cd8"
+  bright_magenta: "#957fb8"
+  bright_cyan: "#7fb4ca"
+  bright_white: "#dcd7ba"
+  
+  # UI specific colors
+  selection: "#2d4f67"     # Kanagawa's selection blue
+  border: "#54546d"        # Subtle border
+  accent: "#7e9cd8"        # Soft blue accent
+  warning: "#ff9e3b"       # Warm orange warning
+  error: "#e82424"         # Clear red error
+  success: "#98bb6c"       # Green success
+  
+  # Status colors for bars/panels
+  active: "#7e9cd8"        # Soft blue for active
+  inactive: "#54546d"      # Muted gray for inactive
+  urgent: "#e82424"        # Red for urgent
+  focused: "#e6c384"       # Warm yellow for focused (less jarring)
+
+  # true cyberpunk colors
+  cyber_yellow: "#fef803"
+  cyber_teal: "#00ffff"
+  cyber_red: "#fb0a26"

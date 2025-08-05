@@ -10,29 +10,29 @@
 Xft.antialias: true
 Xft.hinting: true
 Xft.rgba: rgb
-Xft.autohint: false
+Xft.autialias: false
 Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 
 Xcursor.theme: phinger-cursors-dark
 Xcursor.size: 24
 
-*background:	#1A2026
-*foreground:	#FFFFFF
-*cursorColor:	#FFFFFF
-*color0:	#242D35
-*color1:	#FB6396
-*color2:	#94CF95
-*color3:	#F692B2
-*color4:	#6EC1D6
-*color5:	#CD84C8
-*color6:	#7FE4D2
-*color7:	#FFFFFF
-*color8:	#526170
-*color9:	#F92D72
-*color10:	#6CCB6E
-*color11:	#F26190
-*color12:	#4CB9D6
-*color13:	#C269BC
-*color14:	#58D6BF
-*color15:	#F4F5F2
+*background:	{{ .colors.base }}
+*foreground:	{{ .colors.text }}
+*cursorColor:	{{ .colors.yellow }}
+*color0:	{{ .colors.surface0 }}
+*color1:	{{ .colors.red }}
+*color2:	{{ .colors.green }}
+*color3:	{{ .colors.yellow }}
+*color4:	{{ .colors.blue }}
+*color5:	{{ .colors.mauve }}
+*color6:	{{ .colors.blue }}
+*color7:	{{ .colors.subtext1 }}
+*color8:	{{ .colors.overlay1 }}
+*color9:	{{ .colors.bright_red }}
+*color10:	{{ .colors.bright_green }}
+*color11:	{{ .colors.bright_yellow }}
+*color12:	{{ .colors.bright_blue }}
+*color13:	{{ .colors.bright_magenta }}
+*color14:	{{ .colors.bright_cyan }}
+*color15:	{{ .colors.bright_white }}

@@ -13,7 +13,7 @@ no_audio_cache = true
 # Can be unknown, computer, tablet, smartphone, speaker, tv,
 # avr (Audio/Video Receiver), stb (Set-Top Box), and audiodongle.
 device_type = "computer"
-device_name = "replicant"
+device_name = "{{ .chezmoi.hostname }}"
 
 backend = "pulseaudio"
 

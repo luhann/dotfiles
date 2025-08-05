@@ -21,7 +21,7 @@
 	box-shadow: none;
 	border: none;
 	border-radius: 0;
-	font-family: "Play";
+	font-family: "Monaspace Krypton Var";
 	font-weight: 600;
 	font-size: 12.7px;
 }
@@ -41,12 +41,12 @@ tooltip {
 }
 
 tooltip label {
-	color: @content_main;
+	color: {{ .colors.text }};
 }
 
 #user {
-  font-weight: bold;
-  color: @content_inactive;
+	font-weight: bold;
+	color: @content_inactive;
 }
 
 #custom-os_button {
@@ -115,7 +115,7 @@ tooltip label {
 	margin-right: 2px;
 	padding-left: 8px;
 	padding-right: 8px;
-	color: white;
+	color: {{ .colors.text }};
 	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
@@ -166,7 +166,7 @@ tooltip label {
 }
 
 #tray>.active {
-	border-bottom: 3px solid white;
+	border-bottom: 3px solid {{ .colors.text }};
 }
 
 #tray>.needs-attention {
@@ -218,4 +218,3 @@ tooltip label {
 #clock:hover {
 	background: @bg_hover;
 }
-

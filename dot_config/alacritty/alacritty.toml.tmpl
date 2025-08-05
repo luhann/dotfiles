@@ -1,0 +1,53 @@
+[general]
+live_config_reload = true
+
+[colors.primary]
+background = "{{ .colors.base }}"
+foreground = "{{ .colors.text }}"
+
+[colors.normal]
+black = "{{ .colors.surface1 }}"
+red = "{{ .colors.red }}"
+green = "{{ .colors.green }}"
+yellow = "{{ .colors.yellow }}"
+blue = "{{ .colors.blue }}"
+magenta = "{{ .colors.mauve }}"
+cyan = "{{ .colors.teal }}"
+white = "{{ .colors.subtext1 }}"
+
+[colors.bright]
+black = "{{ .colors.bright_black }}"
+red = "{{ .colors.bright_red }}"
+green = "{{ .colors.bright_green }}"
+yellow = "{{ .colors.bright_yellow }}"
+blue = "{{ .colors.bright_blue }}"
+magenta = "{{ .colors.bright_magenta }}"
+cyan = "{{ .colors.bright_cyan }}"
+white = "{{ .colors.bright_white }}"
+
+[colors.selection]
+text = "{{ .colors.text }}"
+background = "{{ .colors.selection }}"
+
+[colors.cursor]
+text = "{{ .colors.base }}"
+cursor = "{{ .colors.accent }}"
+
+[window]
+dynamic_title = true
+
+[font]
+size = 10.0
+normal = {family = "Monaspace Neon Var", style = "Regular"}
+bold = {family = "Monaspace Neon Var", style = "Bold"}
+bold_italic = {family = "Monaspace Neon Var", style = "Bold Italic"}
+italic = {family = "Monaspace Neon Var", style = "Italic"}
+
+[keyboard]
+bindings = [
+{key = "Escape", mods = "Control", action = "ToggleViMode"},
+{key = "Return", mods = "Control|Shift", action = "SpawnNewInstance"},
+]
+
+[mouse]
+hide_when_typing = false
