@@ -7,13 +7,6 @@ safe_require = function(pkg) {
   TRUE
 }
 
-# Set options for Rscript -e calls
-if (safe_require("lumisc")) {
-  # Call here if needed
-  lumisc::set_startup_options()
-}
-
-grDevices::X11.options(family = "Iosevka", type = "cairo")
 
 # Global options
 options(
@@ -21,7 +14,10 @@ options(
   usethis.full_name = "Luke Hannan",
   max.print = 1000, # Limit console output
   warnPartialMatchDollar = TRUE, # Warn about partial $ matches
+  warnPartialMatchArgs = TRUE, # Also warn about partial argument matches
+  warnPartialMatchAttr = TRUE, # And partial attribute matches
   width = ifelse(interactive(), 120, 80), # Set width conditionally
+  help_type = "html",
   # radian options
   radian.global_history_file = "~/.config/.radian_history",
   radian.history_size = 20000,
@@ -29,7 +25,7 @@ options(
   radian.completion_timeout = 0.05
 )
 
-
+# Interactive session options
 if (interactive()) {
   # Code that will only run in interactive sessions goes here
 
@@ -39,10 +35,16 @@ if (interactive()) {
     q = lumisc::q
     # adds view as an alias for View
     view = lumisc::view
+
+    lumisc::set_startup_options()
   }
 
   # Add convenient alias
   rownames = row.names
+}
+
+if (interactive() && Sys.getenv("DISPLAY") != "") {
+  grDevices::X11.options(family = "Iosevka", type = "cairo")
 }
 
 # VSCode R integration
