@@ -4,11 +4,6 @@ LICENSE
 # general ignore (for old dotfiles)
 {{- if ne .dot_version "old" }}
 # include x11 config
-.xinitrc
-.Xresources
-.config/awesome
-.config/picom
-.config/rofi
 # exclude wayland config
 !.config/hypr
 !.config/fuzzel

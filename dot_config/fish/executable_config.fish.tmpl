@@ -29,6 +29,7 @@ set -gx XSECURELOCK_SHOW_KEYBOARD_LAYOUT 0
 
 # All my aliases
 # Modern command replacements
+alias cat="bat --paging=never"
 alias ls="eza --long --header --git --color=auto --group-directories-first"
 alias find="fd"
 alias top="btop"
@@ -78,6 +79,13 @@ abbr --add gl 'git log'
 abbr --add gp 'git push'
 abbr --add gpf 'git push --force-with-lease'
 abbr --add gpl 'git pull'
+
+# Chezmoi
+abbr --add cz chezmoi
+abbr --add cza 'chezmoi apply'
+abbr --add czd 'chezmoi diff'
+abbr --add cze 'chezmoi edit'
+abbr --add czs 'chezmoi status'
 
 function fish_greeting
 	echo
