@@ -3,20 +3,25 @@
 -- Credit: glepnir
 local lualine = require('lualine')
 
--- Color table for highlights
+-- Color table for highlights using kanagawa-inspired cyberpunk theme
 -- stylua: ignore
 local colors = {
-  bg       = '#202328',
-  fg       = '#bbc2cf',
-  yellow   = '#ECBE7B',
-  cyan     = '#008080',
-  darkblue = '#081633',
-  green    = '#98be65',
-  orange   = '#FF8800',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#51afef',
-  red      = '#ec5f67',
+  bg       = '{{ .colors.base }}',      -- Dark base background
+  fg       = '{{ .colors.text }}',      -- Main text color
+  yellow   = '{{ .colors.yellow }}',    -- Warm yellow
+  cyan     = '{{ .colors.sky }}',       -- Sky blue instead of harsh cyan
+  darkblue = '{{ .colors.sapphire }}',  -- Muted cyber blue
+  green    = '{{ .colors.green }}',     -- Matrix green
+  orange   = '{{ .colors.peach }}',     -- Warm cyber orange
+  violet   = '{{ .colors.mauve }}',     -- Kanagawa purple
+  magenta  = '{{ .colors.pink }}',      -- Soft cyber pink
+  blue     = '{{ .colors.accent }}',    -- Primary blue accent
+  red      = '{{ .colors.error }}',     -- Error red
+  
+  -- Additional colors for better theme integration
+  surface  = '{{ .colors.surface0 }}',  -- For subtle backgrounds
+  subtext  = '{{ .colors.subtext1 }}',  -- For muted text
+  teal     = '{{ .colors.teal }}',      -- Kanagawa teal
 }
 
 local conditions = {
@@ -36,6 +41,7 @@ local conditions = {
 -- Config
 local config = {
   options = {
+    disabled_filetypes = { 'packer', 'NvimTree', 'Lazy' },
     -- Disable sections and component separators
     component_separators = '',
     section_separators = '',
@@ -44,7 +50,7 @@ local config = {
       -- right section. Both are highlighted by c theme .  So we
       -- are just setting default looks o statusline
       normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.fg, bg = colors.bg } },
+      inactive = { c = { fg = colors.subtext, bg = colors.bg } },
     },
   },
   sections = {
@@ -80,10 +86,10 @@ end
 
 ins_left {
   function()
-    return '▊'
+    return '☰'
   end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
-  padding = { left = 0, right = 1 }, -- We don't need space before this
+  color = { fg = colors.blue }, -- Primary accent color
+  padding = { left = 0, right = 1 },
 }
 
 ins_left {
@@ -92,18 +98,18 @@ ins_left {
     return ''
   end,
   color = function()
-    -- auto change color according to neovims mode
+    -- auto change color according to neovims mode with kanagawa-inspired colors
     local mode_color = {
-      n = colors.red,
-      i = colors.green,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
+      n = colors.blue,        -- Normal: blue accent
+      i = colors.green,       -- Insert: green
+      v = colors.magenta,     -- Visual: pink
+      [''] = colors.magenta,
+      V = colors.magenta,
+      c = colors.yellow,      -- Command: yellow
       no = colors.red,
       s = colors.orange,
       S = colors.orange,
-      [''] = colors.orange,
+      [''] = colors.orange,
       ic = colors.yellow,
       R = colors.violet,
       Rv = colors.violet,
@@ -113,7 +119,7 @@ ins_left {
       rm = colors.cyan,
       ['r?'] = colors.cyan,
       ['!'] = colors.red,
-      t = colors.red,
+      t = colors.teal,        -- Terminal: teal
     }
     return { fg = mode_color[vim.fn.mode()] }
   end,
@@ -124,22 +130,29 @@ ins_left {
   -- filesize component
   'filesize',
   cond = conditions.buffer_not_empty,
+  color = { fg = colors.subtext },
 }
 
 ins_left {
   'filename',
   cond = conditions.buffer_not_empty,
-  color = { fg = colors.magenta, gui = 'bold' },
+  color = { fg = colors.cyan, gui = 'bold' },  -- Sky blue for filename
 }
 
-ins_left { 'location' }
+ins_left { 
+  'location',
+  color = { fg = colors.subtext }
+}
 
-ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
+ins_left { 
+  'progress', 
+  color = { fg = colors.fg, gui = 'bold' } 
+}
 
 ins_left {
   'diagnostics',
   sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
+  symbols = { error = ' ', warn = ' ', info = ' ' },
   diagnostics_color = {
     error = { fg = colors.red },
     warn = { fg = colors.yellow },
@@ -147,8 +160,7 @@ ins_left {
   },
 }
 
--- Insert mid section. You can make any number of sections in neovim :)
--- for lualine it's any number greater then 2
+-- Insert mid section
 ins_left {
   function()
     return '%='
@@ -156,7 +168,7 @@ ins_left {
 }
 
 ins_left {
-  -- Lsp server name .
+  -- Lsp server name
   function()
     local msg = 'No Active Lsp'
     local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
@@ -172,14 +184,14 @@ ins_left {
     end
     return msg
   end,
-  icon = ' LSP:',
-  color = { fg = '#ffffff', gui = 'bold' },
+  icon = ' LSP:',
+  color = { fg = colors.teal, gui = 'bold' },  -- Teal for LSP info
 }
 
 -- Add components to right sections
 ins_right {
-  'o:encoding', -- option component same as &encoding in viml
-  fmt = string.upper, -- I'm not sure why it's upper case either ;)
+  'o:encoding',
+  fmt = string.upper,
   cond = conditions.hide_in_width,
   color = { fg = colors.green, gui = 'bold' },
 }
@@ -187,20 +199,19 @@ ins_right {
 ins_right {
   'fileformat',
   fmt = string.upper,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+  icons_enabled = false,
   color = { fg = colors.green, gui = 'bold' },
 }
 
 ins_right {
   'branch',
-  icon = '',
+  icon = '',
   color = { fg = colors.violet, gui = 'bold' },
 }
 
 ins_right {
   'diff',
-  -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
+  symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },
@@ -209,9 +220,10 @@ ins_right {
   cond = conditions.hide_in_width,
 }
 
+-- ▊
 ins_right {
   function()
-    return '▊'
+    return '☰'
   end,
   color = { fg = colors.blue },
   padding = { left = 1 },
@@ -219,4 +231,3 @@ ins_right {
 
 -- Now don't forget to initialize lualine
 lualine.setup(config)
-
