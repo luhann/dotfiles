@@ -85,7 +85,8 @@ require("lazy").setup({
   }
 })
 
-local cmp = require'cmp'
+local cmp = require("cmp")
+local lspconfig = require("lspconfig")
 
 cmp.setup {
   sources = {
@@ -96,7 +97,7 @@ cmp.setup {
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require("lspconfig").air.setup({
+lspconfig.air.setup({
     on_attach = function(_, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
@@ -107,7 +108,7 @@ require("lspconfig").air.setup({
     end,
 })
 
-require'lspconfig'.r_language_server.setup{
+lspconfig.r_language_server.setup{
   capabilities = capabilities,
   on_attach = function(client, _)
         client.server_capabilities.documentFormattingProvider = false
@@ -115,7 +116,7 @@ require'lspconfig'.r_language_server.setup{
     end,
 }
 
-require'lspconfig'.texlab.setup{
+lspconfig.texlab.setup{
   capabilities = capabilities,
   filetypes = { "rnoweb", "tex", "plaintex", "bib" },
   settings = {
@@ -124,6 +125,21 @@ require'lspconfig'.texlab.setup{
     },
   },
 }
+
+lspconfig.rust_analyzer.setup({
+  cmd = { 'rust-analyzer' },
+  on_attach = function(client, bufnr)
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end,
+  settings = {
+    ['rust-analyzer'] = {
+      cargo = {
+        allFeatures = true,
+      },
+      checkOnSave = true,
+    }
+  }
+})
 
 vim.diagnostic.config({
   virtual_text = true,
