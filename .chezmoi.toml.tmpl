@@ -1,6 +1,8 @@
 sourceDir = "/home/{{.chezmoi.username}}/dotfiles"
 pager = "bat"
 
+{{- $codespaces:= env "CODESPACES" | not | not -}}
+
 {{- $chassis_type := "desktop" }}
 {{- if eq .chezmoi.os "darwin" }}
 {{-   if contains "MacBook" (output "system_profiler" "SPHardwareDataType") }}
@@ -14,19 +16,19 @@ pager = "bat"
 {{-   $chassis_type = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim }}
 {{- end }}
 
-{{ $dot_version := promptStringOnce . "dot_version" "Which dotfiles version to use" "new" -}}
-{{- $color_scheme_choice := list "patroclus" -}}
-{{ $color_scheme := promptChoiceOnce . "color_scheme" "What color scheme to use" $color_scheme_choice "patroclus" -}}
+{{- $color_scheme := promptStringOnce . "color_scheme" "What color scheme to use" "patroclus" -}}
+{{- $color_palette := (includeTemplate (print $color_scheme ".yaml") | fromYaml).colors }}
 
 [data]
-  dot_version = {{ $dot_version | quote }}
+  dot_version = {{ promptStringOnce . "dot_version" "Which dotfiles version to use" "new" | quote }}
   chassis_type = {{ $chassis_type | quote }}
-
+  codespaces = {{ $codespaces }}
+  color_scheme = {{ $color_scheme | quote}}
 
 [data.colors]
   # some colors that are not defined
   white = "#ffffff"
-  {{- $color_pallet := (includeTemplate (print $color_scheme ".yaml") | fromYaml).colors }}
-  {{- range $key, $val := $color_pallet }}
-  {{ $key }} = {{ $val | quote }}
+  black = "#000000"
+  {{- range $key, $val := $color_palette }}
+    {{ $key }} = {{ $val | quote }}
   {{- end }}

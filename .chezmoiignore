@@ -1,5 +1,6 @@
 README.md
 LICENSE
+install.sh
 
 # general ignore (for old dotfiles)
 {{- if ne .dot_version "old" }}
@@ -13,4 +14,8 @@ LICENSE
 # machine specific configs
 {{- if ne .chezmoi.hostname "replicant" }}
 bin/backlight # only manage on replicant
+{{- end }}
+
+{{- if eq .codespaces true }}
+.config/Code
 {{- end }}
