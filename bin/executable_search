@@ -1,15 +1,27 @@
 #!/usr/bin/env fish
 
-# Define search menu entries
-set menu_text "Default: google
-!gh: github
-!rd: rdocumentation
-!r: reddit
-!yt: youtube
-!t: twitch
-!sp: spotify
-!ddg: duckduckgo
-!w: wikipedia"
+# Define search engines as key-search_url-home_url-description quadruplets
+set -l search_engines \
+    "gh" "https://github.com/search?q=" "https://github.com" "github" \
+    "rd" "https://www.rdocumentation.org/search?q=" "https://www.rdocumentation.org" "rdocumentation" \
+    "rs" "https://docs.rs/releases/search?query=" "https://docs.rs" "rust docs" \
+    "r" "https://reddit.com/search?q=" "https://reddit.com" "reddit" \
+    "yt" "https://www.youtube.com/results?search_query=" "https://www.youtube.com" "youtube" \
+    "t" "https://twitch.tv/search?term=" "https://twitch.tv" "twitch" \
+    "sp" "https://open.spotify.com/search/" "https://open.spotify.com" "spotify" \
+    "ddg" "https://duckduckgo.com/?q=" "https://duckduckgo.com" "duckduckgo" \
+    "w" "https://www.wikipedia.org/wiki/" "https://www.wikipedia.org" "wikipedia" \
+    "default" "https://www.google.com/search?q=" "https://www.google.com" "google"
+
+# Generate menu text dynamically with descriptions
+set menu_text "Default: google"
+for i in (seq 1 4 (count $search_engines))
+    set bang $search_engines[$i]
+    if test "$bang" != "default"
+        set description $search_engines[(math $i + 3)]  # Description is 3 positions ahead
+        set menu_text "$menu_text\n!$bang: $description"
+    end
+end
 
 # URL encode function
 function url_encode
@@ -19,15 +31,14 @@ end
 # Choose menu program based on session type
 if test "$XDG_SESSION_TYPE" != 'wayland'
     if command -v rofi >/dev/null
-        set selection (echo $menu_text | rofi -dmenu -p "search:" -mesg "search options")
+        set selection (echo -e $menu_text | rofi -dmenu -p "search:" -mesg "search options")
     else
         echo "Error: rofi not found" >&2
         exit 1
     end
 else
     if command -v fuzzel >/dev/null
-        # Use regular dmenu mode, not prompt-only
-        set selection (echo $menu_text | fuzzel --dmenu --prompt "search:")
+        set selection (echo -e $menu_text | fuzzel --dmenu --prompt "search:")
     else
         echo "Error: fuzzel not found" >&2
         exit 1
@@ -39,85 +50,70 @@ if test -z "$selection"
     exit 0
 end
 
-# Handle different selection formats
-# Check if it's a menu item selection (contains colon)
+# Parse selection - updated logic for descriptions
+set bang_cmd "default"
+set search_terms ""
+
+# Check if it's a menu selection (contains colon)
 if string match -q '*:*' $selection
-    # Extract just the bang command from "!cmd: description"
-    set bang_part (string split ':' $selection)[1]
-    set first_word (string trim $bang_part)
-    set has_search_terms 0
-    set search_terms ""
+    # Extract the part before the colon
+    set menu_choice (string split ':' $selection)[1]
+    set after_colon (string split ':' $selection --max 2)[2]
+    
+    if string match -q '!*' $menu_choice
+        # It's a bang command from menu (e.g., "!gh: github")
+        set bang_cmd (string sub -s 2 $menu_choice)
+        # Check if the text after colon is just the description (home page) or actual search terms
+        set trimmed_after (string trim $after_colon)
+        
+        # Find the description for this bang command
+        set expected_desc ""
+        for i in (seq 1 4 (count $search_engines))
+            if test "$search_engines[$i]" = "$bang_cmd"
+                set expected_desc $search_engines[(math $i + 3)]
+                break
+            end
+        end
+        
+        if test "$trimmed_after" != "$expected_desc"
+            # Only set search terms if it's different from the description
+            set search_terms $trimmed_after
+        end
+    else if string match -q "Default*" $menu_choice
+        # Default selection with search terms
+        set bang_cmd "default" 
+        set search_terms (string trim $after_colon)
+    end
 else
-    # It's typed input, parse normally
-    set parts (string split ' ' $selection --max 2)
-    set first_word $parts[1]
-    set has_search_terms 0
-    set search_terms ""
-    if test (count $parts) -gt 1
-        # Get everything after the first word (including multiple words)
+    # Direct input, check if it starts with !
+    set first_word (string split ' ' $selection)[1]
+    if string match -q '!*' $first_word
+        # Direct bang command (e.g., "!gh rust")
+        set bang_cmd (string sub -s 2 $first_word)
         set search_terms (string replace -r "^$first_word " "" $selection)
-        set has_search_terms 1
+    else
+        # Plain search terms for default engine
+        set bang_cmd "default"
+        set search_terms $selection
     end
 end
 
-# Process the command
-if string match -q '!*' $first_word
-    # This is a bang command
-    set bang_cmd (string sub -s 2 $first_word)  # Remove the ! prefix
-    
-    # Set up URLs based on the bang command
-    switch $bang_cmd
-        case "gh"
-            set search_url "https://github.com/search?q="
-            set home_url "https://github.com"
-        case "rd"
-            set search_url "https://www.rdocumentation.org/search?q="
-            set home_url "https://www.rdocumentation.org"
-        case "r"
-            set search_url "https://reddit.com/search?q="
-            set home_url "https://reddit.com"
-        case "yt"
-            set search_url "https://www.youtube.com/results?search_query="
-            set home_url "https://www.youtube.com"
-        case "t"
-            set search_url "https://twitch.tv/search?term="
-            set home_url "https://twitch.tv"
-        case "sp"
-            set search_url "https://open.spotify.com/search/"
-            set home_url "https://open.spotify.com"
-        case "ddg"
-            set search_url "https://duckduckgo.com/?q="
-            set home_url "https://duckduckgo.com"
-        case "w"
-            set search_url "https://www.wikipedia.org/wiki/"
-            set home_url "https://www.wikipedia.org"
-        case "*"
-            set search_url "https://www.google.com/search?q="
-            set home_url "https://www.google.com"
+# Find the engine URLs using single array approach (now stepping by 4)
+set search_url "https://www.google.com/search?q="
+set home_url "https://www.google.com"
+
+for i in (seq 1 4 (count $search_engines))
+    if test "$search_engines[$i]" = "$bang_cmd"
+        set search_url $search_engines[(math $i + 1)]
+        set home_url $search_engines[(math $i + 2)]
+        break
     end
-    
-    if test $has_search_terms -eq 1
-        # Search term provided
-        set encoded_search (url_encode $search_terms)
-        xdg-open $search_url$encoded_search
-    else
-        # Just the bang command, open the homepage
-        xdg-open $home_url
-    end
+end
+
+# Open URL
+if test -n "$search_terms"
+    set encoded_search (url_encode $search_terms)
+    xdg-open $search_url$encoded_search
 else
-    # No bang command, search Google for the entire input
-    # Handle "Default: google" selection
-    if string match -q "Default:*" $selection
-        set search_text (string replace -r '^Default:\s*' '' $selection)
-        if test -n "$search_text"
-            set encoded_search (url_encode $search_text)
-        else
-            # Just "Default: google" selected, go to Google homepage
-            xdg-open "https://www.google.com"
-            exit 0
-        end
-    else
-        set encoded_search (url_encode $selection)
-    end
-    xdg-open "https://www.google.com/search?q=$encoded_search"
+    xdg-open $home_url
 end
