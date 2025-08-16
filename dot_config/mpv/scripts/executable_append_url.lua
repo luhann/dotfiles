@@ -1,4 +1,4 @@
--- appendurl - Tsubajashi
+-- appendurl - Tsubajashi (Modified for Wayland support)
 
 local platform = nil --set to 'linux', 'windows' or 'macos' to override automatic assign
 
@@ -16,23 +16,28 @@ end
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
 
+-- Detect if running on Wayland
+local function is_wayland()
+  return os.getenv("WAYLAND_DISPLAY") ~= nil
+end
+
 --main function
 function append(primaryselect)
   local clipboard = get_clipboard(primaryselect or false)
   if clipboard then
     mp.commandv("loadfile", clipboard, "append-play")
     mp.osd_message("URL appended: "..clipboard)
-    msg.info("URL appended: "..clipboard)
+    mp.msg.info("URL appended: "..clipboard)
   end
 end
 
 --handles the subprocess response table and return clipboard if it was a success
 function handleres(res, args, primary)
   if not res.error and res.status == 0 then
-      return res.stdout
+      return res.stdout:gsub("%s+$", "")
   else
-    --if clipboard failed try primary selection
-    if platform=='linux' and not primary then
+    --if clipboard failed try primary selection (only on X11)
+    if platform=='linux' and not primary and not is_wayland() then
       append(true)
       return nil
     end
@@ -47,7 +52,20 @@ end
 
 function get_clipboard(primary) 
   if platform == 'linux' then
-    local args = { 'xclip', '-selection', primary and 'primary' or 'clipboard', '-out' }
+    local args
+    
+    if is_wayland() then
+      -- Use wl-clipboard for Wayland
+      if primary then
+        args = { 'wl-paste', '--primary' }
+      else
+        args = { 'wl-paste' }
+      end
+    else
+      -- Use xclip for X11
+      args = { 'xclip', '-selection', primary and 'primary' or 'clipboard', '-out' }
+    end
+    
     return handleres(utils.subprocess({ args = args }), args, primary)
   elseif platform == 'windows' then
     local args = {
@@ -78,4 +96,4 @@ function get_clipboard(primary)
   return nil
 end
 
-mp.add_key_binding("ctrl+v", "appendURL", append)
+mp.add_key_binding("ctrl+v", "append_url", append)
