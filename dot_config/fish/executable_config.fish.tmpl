@@ -15,7 +15,7 @@ end
 set -gx GPG_TTY (tty)
 set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
-set -gx BROWSER /bin/firefox
+set -gx BROWSER firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 
 {{- if ne .dot_version "new" }}
