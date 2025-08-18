@@ -55,7 +55,7 @@ monitorv2 {
 
 # Set programs that you use
 $terminal = alacritty
-$browser = firefox
+$browser = firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
 $fileManager = XDG_CURRENT_DESKTOP=kde dolphin
 $menu = fuzzel
 
@@ -136,12 +136,16 @@ general {
     border_size = 2 # Add visible borders with your theme
     
     # Use your cyberpunk colors
-    col.active_border = rgba({{ .colors.yellow | replace "#" "" }}80) rgba({{ .colors.blue | replace "#" "" }}80) 90deg
+    col.active_border = rgba({{ .colors.cyber_yellow | replace "#" "" }}80) rgba({{ .colors.cyber_teal | replace "#" "" }}80) 90deg
     col.inactive_border = rgba({{ .colors.surface1 | replace "#" "" }}b3)
     
     resize_on_border = true  # Enable for better UX
     allow_tearing = false
     layout = dwindle
+}
+
+cursor {
+  inactive_timeout = 5
 }
 
 input {
