@@ -9,4 +9,5 @@ pager: bat
 # Aliases allow you to create nicknames for gh commands
 aliases:
     co: pr checkout
+    involved: search issues --involves @me --include-prs --state open --sort updated
 version: "1"
