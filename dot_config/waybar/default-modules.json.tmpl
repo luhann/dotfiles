@@ -51,16 +51,6 @@
         "tooltip": true,
         "tooltip-format": "RAM - {used:0.2f}GiB used"
     },
-    "wlr/taskbar": {
-        "all-outputs": false,
-        "format": "{icon}",
-        "icon-size": 28,
-        "spacing": 3,
-        "on-click-middle": "close",
-        "tooltip-format": "{title}",
-        "ignore-list": [],
-        "on-click": "activate"
-    },
     "tray": {
         "icon-size": 18,
         "spacing": 3
@@ -133,6 +123,14 @@
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "max-volume": 100,
         "scroll-step": 5
+    },
+    "mpris": {
+        "format": "{status_icon} {dynamic}",
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "status-icons": {
+            "paused": "⏸"
+        },
+        "dynamic-order": ["title", "artist"]
     },
     "idle_inhibitor": {
         "format": "{icon} ",
