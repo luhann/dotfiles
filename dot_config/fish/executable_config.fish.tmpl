@@ -87,21 +87,27 @@ abbr --add czd 'chezmoi diff'
 abbr --add cze 'chezmoi edit'
 abbr --add czs 'chezmoi status'
 
-function fish_greeting
-	echo
-	echo -e (uname -ro | awk '{print " \\\\e[1mOS: \\\\e[0;32m"$0"\\\\e[0m"}')
-	echo -e (uname -n | awk '{print " \\\\e[1mHostname: \\\\e[0;32m"$0"\\\\e[0m"}')
-end
+if status --is-interactive
+    function fish_greeting
+      echo
+      echo -e (uname -ro | awk '{print " \\\\e[1mOS: \\\\e[0;32m"$0"\\\\e[0m"}')
+      echo -e (uname -n | awk '{print " \\\\e[1mHostname: \\\\e[0;32m"$0"\\\\e[0m"}')
+    end
 
-# Load completions only if programs exist
-if command -q gh
-    gh completion --shell fish | source
-end
+    # Load completions only if programs exist
+    if command -q gh
+        gh completion --shell fish | source
+    end
 
-if command -q zoxide
-    zoxide init fish | source
-end
+    if command -q zoxide
+        zoxide init fish | source
+    end
 
-if command -q starship
-    starship init fish | source
+    if command -q starship
+        starship init fish | source
+    end
+    
+    if command -q atuin
+        atuin init fish | source
+    end
 end
