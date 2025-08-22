@@ -7,5 +7,5 @@ end
 
 set brightness $argv[1]
 
-ddcutil --display 1 setvcp 10 $brightness
-ddcutil --display 2 setvcp 10 $brightness
+ddcutil --display 1 setvcp 10 $brightness &
+ddcutil --display 2 setvcp 10 $brightness &
