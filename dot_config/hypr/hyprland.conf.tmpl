@@ -151,7 +151,7 @@ cursor {
 input {
     scroll_factor = 1.95
     natural_scroll = false
-    {{- if ne .chezmoi.hostname "replicant" }}
+    {{- if ne .chassis_type "desktop" }}
     kb_variant = colemak_dh
     kb_options = caps:super, compose:rctrl
     {{- end }}
@@ -263,6 +263,7 @@ $mainMod = SUPER # Sets "Windows" key as main modifier
 bind = $mainMod, Return, exec, $terminal
 bind = $mainMod SHIFT, Return, exec, $terminal --class floating
 bind = $mainMod, E, exec, $fileManager
+bind = $mainMod SHIFT, E, exec, $terminal --class floating -e yazi
 bind = $mainMod, R, exec, $browser
 
 bind = $mainMod, L, exec, loginctl lock-session
