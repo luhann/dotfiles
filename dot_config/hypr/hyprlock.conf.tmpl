@@ -36,10 +36,11 @@ label {
 # INPUT FIELD
 input-field {
     monitor =
-    size = 15%, 5%
+    size = 20%, 5%
     outline_thickness = 0
     dots_text_format = *
     dots_size = 0.75
+    dots_spacing = 0.25
     inner_color = rgba({{ .colors.surface0 | replace "#" "" }}4d)  # 30% opacity
     font_color = rgba({{ .colors.cyber_yellow | replace "#" "" }}ff)     # Full opacity
     fail_text = <span weight="bold">ACCESS DENIED</span>
