@@ -3,17 +3,18 @@ LICENSE
 install.sh
 
 # general ignore (for old dotfiles)
-{{- if ne .dot_version "old" }}
+{{- if eq .dot_version "old" }}
 # include x11 config
 # exclude wayland config
-!.config/hypr
-!.config/fuzzel
-!.config/waybar
+.config/hypr
+.config/fuzzel
+.config/waybar
 {{- end }}
 
 # machine specific configs
 {{- if ne .chezmoi.hostname "replicant" }}
 bin/backlight # only manage on replicant
+.config/pipewire/pipewire.conf.d
 {{- end }}
 
 {{- if eq .codespaces true }}
