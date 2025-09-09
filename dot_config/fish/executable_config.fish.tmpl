@@ -59,7 +59,7 @@ abbr --add xinstall "sudo xbps-install -S"
 {{- if eq .chezmoi.osRelease.id "gentoo"}}
 abbr --add einstall "sudo emerge --ask --verbose"
 abbr --add eremove "sudo emerge --ask --depclean"
-abbr --add eupdate "sudo emerge --ask --verbose --newuse --update --deep @world"
+abbr --add eupdate "sudo emerge --ask --verbose --quiet --newuse --update --deep @world"
 abbr --add edepclean "sudo emerge --ask --depclean"
 abbr --add esync "sudo eix-sync"
 abbr --add esearch "eix"
