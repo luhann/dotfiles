@@ -1,10 +1,11 @@
 general {
   hide_cursor = true
+  fail_timeout = 1000
 }
 
 background {
     monitor =
-    path = ~/onedrive/wallpapers/arasaka.png
+    path = ~/onedrive/wallpapers/redspiderlily.png
     color = rgba({{ .colors.base | replace "#" "" }}ff)  # Full opacity
     blur_passes = 2
 }
@@ -12,26 +13,26 @@ background {
 # DATE
 label {
   monitor =
-  text = cmd[update:1000] echo "$(date +"%A, %B %d")"
-  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}e6)  # 90% opacity
+  text = cmd[update:1000] echo "$(date "+%F %T %z")"
+  color = rgba({{ .colors.cyber_red | replace "#" "" }}80)
   font_size = 22
-  font_family = Play
-  position = 0, 300
-  halign = center
-  valign = center
+  font_family = Monaspace Krypton Var
+  position = 2%, 4%
+  halign = left 
+  valign = left 
 }
 
 # TIME
-label {
-  monitor = 
-  text = $TIME
-  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}ff)  # Full opacity
-  font_size = 95
-  font_family = Play
-  position = 0, 200
-  halign = center
-  valign = center
-}
+# label {
+#   monitor = 
+#   text = $TIME
+#   color = rgba({{ .colors.cyber_red | replace "#" "" }}80)
+#   font_size = 22
+#   font_family = Monaspace Krypton Var
+#   position = 4%, 5%
+#   halign = left
+#   valign = left
+# }
 
 # INPUT FIELD
 input-field {
@@ -41,31 +42,10 @@ input-field {
     dots_text_format = *
     dots_size = 0.75
     dots_spacing = 0.25
-    inner_color = rgba({{ .colors.surface0 | replace "#" "" }}4d)  # 30% opacity
-    font_color = rgba({{ .colors.cyber_yellow | replace "#" "" }}ff)     # Full opacity
+    inner_color = rgba({{ .colors.surface0 | replace "#" "" }}1A)
+    font_color = rgba({{ .colors.cyber_red | replace "#" "" }}cc)
     fail_text = <span weight="bold">ACCESS DENIED</span>
     fail_color = rgba({{ .colors.error | replace "#" "" }}ff)      # Full opacity
     placeholder_text = 
 }
 
-label {
-  monitor = 
-  text = cmd[update:10000] echo "- $(whoami | sha1sum)"
-  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}bf)  # 75% opacity
-  font_size = 25
-  font_family = Play
-  position = 0, -200
-  halign = center
-  valign = center
-}
-
-label {
-  monitor = 
-  text = cmd[update:1000] echo "- $(date | b2sum)"
-  color = rgba({{ .colors.cyber_yellow | replace "#" "" }}bf)  # 75% opacity
-  font_size = 25
-  font_family = Play
-  position = 0, -45%
-  halign = center
-  valign = center
-}
