@@ -148,9 +148,12 @@ vim.diagnostic.config({
 vim.g.R_app = "radian"
 vim.g.R_cmd = "R"
 
+vim.opt.undofile = true
+
 vim.opt.showmatch = true
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes"
 vim.opt.spell = true
 vim.opt.spelllang = "en_gb"
 vim.opt.spellsuggest = "best"

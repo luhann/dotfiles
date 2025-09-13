@@ -5,13 +5,14 @@ local map = vim.keymap.set
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Quick save" })
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
+map({"n", "v", "x"}, "<leader>y", '"+y<CR>', {desc = "System copy"})
+map({"n", "v", "x"}, "<leader>d", '"+d<CR>', {desc = "System delete"})
 
 -- remap normal mode command to semi-colon
 map("n", ";", ":")
 
 -- F11 toggles spellcheck
-map("n", "<F11>", function() vim.o.spell = not vim.o.spell end , { desc = "Toggle spellcheck" })
-map("i", "<F11>", function() vim.o.spell = not vim.o.spell end , { desc = "Toggle spellcheck" })
+map({"n", "i"}, "<F11>", function() vim.o.spell = not vim.o.spell end , { desc = "Toggle spellcheck" })
 
 -- NvimTree
 map("n", "<localleader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
@@ -32,7 +33,7 @@ map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 map("n", "K", vim.lsp.buf.hover, { desc = "Show hover info" })
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
-map("n", "<leader>f", vim.lsp.buf.format, { desc = "Format code" })
+map("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format code" })
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
