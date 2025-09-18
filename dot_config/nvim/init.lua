@@ -73,72 +73,58 @@ require("lazy").setup({
 
   -- LSP/Completion
   {"neovim/nvim-lspconfig", lazy = false},
-  {
-    "hrsh7th/nvim-cmp",
-    -- load cmp on InsertEnter
-    event = "InsertEnter",
-    -- these dependencies will only be loaded when cmp loads
-    -- dependencies are always lazy-loaded unless specified otherwise
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
+  {"saghen/blink.cmp",
+    opts = {
+      keymap = { preset = 'super-tab' },
     },
   }
 })
 
-local cmp = require("cmp")
-local lspconfig = require("lspconfig")
+vim.lsp.enable("air")
+vim.lsp.enable("r_language_server")
+vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("texlab")
 
-cmp.setup {
-  sources = {
-    { name = 'nvim_lsp' }
-  },
-  mapping = cmp.mapping.preset.insert(),
-}
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-lspconfig.air.setup({
-    on_attach = function(_, bufnr)
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            callback = function()
-                vim.lsp.buf.format()
-            end,
-        })
-    end,
+vim.lsp.config("r_language_server", {
+  on_attach = function(client, _)
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+  end,
 })
 
-lspconfig.r_language_server.setup{
-  capabilities = capabilities,
-  on_attach = function(client, _)
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-    end,
-}
-
-lspconfig.texlab.setup{
-  capabilities = capabilities,
-  filetypes = { "rnoweb", "tex", "plaintex", "bib" },
-  settings = {
-    texlab = {
-      latexFormatter = "latexindent",
-    },
-  },
-}
-
-lspconfig.rust_analyzer.setup({
-  cmd = { 'rust-analyzer' },
-  on_attach = function(client, bufnr)
+vim.lsp.config("rust_analyzer", {
+on_attach = function(client, bufnr)
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end,
+end,
+capabilities = {
+    experimental = { serverStatusNotification = true },
+  },
+  filetypes = { "rust", "toml.Cargo" },
+  root_markers = { "Cargo.toml", "Cargo.lock", "build.rs" },
+  -- See more: https://rust-analyzer.github.io/book/configuration.html
   settings = {
-    ['rust-analyzer'] = {
+    ["rust-analyzer"] = {
       cargo = {
         allFeatures = true,
       },
-      checkOnSave = true,
+      check = {
+        command = "clippy",
+        features = "all",
+        allTargets = true,
+        onSave = true,
+      },
+      diagnostics = {
+        styleLints = { enable = true }
+      },
+      inlayHints = {
+        enable = true,
+      },
     }
   }
+})
+
+vim.lsp.config("texlab", {
+  filetypes = { "rnoweb", "tex", "plaintex", "bib" },
 })
 
 vim.diagnostic.config({
