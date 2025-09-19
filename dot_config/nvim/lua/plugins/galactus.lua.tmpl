@@ -6,22 +6,22 @@ local lualine = require('lualine')
 -- Color table for highlights using kanagawa-inspired cyberpunk theme
 -- stylua: ignore
 local colors = {
-  bg       = '{{ .colors.base }}',      -- Dark base background
-  fg       = '{{ .colors.text }}',      -- Main text color
-  yellow   = '{{ .colors.yellow }}',    -- Warm yellow
-  cyan     = '{{ .colors.sky }}',       -- Sky blue instead of harsh cyan
-  darkblue = '{{ .colors.sapphire }}',  -- Muted cyber blue
-  green    = '{{ .colors.green }}',     -- Matrix green
-  orange   = '{{ .colors.peach }}',     -- Warm cyber orange
-  violet   = '{{ .colors.mauve }}',     -- Kanagawa purple
-  magenta  = '{{ .colors.pink }}',      -- Soft cyber pink
-  blue     = '{{ .colors.accent }}',    -- Primary blue accent
-  red      = '{{ .colors.error }}',     -- Error red
-  
+  bg       = '{{ .colors.base }}',     -- Dark base background
+  fg       = '{{ .colors.text }}',     -- Main text color
+  yellow   = '{{ .colors.yellow }}',   -- Warm yellow
+  cyan     = '{{ .colors.sky }}',      -- Sky blue instead of harsh cyan
+  darkblue = '{{ .colors.sapphire }}', -- Muted cyber blue
+  green    = '{{ .colors.green }}',    -- Matrix green
+  orange   = '{{ .colors.peach }}',    -- Warm cyber orange
+  violet   = '{{ .colors.mauve }}',    -- Kanagawa purple
+  magenta  = '{{ .colors.pink }}',     -- Soft cyber pink
+  blue     = '{{ .colors.accent }}',   -- Primary blue accent
+  red      = '{{ .colors.error }}',    -- Error red
+
   -- Additional colors for better theme integration
-  surface  = '{{ .colors.surface0 }}',  -- For subtle backgrounds
-  subtext  = '{{ .colors.subtext1 }}',  -- For muted text
-  teal     = '{{ .colors.teal }}',      -- Kanagawa teal
+  surface  = '{{ .colors.surface0 }}', -- For subtle backgrounds
+  subtext  = '{{ .colors.subtext1 }}', -- For muted text
+  teal     = '{{ .colors.teal }}',     -- Kanagawa teal
 }
 
 local conditions = {
@@ -100,12 +100,12 @@ ins_left {
   color = function()
     -- auto change color according to neovims mode with kanagawa-inspired colors
     local mode_color = {
-      n = colors.blue,        -- Normal: blue accent
-      i = colors.green,       -- Insert: green
-      v = colors.magenta,     -- Visual: pink
+      n = colors.blue,    -- Normal: blue accent
+      i = colors.green,   -- Insert: green
+      v = colors.magenta, -- Visual: pink
       [''] = colors.magenta,
       V = colors.magenta,
-      c = colors.yellow,      -- Command: yellow
+      c = colors.yellow, -- Command: yellow
       no = colors.red,
       s = colors.orange,
       S = colors.orange,
@@ -119,7 +119,7 @@ ins_left {
       rm = colors.cyan,
       ['r?'] = colors.cyan,
       ['!'] = colors.red,
-      t = colors.teal,        -- Terminal: teal
+      t = colors.teal, -- Terminal: teal
     }
     return { fg = mode_color[vim.fn.mode()] }
   end,
@@ -136,17 +136,17 @@ ins_left {
 ins_left {
   'filename',
   cond = conditions.buffer_not_empty,
-  color = { fg = colors.cyan, gui = 'bold' },  -- Sky blue for filename
+  color = { fg = colors.cyan, gui = 'bold' }, -- Sky blue for filename
 }
 
-ins_left { 
+ins_left {
   'location',
   color = { fg = colors.subtext }
 }
 
-ins_left { 
-  'progress', 
-  color = { fg = colors.fg, gui = 'bold' } 
+ins_left {
+  'progress',
+  color = { fg = colors.fg, gui = 'bold' }
 }
 
 ins_left {
@@ -185,7 +185,7 @@ ins_left {
     return msg
   end,
   icon = ' LSP:',
-  color = { fg = colors.teal, gui = 'bold' },  -- Teal for LSP info
+  color = { fg = colors.teal, gui = 'bold' }, -- Teal for LSP info
 }
 
 -- Add components to right sections
