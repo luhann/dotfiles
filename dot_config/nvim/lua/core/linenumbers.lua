@@ -1,4 +1,3 @@
-
 -- Toggle relative numbering on buffer events
 local linenumber = vim.api.nvim_create_augroup("linenumber", { clear = true })
 
@@ -14,7 +13,7 @@ local function should_ignore_buffer()
 end
 
 -- Turns ON relative numbers when you enter a normal buffer
-vim.api.nvim_create_autocmd({"BufEnter", "FocusGained", "InsertLeave"}, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave" }, {
   group = linenumber,
   callback = function()
     if not should_ignore_buffer() then

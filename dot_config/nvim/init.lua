@@ -6,7 +6,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 -- Example using a list of specs with the default options
-vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
+vim.g.mapleader = " "       -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -25,21 +25,22 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- UI/Appearance
-  {"rebelot/kanagawa.nvim"},
+  { "rebelot/kanagawa.nvim" },
   "nvim-lualine/lualine.nvim",
   "nvim-tree/nvim-web-devicons",
 
-   -- Editor enhancements
-  {"folke/which-key.nvim",
-  event = "VeryLazy",
-  init = function()
-    vim.o.timeout = true
-    vim.o.timeoutlen = 300
-  end,
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+  -- Editor enhancements
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
     }
   },
   {
@@ -57,46 +58,52 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function () 
+    config = function()
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
-          ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex"},
-          sync_install = false,
-          auto_install = true,
-          highlight = { enable = true},
-          indent = { enable = true },
-        })
+        ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex" },
+        sync_install = false,
+        auto_install = true,
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
     end
   },
-  {"R-nvim/R.nvim", lazy = false},
+  { "R-nvim/R.nvim",         lazy = false },
 
   -- LSP/Completion
-  {"neovim/nvim-lspconfig", lazy = false},
-  {"saghen/blink.cmp",
+  { "neovim/nvim-lspconfig", lazy = false },
+  {
+    "saghen/blink.cmp",
+    version = '1.*',
     opts = {
       keymap = { preset = 'super-tab' },
+      fuzzy = {
+        implementation = "prefer_rust_with_warning"   -- or "rust" if you strictly want the Rust implementation
+      },
     },
   }
 })
 
 vim.lsp.enable("air")
+vim.lsp.enable("lua_ls")
 vim.lsp.enable("r_language_server")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("texlab")
 
 vim.lsp.config("r_language_server", {
   on_attach = function(client, _)
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
   end,
 })
 
 vim.lsp.config("rust_analyzer", {
-on_attach = function(client, bufnr)
-        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-end,
-capabilities = {
+  on_attach = function(client, bufnr)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end,
+  capabilities = {
     experimental = { serverStatusNotification = true },
   },
   filetypes = { "rust", "toml.Cargo" },
