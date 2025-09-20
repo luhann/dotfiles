@@ -80,7 +80,7 @@ require("lazy").setup({
     opts = {
       keymap = { preset = 'super-tab' },
       fuzzy = {
-        implementation = "prefer_rust_with_warning"   -- or "rust" if you strictly want the Rust implementation
+        implementation = "prefer_rust_with_warning" -- or "rust" if you strictly want the Rust implementation
       },
     },
   }
