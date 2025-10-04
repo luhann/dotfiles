@@ -91,6 +91,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("r_language_server")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("texlab")
+vim.lsp.enable("tinymist")
 
 vim.lsp.config("r_language_server", {
   on_attach = function(client, _)
@@ -132,6 +133,15 @@ vim.lsp.config("rust_analyzer", {
 
 vim.lsp.config("texlab", {
   filetypes = { "rnoweb", "tex", "plaintex", "bib" },
+})
+
+vim.lsp.config("tinymist", {
+  filetypes = { "typst" },
+  settings = {
+    formatterMode = "typstyle",
+    exportPdf = "onType",
+    semanticTokens = "disable"
+  }
 })
 
 vim.diagnostic.config({
