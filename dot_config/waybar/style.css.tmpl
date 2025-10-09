@@ -181,6 +181,20 @@ tooltip label {
 	background: @bg_hover;
 }
 
+#battery.charging {
+  color: {{ .colors.green }};
+  background: rgba(0, 0, 0, 0);
+}
+
+#battery.warning {
+  background: rgba(0, 0, 0, 0);
+}
+
+#battery.critical {
+  color: rgba(178, 34, 34, 1);
+  background: rgba(0, 0, 0, 0);
+}
+
 #wireplumber {
 	color: @content_inactive;
 	font-family: "Monaspace Krypton Var";
