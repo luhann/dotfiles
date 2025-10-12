@@ -8,10 +8,16 @@
   gpgsign = true
 [core]
   autocrlf = input
+  pager = delta
 [credential]
 	helper = cache
 [init]
-	defaultBranch = master
+  defaultBranch = master
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  side-by-side = true
 [help]
 	autocorrect = 1
 [rerere]
@@ -23,4 +29,7 @@
 [fetch]
 	writeCommitGraph = true
 [rebase]
-	updateRefs = true
+  updateRefs = true
+[merge]
+  conflictStyle = zdiff3
+
