@@ -1,8 +1,7 @@
 #!/usr/bin/env fish
 
 # Get the Writeback value from /proc/meminfo and format it appropriately
-grep -m 1 "Writeback" /proc/meminfo | awk '
-{
+awk '/Writeback/ {
     # Extract the value in kB
     size_kb = $2
     
@@ -17,4 +16,5 @@ grep -m 1 "Writeback" /proc/meminfo | awk '
         # Keep as kB
         printf "%d kB", size_kb
     }
-}'
+    exit
+}' /proc/meminfo
