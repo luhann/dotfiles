@@ -29,10 +29,10 @@ if test "$XDG_SESSION_TYPE" != "wayland"
     echo "Set X11 wallpaper to: $WALL"
 else
     # Check if hyprctl is available
-    if not command -q hyprctl
-        echo "Error: hyprctl is not installed" >&2
+    if not command -q swww
+        echo "Error: swww is not installed" >&2
         exit 1
     end
-    hyprctl hyprpaper reload , "$WALL"
+    swww img --transition-fps 165 --transition-type wave --transition-wave 50,25 --transition-angle 135 "$WALL"
     echo "Set Wayland wallpaper to: $WALL"
 end
