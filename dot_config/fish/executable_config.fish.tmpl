@@ -111,4 +111,8 @@ if status --is-interactive
     if command -q atuin
         atuin init fish | source
     end
+
+    if command -q jj
+        COMPLETE=fish jj | source
+    end
 end
