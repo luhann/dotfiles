@@ -2,5 +2,5 @@ feh -B black \
 -x \
 -d \
 -N \
---info "identify -ping -format '%w - %h | %S' %F" \
+--info "vipsheader -f width -f height %F" \
 --scale-down

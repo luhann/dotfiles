@@ -6,17 +6,17 @@ set name (status basename)
 
 if test $argc -eq 0; or test $argc -gt 2
     echo "Usage:" >&2
-    echo "  $name <brightness>           # Set both displays to same brightness" >&2
+    echo "  $name <brightness>                 # Set both displays to same brightness" >&2
     echo "  $name <brightness1> <brightness2>  # Set each display individually" >&2
     exit 1
 end
 
 if test $argc -eq 1
-    ddcutil --display 1 setvcp 10 $argv[1] &
-    ddcutil --display 2 setvcp 10 $argv[1] &
+    ddcutil --display 1 --skip-ddc-checks --enable-dynamic-sleep setvcp 10 $argv[1] &
+    ddcutil --display 2 --skip-ddc-checks --enable-dynamic-sleep setvcp 10 $argv[1] &
 else if test $argc -eq 2
-    ddcutil --display 1 setvcp 10 $argv[1] &
-    ddcutil --display 2 setvcp 10 $argv[2] &
+    ddcutil --display 1 --skip-ddc-checks --enable-dynamic-sleep setvcp 10 $argv[1] &
+    ddcutil --display 2 --skip-ddc-checks --enable-dynamic-sleep setvcp 10 $argv[2] &
 end
 
 wait ddcutil
