@@ -1,0 +1,6 @@
+[list]
+all = yes
+
+[keys.viewer]
+Left = prev_file
+Right = next_file
