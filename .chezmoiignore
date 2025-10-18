@@ -9,6 +9,7 @@ install.sh
 .config/hypr
 .config/fuzzel
 .config/waybar
+.config/swayimg
 {{- end }}
 
 # machine specific configs

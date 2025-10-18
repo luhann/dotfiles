@@ -1,6 +1,0 @@
-feh -B black \
--x \
--d \
--N \
---info "vipsheader -f width -f height %F" \
---scale-down
