@@ -9,6 +9,7 @@ end
 # Get dunst pause status
 set -l is_paused (dunstctl is-paused)
 set -l waiting_count (dunstctl count waiting)
+set -l num_notifications (dunstctl history | jq '.data[0] | length')
 
 # Determine output format based on session type
 if test "$XDG_SESSION_TYPE" = "wayland"
@@ -22,10 +23,10 @@ if test "$XDG_SESSION_TYPE" = "wayland"
         if test "$waiting_count" -gt 0
             set output_text "$disabled_icon $waiting_count"
         end
-        echo '{"text": "'"$output_text"'", "class": "paused"}'
+        echo '{"text": "'"$output_text"'", "class": "paused", "tooltip": "'"$num_notifications"'"}'
     else
         # Notifications are active
-        echo '{"text": "'"$enabled_icon"'", "alt": "active"}'
+        echo '{"text": "'"$enabled_icon"'", "alt": "active", "tooltip": "'"$num_notifications"'"}'
     end
 else
     # Polybar format (plain text with formatting)
