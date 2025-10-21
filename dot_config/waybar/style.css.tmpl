@@ -87,13 +87,17 @@ tooltip label {
 	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+#workspaces button.empty {
+	color: transparent;
+}
+
 #workspaces button.active {
 	color: @content_main;
 	border-bottom: 3px solid @content_main;
 }
 
 #workspaces button.focused {
-	color: @bg_active;
+	color: @content_main;
 }
 
 #workspaces button.urgent {
