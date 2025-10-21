@@ -33,6 +33,6 @@ else
         echo "Error: swww is not installed" >&2
         exit 1
     end
-    swww img --transition-fps 165 --transition-type wave --transition-wave 50,25 --transition-angle 135 "$WALL"
+    swww img --transition-fps 255 --transition-type wave --transition-wave 50,25 --transition-angle 135 "$WALL"
     echo "Set Wayland wallpaper to: $WALL"
 end
