@@ -269,10 +269,10 @@ bind = $mainMod SHIFT, E, exec, $terminal --class floating -e yazi
 bind = $mainMod, R, exec, $browser
 
 bind = $mainMod, L, exec, loginctl lock-session
-bind = $mainMod, W, killactive,
+bind = $mainMod, Q, killactive,
 bind = $mainMod SHIFT, Q, exit,
 bind = $mainMod, V, togglefloating,
-bind = $mainMod, d, exec, $menu
+bind = $mainMod, D, exec, $menu
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, J, togglesplit, # dwindle
 
@@ -286,6 +286,7 @@ bind = $mainMod, left, movefocus, l
 bind = $mainMod, right, movefocus, r
 bind = $mainMod, up, movefocus, u
 bind = $mainMod, down, movefocus, d
+bind = $mainMod, f, fullscreen
 
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, workspace, 1
