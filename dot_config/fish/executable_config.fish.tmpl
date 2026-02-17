@@ -52,12 +52,12 @@ alias weather="curl -4 wttr.in/Cape+Town"
 alias dolphin="env XDG_CURRENT_DESKTOP=kde dolphin"
 
 # OS-specific package management
-{{- if eq .chezmoi.osRelease.id "void"}}
+{{- if eq .chezmoi.osRelease.id "'void'"}}
 abbr --add xup "sudo xbps-install -Su"
 abbr --add xrm "sudo xbps-remove -R"
 abbr --add xinstall "sudo xbps-install -S"
 {{- end}}
-{{- if eq .chezmoi.osRelease.id "gentoo"}}
+{{- if eq .chezmoi.osRelease.id "'gentoo'"}}
 abbr --add einstall "sudo emerge --ask --verbose"
 abbr --add eremove "sudo emerge --ask --depclean"
 abbr --add eupdate "sudo emerge --ask --verbose --quiet --newuse --update --deep @world"
