@@ -17,7 +17,7 @@ install.sh
 .config/niri
 {{- end }}
 
-{{- if ne .wm "hypr"}}
+{{- if ne .wm "hyprland"}}
 .config/hypr
 {{- end }}
 
