@@ -70,7 +70,50 @@ require("lazy").setup({
       })
     end
   },
-  { "R-nvim/R.nvim",         lazy = false },
+  {
+    "R-nvim/R.nvim",
+    lazy = false,
+    config = function()
+      -- Create a table with the options to be passed to setup()
+      ---@type RConfigUserOpts
+      local opts = {
+        hook = {
+          on_filetype = function()
+            vim.api.nvim_buf_set_keymap(0, "n", "<Enter>", "<Plug>RDSendLine", {})
+            vim.api.nvim_buf_set_keymap(0, "v", "<Enter>", "<Plug>RSendSelection", {})
+          end
+        },
+        R_args = { "--quiet", "--no-save" },
+        R_app = "arf",
+        R_cmd = "R",
+        min_editor_width = 72,
+        rconsole_width = 78,
+        objbr_mappings = {                                      -- Object browser keymap
+          c = 'class',                                          -- Call R functions
+          ['<localleader>gg'] = 'head({object}, n = 15)',       -- Use {object} notation to write arbitrary R code.
+          v = function()
+            -- Run lua functions
+            require('r.browser').toggle_view()
+          end
+        },
+        disable_cmds = {
+          "RClearConsole",
+          "RCustomStart",
+          "RSPlot",
+          "RSaveClose",
+        },
+      }
+      -- Check if the environment variable "R_AUTO_START" exists.
+      -- If using fish shell, you could put in your config.fish:
+      -- alias r "R_AUTO_START=true nvim"
+      if vim.env.R_AUTO_START == "true" then
+        opts.auto_start = "on startup"
+        opts.objbr_auto_start = true
+      end
+      require("r").setup(opts)
+    end,
+
+  },
 
   -- LSP/Completion
   { "neovim/nvim-lspconfig", lazy = false },
@@ -87,18 +130,21 @@ require("lazy").setup({
 })
 
 vim.lsp.enable("air")
+vim.lsp.enable("jarl")
 vim.lsp.enable("lua_ls")
-vim.lsp.enable("r_language_server")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("texlab")
 vim.lsp.enable("tinymist")
 
-vim.lsp.config("r_language_server", {
-  on_attach = function(client, _)
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
+vim.lsp.config("jarl", {
+  cmd = { 'jarl', 'server' },
+  filetypes = { 'r', 'rmd'},
+  -- root_markers = { '.git' },
+  root_dir = function(bufnr, on_dir)
+    on_dir(vim.fs.root(bufnr, '.git') or vim.uv.os_homedir())
   end,
 })
+
 
 vim.lsp.config("rust_analyzer", {
   on_attach = function(client, bufnr)
@@ -147,9 +193,6 @@ vim.lsp.config("tinymist", {
 vim.diagnostic.config({
   virtual_text = true,
 })
-
-vim.g.R_app = "radian"
-vim.g.R_cmd = "R"
 
 vim.opt.undofile = true
 
