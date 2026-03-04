@@ -57,7 +57,7 @@ abbr --add xup "sudo xbps-install -Su"
 abbr --add xrm "sudo xbps-remove -R"
 abbr --add xinstall "sudo xbps-install -S"
 {{- end}}
-{{- if eq .chezmoi.osRelease.id "'gentoo'"}}
+{{- if (or (eq .chezmoi.osRelease.idLike "gentoo") (eq .chezmoi.osRelease.id "gentoo"))}}
 abbr --add einstall "sudo emerge --ask --verbose"
 abbr --add eremove "sudo emerge --ask --depclean"
 abbr --add eupdate "sudo emerge --ask --verbose --quiet --newuse --update --deep @world"
