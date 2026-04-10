@@ -1,0 +1,21 @@
+#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+
+[user]
+name = "Luke Hannan"
+email = "luke@lukehannan.com"
+
+[ui]
+default-command = ["st"]
+
+[signing]
+behavior = "drop"
+backend = "gpg"
+
+[git]
+sign-on-push = true
+
+[aliases]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
+tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+la = ["log", "-r", "all()"]
+lla = ["log", "-r", "all() | hidden()"]
