@@ -6,7 +6,7 @@ general {
 background {
     monitor =
     path = ~/onedrive/wallpapers/redspiderlily.png
-    color = rgba({{ .colors.base | replace "#" "" }}ff)  # Full opacity
+    color = rgba({{ .colors.base | replace "#" "" }}ff)
     blur_passes = 2
 }
 
@@ -38,14 +38,17 @@ label {
 input-field {
     monitor =
     size = 20%, 5%
+    position = 0%, 10%
     outline_thickness = 0
     dots_text_format = *
     dots_size = 0.75
     dots_spacing = 0.25
-    inner_color = rgba({{ .colors.surface0 | replace "#" "" }}1A)
+    inner_color = rgba({{ .colors.surface0 | replace "#" "" }}00)
     font_color = rgba({{ .colors.cyber_red | replace "#" "" }}cc)
+    check_color = rgba({{ .colors.warning | replace "#" "" }}00)
     fail_text = <span weight="bold">ACCESS DENIED</span>
-    fail_color = rgba({{ .colors.error | replace "#" "" }}ff)      # Full opacity
-    placeholder_text = 
+    fail_color = rgba({{ .colors.error | replace "#" "" }}00)
+    placeholder_text = <span letter_spacing="5000" weight="bold">[ 眠りの森 ]</span>
+    fade_on_empty = false
 }
 
