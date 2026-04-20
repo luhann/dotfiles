@@ -1,4 +1,4 @@
-#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
 
 [user]
 name = "Luke Hannan"
@@ -6,6 +6,8 @@ email = "luke@lukehannan.com"
 
 [ui]
 default-command = ["st"]
+pager = "delta"
+diff-formatter = ":git"
 
 [signing]
 behavior = "drop"
@@ -13,9 +15,23 @@ backend = "gpg"
 
 [git]
 sign-on-push = true
+private-commits = "description('wip:*') | description('private:*')"
+
+[snapshot]
+auto-update-stale = true
+
+[working-copy]
+eol-conversion = "input"
+
+[revsets]
+bookmark-advance-to = "closest_pushable(@)"
+
+[revset-aliases]
+"closest_pushable(to)" = "heads(::to & mutable() & ~description(exact:\"\") & (~empty() | merges()))"
 
 [aliases]
-tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
-tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 la = ["log", "-r", "all()"]
 lla = ["log", "-r", "all() | hidden()"]
+sr = ["show", "-r", "@"]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
+tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]

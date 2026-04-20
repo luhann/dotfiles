@@ -115,4 +115,8 @@ if status --is-interactive
     if command -q jj
         COMPLETE=fish jj | source
     end
+
+    if command -q pixi
+      pixi completion --shell fish | source
+    end
 end
