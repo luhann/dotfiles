@@ -136,6 +136,7 @@ vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("texlab")
 vim.lsp.enable("tinymist")
 vim.lsp.enable("ty")
+vim.lsp.enable("ruff")
 
 vim.lsp.config("jarl", {
   cmd = { 'jarl', 'server' },
