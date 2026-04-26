@@ -1,0 +1,9 @@
+{{- $make_jobs := "4" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{- $make_jobs = (output "nproc" | trim) -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{- $make_jobs = (output "sysctl" "-n" "hw.logicalcpu" | trim) -}}
+{{- end -}}
+NOT_CRAN=true
+MAKEFLAGS=-j{{ $make_jobs }}
+R_LIBS_USER=~/rlibrary/
