@@ -1,4 +1,4 @@
-sourceDir = "/home/{{.chezmoi.username}}/dotfiles"
+sourceDir = "{{.chezmoi.homeDir}}/dotfiles"
 pager = "delta"
 
 {{- $codespaces:= env "CODESPACES" | not | not -}}
@@ -16,6 +16,9 @@ pager = "delta"
 {{-   $chassis_type = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim }}
 {{- end }}
 
+{{- $has_nvidia := false }}
+{{- if eq .chezmoi.hostname "gestalt" }}{{-   $has_nvidia = true }}{{- end }}
+
 {{- $color_scheme := promptStringOnce . "color_scheme" "What color scheme to use" "patroclus" -}}
 {{- $color_palette := (includeTemplate (print $color_scheme ".yaml") | fromYaml).colors }}
 
@@ -25,6 +28,7 @@ pager = "delta"
   chassis_type = {{ $chassis_type | quote }}
   codespaces = {{ $codespaces }}
   color_scheme = {{ $color_scheme | quote}}
+  has_nvidia = {{ $has_nvidia }}
 
 [data.colors]
   # some colors that are not defined
@@ -33,3 +37,54 @@ pager = "delta"
   {{- range $key, $val := $color_palette }}
     {{ $key }} = {{ $val | quote }}
   {{- end }}
+
+{{- if eq $chassis_type "desktop" }}
+
+[[data.monitors]]
+output   = "DP-1"
+mode     = "2560x1440@165"
+position = "auto"
+scale    = "auto"
+bitdepth = 10
+icc      = "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"
+
+[[data.monitors]]
+output   = "DP-2"
+mode     = "2560x1440@165"
+position = "auto-left"
+niri_x   = -2560
+niri_y   = 0
+scale    = "auto"
+bitdepth = 10
+icc      = "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"
+
+[[data.monitors]]
+output   = ""
+mode     = "preferred"
+position = "auto"
+scale    = "1"
+
+{{- else if eq $chassis_type "laptop" }}
+
+[[data.monitors]]
+output   = "eDP-1"
+mode     = "preferred"
+position = "auto"
+scale    = "auto"
+bitdepth = 10
+
+[[data.monitors]]
+output   = ""
+mode     = "preferred"
+position = "auto"
+scale    = "1"
+
+{{- else }}
+
+[[data.monitors]]
+output   = ""
+mode     = "preferred"
+position = "auto"
+scale    = "1"
+
+{{- end }}
