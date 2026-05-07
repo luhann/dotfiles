@@ -2,6 +2,24 @@
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
+
+// Outputs — defined in .chezmoi.toml.tmpl alongside Hyprland monitor config
+{{- range .monitors }}
+{{- if .output }}
+output {{ .output | quote }} {
+{{- if and .mode (ne .mode "preferred") }}
+    mode {{ .mode | quote }}
+{{- end }}
+{{- if and .scale (ne .scale "auto") }}
+    scale {{ .scale }}
+{{- end }}
+{{- if .niri_x }}
+    position x={{ .niri_x }} y={{ .niri_y }}
+{{- end }}
+}
+{{- end }}
+{{- end }}
+
 environment {
   TERMINAL "alacritty"
   QT_QPA_PLATFORM "wayland"
@@ -101,109 +119,6 @@ input {
     focus-follows-mouse max-scroll-amount="10%"
 }
 
-// You can configure outputs by their name, which you can find
-// by running `niri msg outputs` while inside a niri instance.
-// The built-in laptop monitor is usually called "eDP-1".
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Outputs
-// Remember to uncomment the node by removing "/-"!
-{{ if eq .chassis_type "desktop" -}}
-output "DP-1" {
-    // Uncomment this line to disable this output.
-    // off
-    variable-refresh-rate
-
-    // Resolution and, optionally, refresh rate of the output.
-    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-    // If the refresh rate is omitted, niri will pick the highest refresh rate
-    // for the resolution.
-    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "2560x1440@165.080"
-
-    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    // scale 2
-
-    // Transform allows to rotate the output counter-clockwise, valid values are:
-    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    transform "normal"
-
-    // Position of the output in the global coordinate space.
-    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-    // The cursor can only move between directly adjacent outputs.
-    // Output scale and rotation has to be taken into account for positioning:
-    // outputs are sized in logical, or scaled, pixels.
-    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-    // so to put another output directly adjacent to it on the right, set its x to 1920.
-    // If the position is unset or results in an overlap, the output is instead placed
-    // automatically.
-    position x=2560 y=0
-}
-
-output "DP-2" {
-    // Uncomment this line to disable this output.
-    // off
-    variable-refresh-rate
-
-    // Resolution and, optionally, refresh rate of the output.
-    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-    // If the refresh rate is omitted, niri will pick the highest refresh rate
-    // for the resolution.
-    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "2560x1440@165.080"
-
-    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    // scale 2
-
-    // Transform allows to rotate the output counter-clockwise, valid values are:
-    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    transform "normal"
-
-    // Position of the output in the global coordinate space.
-    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-    // The cursor can only move between directly adjacent outputs.
-    // Output scale and rotation has to be taken into account for positioning:
-    // outputs are sized in logical, or scaled, pixels.
-    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-    // so to put another output directly adjacent to it on the right, set its x to 1920.
-    // If the position is unset or results in an overlap, the output is instead placed
-    // automatically.
-    position x=0 y=0
-}
-{{ else }}
-output "eDP-1" {
-    // Uncomment this line to disable this output.
-    // off
-    variable-refresh-rate
-
-    // Resolution and, optionally, refresh rate of the output.
-    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-    // If the refresh rate is omitted, niri will pick the highest refresh rate
-    // for the resolution.
-    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    // mode "2560x1440@165.080"
-
-    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 1.5
-
-    // Transform allows to rotate the output counter-clockwise, valid values are:
-    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    transform "normal"
-
-    // Position of the output in the global coordinate space.
-    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-    // The cursor can only move between directly adjacent outputs.
-    // Output scale and rotation has to be taken into account for positioning:
-    // outputs are sized in logical, or scaled, pixels.
-    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-    // so to put another output directly adjacent to it on the right, set its x to 1920.
-    // If the position is unset or results in an overlap, the output is instead placed
-    // automatically.
-    position x=0 y=0
-}
-{{ end }}
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
@@ -387,7 +302,7 @@ layout {
 spawn-at-startup "hypridle"
 spawn-at-startup "dunst"
 spawn-at-startup "waybar"
-spawn-at-startup "swww-daemon"
+spawn-at-startup "awww-daemon"
 spawn-at-startup "systemctl --user start hyprpolkitagent"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
