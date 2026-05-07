@@ -198,6 +198,7 @@ vim.diagnostic.config({
 
 vim.opt.undofile = true
 
+vim.opt.colorcolumn = "120"
 vim.opt.showmatch = true
 vim.opt.number = true
 vim.opt.relativenumber = true
