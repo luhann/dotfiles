@@ -18,6 +18,28 @@ set -gx EDITOR nvim
 set -gx BROWSER firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 
+{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (eq .chezmoi.osRelease.idLike "gentoo"))}}
+# Clang/LLVM toolchain
+set -gx CC clang
+set -gx CXX clang++
+set -gx CPP clang-cpp
+set -gx FC flang
+set -gx LD ld.lld
+set -gx AR llvm-ar
+set -gx NM llvm-nm
+set -gx RANLIB llvm-ranlib
+set -gx OBJCOPY llvm-objcopy
+set -gx STRIP llvm-strip
+set -gx OBJDUMP llvm-objdump
+set -gx READELF llvm-readelf
+
+set -gx CFLAGS "-march=native -O2 -flto=thin"
+set -gx CXXFLAGS "-march=native -O2 -flto=thin"
+set -gx LDFLAGS "-fuse-ld=lld"
+set -gx RUSTFLAGS "-C target-cpu=native -C opt-level=3"
+set -gx MAKEFLAGS "--jobs (nproc)"
+{{- end}}
+
 {{- if ne .dot_version "new" }}
 # XSecureLock settings
 set -gx XSECURELOCK_SAVER saver_mpv
@@ -57,7 +79,7 @@ abbr --add xup "sudo xbps-install -Su"
 abbr --add xrm "sudo xbps-remove -R"
 abbr --add xinstall "sudo xbps-install -S"
 {{- end}}
-{{- if (or (eq .chezmoi.osRelease.idLike "gentoo") (eq .chezmoi.osRelease.id "gentoo"))}}
+{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (eq .chezmoi.osRelease.idLike "gentoo"))}}
 abbr --add einstall "sudo emerge --ask --verbose"
 abbr --add eremove "sudo emerge --ask --depclean"
 abbr --add eupdate "sudo emerge --ask --verbose --quiet --newuse --update --deep @world"
