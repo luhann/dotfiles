@@ -28,6 +28,7 @@ bookmark-advance-to = "closest_pushable(@)"
 
 [revset-aliases]
 "closest_pushable(to)" = "heads(::to & mutable() & ~description(exact:\"\") & (~empty() | merges()))"
+"why_immutable(r)" = "(r & immutable()) | roots(r:: & immutable_heads())"
 
 [aliases]
 la = ["log", "-r", "all()"]
