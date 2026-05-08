@@ -3,6 +3,8 @@ local map = vim.keymap.set
 
 -- Better defaults
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
+map("n", "n", "nzzzv", { desc = "Next result (centered)" })
+map("n", "N", "Nzzzv", { desc = "Prev result (centered)" })
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Quick save" })
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
 map({"n", "v", "x"}, "<leader>y", '"+y<CR>', {desc = "System copy"})
@@ -16,6 +18,16 @@ map({"n", "i"}, "<F11>", function() vim.o.spell = not vim.o.spell end , { desc =
 
 -- NvimTree
 map("n", "<localleader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+
+-- Stay in visual mode when indenting
+map("v", "<", "<gv", { desc = "Indent left" })
+map("v", ">", ">gv", { desc = "Indent right" })
+
+-- Move lines up/down
+map("n", "<A-Down>", "<cmd>move .+1<CR>==", { desc = "Move line down" })
+map("n", "<A-Up>", "<cmd>move .-2<CR>==", { desc = "Move line up" })
+map("v", "<A-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("v", "<A-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selection up" })
 
 -- Better window navigation
 map("n", "<C-h>", "<C-w>h")
