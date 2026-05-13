@@ -33,6 +33,9 @@ background = "{{ .colors.selection }}"
 text = "{{ .colors.base }}"
 cursor = "{{ .colors.accent }}"
 
+[scrolling]
+history = 50000
+
 [window]
 dynamic_title = true
 decorations = "none"
@@ -49,6 +52,3 @@ bindings = [
 {key = "Escape", mods = "Control", action = "ToggleViMode"},
 {key = "Return", mods = "Control|Shift", action = "SpawnNewInstance"},
 ]
-
-[mouse]
-hide_when_typing = false
