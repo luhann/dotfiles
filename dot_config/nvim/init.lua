@@ -34,7 +34,6 @@ require("lazy").setup({
     "folke/which-key.nvim",
     event = "VeryLazy",
     init = function()
-      vim.o.timeout = true
       vim.o.timeoutlen = 300
     end,
     opts = {
@@ -62,7 +61,7 @@ require("lazy").setup({
       local configs = require("nvim-treesitter.config")
 
       configs.setup({
-        ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex" },
+        ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex", "rust", "fish", "toml" },
         sync_install = false,
         auto_install = true,
         highlight = { enable = true },
@@ -88,9 +87,9 @@ require("lazy").setup({
         R_cmd = "R",
         min_editor_width = 72,
         rconsole_width = 78,
-        objbr_mappings = {                                      -- Object browser keymap
-          c = 'class',                                          -- Call R functions
-          ['<localleader>gg'] = 'head({object}, n = 15)',       -- Use {object} notation to write arbitrary R code.
+        objbr_mappings = {                                -- Object browser keymap
+          c = 'class',                                    -- Call R functions
+          ['<localleader>gg'] = 'head({object}, n = 15)', -- Use {object} notation to write arbitrary R code.
           v = function()
             -- Run lua functions
             require('r.browser').toggle_view()
@@ -123,12 +122,13 @@ require("lazy").setup({
     opts = {
       keymap = { preset = 'super-tab' },
       fuzzy = {
-        implementation = "prefer_rust_with_warning" -- or "rust" if you strictly want the Rust implementation
+        implementation = "rust",
       },
     },
   }
 })
 
+vim.lsp.inlay_hint.enable(true)
 vim.lsp.enable("air")
 vim.lsp.enable("jarl")
 vim.lsp.enable("lua_ls")
@@ -140,7 +140,7 @@ vim.lsp.enable("ruff")
 
 vim.lsp.config("jarl", {
   cmd = { 'jarl', 'server' },
-  filetypes = { 'r', 'rmd'},
+  filetypes = { 'r', 'rmd' },
   -- root_markers = { '.git' },
   root_dir = function(bufnr, on_dir)
     on_dir(vim.fs.root(bufnr, '.git') or vim.uv.os_homedir())
@@ -149,9 +149,6 @@ vim.lsp.config("jarl", {
 
 
 vim.lsp.config("rust_analyzer", {
-  on_attach = function(client, bufnr)
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end,
   capabilities = {
     experimental = { serverStatusNotification = true },
   },
@@ -193,8 +190,21 @@ vim.lsp.config("tinymist", {
 })
 
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = {
+    virt_text_pos = "eol_right_align",
+    format = function(d)
+      return d.message
+    end,
+  },
+  signs = true,
+  underline = true,
+  float = { border = "rounded", source = "if_many" },
 })
+
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#c87171", italic = true })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#c8a871", italic = true })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#7192c8", italic = true })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#71c8a8", italic = true })
 
 vim.opt.undofile = true
 
@@ -202,6 +212,7 @@ vim.opt.colorcolumn = "120"
 vim.opt.showmatch = true
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.spell = true
 vim.opt.spelllang = "en_gb"
@@ -212,12 +223,19 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, { command = "checktime" })
+
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = false
+vim.opt.foldnestmax = 4
 
-vim.api.nvim_command("colorscheme kanagawa")
+vim.cmd.colorscheme("kanagawa")
 
 -- core functionality
 require("core.keybinds")
