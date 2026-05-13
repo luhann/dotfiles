@@ -13,8 +13,8 @@ end
 
 # Environment variables
 set -gx GPG_TTY (tty)
-set -gx HISTCONTROL ignoreboth:erasedups
 set -gx EDITOR nvim
+set -gx VISUAL nvim
 set -gx BROWSER firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 
@@ -37,7 +37,7 @@ set -gx CFLAGS "-march=native -O2 -flto=thin"
 set -gx CXXFLAGS "-march=native -O2 -flto=thin"
 set -gx LDFLAGS "-fuse-ld=lld"
 set -gx RUSTFLAGS "-C target-cpu=native -C opt-level=3"
-set -gx MAKEFLAGS "--jobs (nproc)"
+set -gx MAKEFLAGS "--jobs" (nproc)
 {{- end}}
 
 {{- if ne .dot_version "new" }}
@@ -90,25 +90,25 @@ abbr --add esearch "eix"
 
 # Useful abbreviations
 # Git
-abbr --add g 'git'
-abbr --add gst 'git status'
-abbr --add gc 'git commit'
-abbr --add gco 'git checkout'
-abbr --add ga 'git add'
-abbr --add gaa 'git add --all'
-abbr --add gb 'git branch'
-abbr --add gd 'git diff'
-abbr --add gl 'git log'
-abbr --add gp 'git push'
-abbr --add gpf 'git push --force-with-lease'
-abbr --add gpl 'git pull'
+abbr --add g "git"
+abbr --add gst "git status"
+abbr --add gc "git commit"
+abbr --add gco "git checkout"
+abbr --add ga "git add"
+abbr --add gaa "git add --all"
+abbr --add gb "git branch"
+abbr --add gd "git diff"
+abbr --add gl "git log"
+abbr --add gp "git push"
+abbr --add gpf "git push --force-with-lease"
+abbr --add gpl "git pull"
 
 # Chezmoi
-abbr --add cz 'chezmoi'
-abbr --add cza 'chezmoi apply'
-abbr --add czd 'chezmoi diff'
-abbr --add cze 'chezmoi edit'
-abbr --add czs 'chezmoi status'
+abbr --add cz "chezmoi"
+abbr --add cza "chezmoi apply"
+abbr --add czd "chezmoi diff"
+abbr --add cze "chezmoi edit"
+abbr --add czs "chezmoi status"
 
 if status --is-interactive
     function fish_greeting

@@ -9,6 +9,7 @@ map("n", "<leader>w", "<cmd>w<CR>", { desc = "Quick save" })
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
 map({ "n", "v", "x" }, "<leader>y", '"+y', { desc = "System copy" })
 map({ "n", "v", "x" }, "<leader>d", '"+d', { desc = "System delete" })
+map({ "n", "v", "x" }, "<leader>p", '"+p', { desc = "System paste" })
 
 -- remap normal mode command to semi-colon
 map("n", ";", ":")
@@ -29,6 +30,10 @@ map("n", "<A-Up>", "<cmd>move .-2<CR>==", { desc = "Move line up" })
 map("v", "<A-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selection down" })
 map("v", "<A-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selection up" })
 
+-- Centre view on half-page jumps
+map("n", "<C-d>", "<C-d>zz", { desc = "Half-page down (centred)" })
+map("n", "<C-u>", "<C-u>zz", { desc = "Half-page up (centred)" })
+
 -- Better window navigation
 map("n", "<C-h>", "<C-w>h")
 map("n", "<C-j>", "<C-w>j")
@@ -41,6 +46,7 @@ map("n", "<leader>ih", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hi
 
 -- Standard LSP keybinds
 map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+map("n", "gt", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
 map("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
 map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 map("n", "K", vim.lsp.buf.hover, { desc = "Show hover info" })

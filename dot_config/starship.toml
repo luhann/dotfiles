@@ -19,7 +19,7 @@ error_symbol = "[-](bold red) "
 disabled = false
 
 [cmd_duration]
-min_time = 500
+min_time = 2000
 format = "took [$duration](bold yellow)"
 
 [rlang]
