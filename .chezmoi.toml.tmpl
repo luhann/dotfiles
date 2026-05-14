@@ -19,6 +19,9 @@ pager = "delta"
 {{- $has_nvidia := false }}
 {{- if eq .chezmoi.hostname "gestalt" }}{{-   $has_nvidia = true }}{{- end }}
 
+{{- $hwmon_path := "" }}
+{{- if eq $chassis_type "desktop" }}{{-   $hwmon_path = "/sys/devices/pci0000:00/0000:00:18.3/hwmon" }}{{- end }}
+
 {{- $color_scheme := promptStringOnce . "color_scheme" "What color scheme to use" "patroclus" -}}
 {{- $color_palette := (includeTemplate (print $color_scheme ".yaml") | fromYaml).colors }}
 
@@ -29,6 +32,7 @@ pager = "delta"
   codespaces = {{ $codespaces }}
   color_scheme = {{ $color_scheme | quote}}
   has_nvidia = {{ $has_nvidia }}
+  hwmon_path = {{ $hwmon_path | quote }}
 
 [data.colors]
   # some colors that are not defined

@@ -1,3 +1,8 @@
+{{- $primary := (index .monitors 0).output -}}
+{{- $secondary := "" -}}
+{{- if gt (len .monitors) 1 -}}
+{{-   $secondary = (index .monitors 1).output -}}
+{{- end -}}
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
@@ -27,19 +32,19 @@ environment {
   MOZ_ENABLE_WAYLAND "1"
 }
 
-{{ if eq .chassis_type "desktop" -}}
+{{ if $secondary -}}
 workspace "main" {
-  open-on-output "DP-1"
+  open-on-output "{{ $primary }}"
 }
 workspace "dev" {
-  open-on-output "DP-1"
+  open-on-output "{{ $primary }}"
 }
 
 workspace "alt-main" {
-  open-on-output "DP-2"
+  open-on-output "{{ $secondary }}"
 }
 workspace "alt-dev" {
-  open-on-output "DP-2"
+  open-on-output "{{ $secondary }}"
 }
 {{- else -}}
 workspace "main"
