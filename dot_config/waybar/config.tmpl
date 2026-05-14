@@ -1,12 +1,16 @@
-{{ if eq .chezmoi.hostname "replicant" -}}
+{{- $wm := .wm -}}
+{{- $primary := (index .monitors 0).output -}}
+{{- $secondary := "" -}}
+{{- if gt (len .monitors) 1 -}}
+{{-   $secondary = (index .monitors 1).output -}}
+{{- end -}}
 [
+{{- if $secondary }}
 {
     "layer": "bottom",
     "position": "top",
     "mod": "dock",
-    "output": [
-        "DP-1"
-    ],
+    "output": ["{{ $primary }}"],
     "include": [
         "~/.config/waybar/default-modules.json"
     ],
@@ -22,7 +26,7 @@
         "custom/os_button"
     ],
     "modules-center": [
-        "{{ .wm }}/workspaces"
+        "{{ $wm }}/workspaces"
     ],
     "modules-right": [
         "cpu",
@@ -39,9 +43,7 @@
     "layer": "bottom",
     "position": "top",
     "mod": "dock",
-    "output": [
-        "DP-2"
-    ],
+    "output": ["{{ $secondary }}"],
     "include": [
         "~/.config/waybar/default-modules.json"
     ],
@@ -58,7 +60,7 @@
         "mpris"
     ],
     "modules-center": [
-        "{{ .wm }}/workspaces"
+        "{{ $wm }}/workspaces"
     ],
     "modules-right": [
         "idle_inhibitor",
@@ -69,12 +71,14 @@
         "clock"
     ]
 }
-]
-{{ else }}
+{{- else }}
 {
     "layer": "bottom",
     "position": "top",
     "mod": "dock",
+{{- if $primary }}
+    "output": ["{{ $primary }}"],
+{{- end }}
     "include": [
         "~/.config/waybar/default-modules.json"
     ],
@@ -93,7 +97,7 @@
         "custom/dunst"
     ],
     "modules-center": [
-        "{{ .wm }}/workspaces"
+        "{{ $wm }}/workspaces"
     ],
     "modules-right": [
         "tray",
@@ -108,3 +112,4 @@
     ]
 }
 {{- end }}
+]

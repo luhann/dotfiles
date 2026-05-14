@@ -47,7 +47,7 @@ slang=eng,en
 
 # ===== Video =====
 profile=high-quality
-{{ if eq .chezmoi.hostname "replicant" -}}
+{{ if not .has_nvidia -}}
 vo=gpu-next
 interpolation=no
 target-colorspace-hint=auto
