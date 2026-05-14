@@ -10,7 +10,9 @@ map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
 map({ "n", "v", "x" }, "<leader>y", '"+y', { desc = "System copy" })
 map({ "n", "v", "x" }, "<leader>d", '"+d', { desc = "System delete" })
 map({ "n", "v", "x" }, "<leader>p", '"+p', { desc = "System paste" })
-
+map({ "n", "v", "x" }, "<leader>o", function()
+  if vim.bo.buftype == "" then vim.cmd("set wrap!") end
+end, { desc = "Toggle line wrap" })
 -- remap normal mode command to semi-colon
 map("n", ";", ":")
 
