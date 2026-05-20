@@ -47,6 +47,12 @@ hl.bind(mainMod .. " + up",             hl.dsp.focus({ direction = "u" }))
 hl.bind(mainMod .. " + down",           hl.dsp.focus({ direction = "d" }))
 hl.bind(mainMod .. " + f",              hl.dsp.window.fullscreen())
 
+-- Scrolling
+hl.bind(mainMod .. " + period", hl.dsp.layout("move +col"))
+hl.bind(mainMod .. " + SHIFT + period", hl.dsp.layout("move -col"))
+hl.bind(mainMod .. " + comma", hl.dsp.layout("swapcol l"))
+hl.bind(mainMod .. " + SHIFT + comma", hl.dsp.layout("swapcol r"))
+
 -- Workspaces
 for i = 1, 10 do
     local key = i % 10  -- 10 maps to key 0
