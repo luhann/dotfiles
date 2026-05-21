@@ -124,6 +124,7 @@
         "max-volume": 100,
         "scroll-step": 5
     },
+    {{- if eq .chassis_type "desktop" }}
     "mpris": {
         "format": "{status_icon} {dynamic}",
         "format-paused": "{status_icon} <i>{dynamic}</i>",
@@ -132,6 +133,23 @@
         },
         "dynamic-order": ["title", "artist"]
     },
+    {{- else }}
+    "mpris": {
+      "format": "{player_icon}",
+      "format-paused": "{status_icon} <i>{player_icon}</i>",
+      "tooltip": true,
+      "tooltip-format": "{player}: {artist} - {title} ({position}/{length})",
+      "player-icons": {
+          "default": "🎵",
+          "spotify": "",
+          "firefox": "",
+          "mpv": "🎬"
+      },
+      "status-icons": {
+          "paused": "⏸"
+      }
+    },
+    {{- end }}
     "idle_inhibitor": {
         "format": "{icon} ",
         "format-icons": {
@@ -147,5 +165,12 @@
         "on-click-right": "dunstctl history-pop",
         "return-type": "json",
         "interval": 1
+    },
+    "custom/writeback": {
+        "format": "󰾆 {}",
+        "exec-if": "writeback --min-mb 50 --quiet",
+        "exec": "writeback",
+        "interval": 2,
+        "tooltip": false
     }
 }
