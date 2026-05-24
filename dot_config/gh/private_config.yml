@@ -10,4 +10,5 @@ pager: bat
 aliases:
     co: pr checkout
     involved: search issues --involves @me --include-prs --state open --sort updated
+    wv: repo view --web
 version: "1"
