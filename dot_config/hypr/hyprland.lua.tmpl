@@ -29,7 +29,7 @@ hl.monitor({
 
 local terminal = "alacritty"
 local browser = "firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}"
-local fileManager = "XDG_CURRENT_DESKTOP=kde dolphin"
+local fileManager = "nemo"
 local menu = "fuzzel"
 local mainMod = "SUPER"
 
@@ -89,7 +89,6 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "phinger-cursors-light")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORM", "wayland")
-hl.env("XDG_MENU_PREFIX", "plasma-")
 {{- if .has_nvidia }}
 hl.env("GBM_BACKEND", "nvidia-drm")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
