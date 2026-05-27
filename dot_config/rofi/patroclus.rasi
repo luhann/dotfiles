@@ -1,0 +1,126 @@
+* {
+    bg-base: #1f1f28e6;
+    /* Kanagawa base with ~90% alpha */
+    bg-surface: #2a2a37;
+    bg-selection: #e6c4842f;
+
+    fg-text: #dcd7ba;
+    fg-muted: #a6a69c;
+
+    accent-blue: #7e9cd8;
+    accent-yellow: #e6c384;
+    accent-red: #e82424;
+
+    background-color: transparent;
+    font: "Iosevka Nerd Font 11";
+}
+
+window {
+    background-color: @bg-base;
+    border: 1px;
+    border-color: #363646;
+    /* surface1 for a sleek, thin border */
+    border-radius: 14px;
+
+    /* 5-10% Desktop size constraints */
+    width: 18%;
+    location: center;
+    anchor: center;
+}
+
+mainbox {
+    padding: 5px 5px 5px 5px;
+    children: [ inputbar, message, listview];
+}
+
+/* Modern Input Bar (Search Pill) */
+inputbar {
+    background-color: @bg-surface;
+    border-radius: 8px;
+    padding: 5px 5px;
+    spacing: 10px;
+    text-color: @fg-text;
+    children: [ prompt, entry];
+}
+
+prompt {
+    text-color: @accent-blue;
+    font: "Iosevka Nerd Font Bold 12";
+}
+
+entry {
+    text-color: @fg-text;
+    placeholder: "";
+    placeholder-color: @fg-muted;
+    cursor: text;
+}
+
+message {
+    text-color: @fg-text;
+}
+
+textbox {
+    text-color: @fg-text;
+}
+
+/* List View constraints */
+listview {
+    fixed-height: false;
+    lines: 7;
+    /* Keeps the window compact and small */
+    spacing: 4px;
+    scrollbar: false;
+    dynamic: true;
+}
+
+/* Clean, modern list elements */
+element {
+    padding: 0px 0px;
+    border-radius: 6px;
+    spacing: 12px;
+    children: [ element-icon, element-text];
+}
+
+element-icon {
+    size: 1.2em;
+    cursor: inherit;
+    background-color: inherit;
+    text-color: inherit;
+}
+
+element-text {
+    vertical-align: 0.5;
+    cursor: inherit;
+    background-color: inherit;
+    text-color: inherit;
+}
+
+/* State changes */
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg-text;
+}
+
+element selected.normal {
+    background-color: @bg-selection;
+    text-color: @accent-yellow;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @fg-text;
+}
+
+element normal.active {
+    text-color: @accent-blue;
+}
+
+element selected.active {
+    background-color: @bg-selection;
+    text-color: @accent-blue;
+}
+
+element alternate.active {
+    background-color: transparent;
+    text-color: @fg-text;
+}

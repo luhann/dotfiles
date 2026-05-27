@@ -1,0 +1,63 @@
+/*
+ * Modern Rofi Configuration
+ * Consistent with Kanagawa-inspired, minimal, editorial dotfiles
+ */
+configuration {
+    terminal: "alacritty";
+    font: "Iosevka Nerd Font 11";
+    show-icons: true;
+    cycle: true;
+    fixed-num-lines: false;
+    matching: "fuzzy";
+    kb-cancel: "Escape,MousePrimary";
+    hover-select: true;
+
+    /* Modes */
+    modes: "drun,window,calc,filebrowser";
+
+    /* Display labels */
+    display-window:    "window";
+    display-drun:      "run";
+    display-windowcd:  "windowcd";
+    display-run:       "run";
+    display-ssh:       "ssh";
+    display-combi:     "combi";
+    display-keys:      "keys";
+    display-filebrowser: "filebrowser";
+
+    /* Combi mode */
+    combi-modes: "window,drun";
+    combi-hide-mode-prefix: false;
+    combi-display-format: "<i>{mode}</i> {text}";
+
+    /* Window mode */
+    window-format: "<span fgalpha='65%'>[{w:-1}] </span><b>{c:-1}</b> <span weight='light' fgalpha='65%' size='small'>{t:-1}</span>";
+    window-thumbnail: false;
+
+    /* Drun mode */
+    drun-url-launcher: "xdg-open";
+    drun-match-fields: "name,generic,exec,categories,keywords";
+    drun-display-format: "<b>{name}</b>[ <span weight='light' size='small'><i>({generic})</i></span>][ <span weight='light' fgalpha='65%' size='small'>{exec}</span>]";
+    drun-show-actions: true;
+    drun {
+        parse-user: true;
+        parse-system: true;
+    }
+
+    /* Run mode */
+    run-command: "{cmd}";
+    run-list-command: "";
+    run-shell-command: "{terminal} -e {cmd}";
+
+    /* Filebrowser mode */
+    filebrowser {
+        directories-first: true;
+        sorting-method: "name";
+    }
+
+    calc {
+        no-history: true;
+    }
+}
+
+@theme "patroclus"
