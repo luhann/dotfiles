@@ -19,3 +19,4 @@ hl.window_rule({ match = { class = "floating" },                        float = 
 
 -- Layer rules
 hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+hl.layer_rule({ match = { namespace = "rofi" }, no_anim = true })
