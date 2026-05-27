@@ -72,6 +72,8 @@ alias psg="ps aux | rg -i"
 alias preview="fzf --preview 'bat --color=always {}'"
 alias weather="curl -4 wttr.in/Cape+Town"
 
+abbr --add scu "systemctl --user"
+
 # OS-specific package management
 {{- if eq .chezmoi.osRelease.id "'void'"}}
 abbr --add xup "sudo xbps-install -Su"
