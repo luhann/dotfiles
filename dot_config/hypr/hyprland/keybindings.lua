@@ -11,10 +11,10 @@ local menu        = HY.menu
 local mainMod     = HY.mainMod
 
 -- Applications
-hl.bind(mainMod .. " + Return",         hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd(terminal .. " --class floating"))
+hl.bind(mainMod .. " + Return",         hl.dsp.exec_cmd(terminal .. " msg create-window"))
+hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd(terminal .. " msg create-window --class floating"))
 hl.bind(mainMod .. " + E",              hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + SHIFT + E",      hl.dsp.exec_cmd(terminal .. " --class floating -e fish -c br"))
+hl.bind(mainMod .. " + SHIFT + E",      hl.dsp.exec_cmd(terminal .. " msg create-window --class floating -e fish -c yazi"))
 hl.bind(mainMod .. " + R",              hl.dsp.exec_cmd(browser))
 
 -- Session / window management
