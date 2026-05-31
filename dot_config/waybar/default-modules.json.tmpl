@@ -159,18 +159,15 @@
     },
     "custom/dunst": {
         "format": "{}",
-        "exec": "notifi",
+        "exec": "notifi --daemon",
         "on-click": "dunstctl set-paused toggle",
         "on-click-middle": "dunstctl history-clear",
         "on-click-right": "dunstctl history-pop",
         "return-type": "json",
-        "interval": 1
     },
     "custom/writeback": {
         "format": "󰾆 {}",
-        "exec-if": "writeback --min-mb 50 --quiet",
-        "exec": "writeback",
-        "interval": 2,
+        "exec": "writeback --daemon --min-mb 50",
         "tooltip": false
     }
 }
