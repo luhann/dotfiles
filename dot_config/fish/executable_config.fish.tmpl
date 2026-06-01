@@ -36,7 +36,7 @@ set -gx READELF llvm-readelf
 set -gx CFLAGS "-march=native -O2 -flto=thin"
 set -gx CXXFLAGS "-march=native -O2 -flto=thin"
 set -gx LDFLAGS "-fuse-ld=lld"
-set -gx RUSTFLAGS "-C target-cpu=native -C link-arg=-fuse-ld=wild -C opt-level=3"
+set -gx RUSTFLAGS "-C target-cpu=native -C opt-level=3"
 set -gx MAKEFLAGS "--jobs" (nproc)
 {{- end}}
 
