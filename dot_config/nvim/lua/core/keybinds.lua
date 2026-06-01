@@ -1,5 +1,6 @@
 -- More efficient keybindings
 local map = vim.keymap.set
+local builtin = require("telescope.builtin")
 
 -- Better defaults
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
@@ -47,14 +48,26 @@ map("n", "<leader>ih", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hi
   { desc = "Toggle inlay hints" })
 
 -- Standard LSP keybinds
-map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-map("n", "gt", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
-map("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
-map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+map("n", "gd", builtin.lsp_definitions, { desc = "Go to definition" })
+map("n", "gt", builtin.lsp_type_definitions, { desc = "Go to type definition" })
+map("n", "gr", builtin.lsp_references, { desc = "Show references" })
+map("n", "gi", builtin.lsp_implementations, { desc = "Go to implementation" })
 map("n", "K", vim.lsp.buf.hover, { desc = "Show hover info" })
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 map({ "n", "v" }, "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 map({ "n", "v" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format code" })
 map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
 map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic" })
-map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+map("n", "[e", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Previous error" })
+map("n", "]e", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Next error" })
+map("n", "<leader>xl", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+
+-- Telescope keybinds
+map("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+map("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+map("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+map("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+map("n", "<leader>sd", builtin.lsp_document_symbols, { desc = "Document Symbols" })
+map("n", "<leader>sw", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
+map("n", "<leader>xd", function() builtin.diagnostics({ bufnr = 0, sort_by = "severity" })end, { desc = "Buffer diagnostics" })
+map("n", "<leader>xw", function() builtin.diagnostics({sort_by = "severity" })end, { desc = "Workspace diagnostics" })

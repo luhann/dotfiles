@@ -52,6 +52,14 @@ require("lazy").setup({
       })
     end
   },
+  {
+    'nvim-telescope/telescope.nvim', version = '*',
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        -- optional but recommended
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    }
+  },
 
   -- Language support
   {
@@ -140,13 +148,21 @@ vim.lsp.enable("ruff")
 
 vim.lsp.config("jarl", {
   cmd = { 'jarl', 'server' },
-  filetypes = { 'r', 'rmd' },
-  -- root_markers = { '.git' },
-  root_dir = function(bufnr, on_dir)
-    on_dir(vim.fs.root(bufnr, '.git') or vim.uv.os_homedir())
+  filetypes = { 'r', 'rmd', 'quarto' },
+  on_attach = function(client, bufnr)
+    -- Tell Neovim NOT to use Jarl for general file formatting
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
   end,
 })
 
+-- Air Configuration (Formatting)
+vim.lsp.config("air", {
+  on_attach = function(client, bufnr)
+    -- Ensure Air is recognized as the formatter
+    client.server_capabilities.documentFormattingProvider = true
+  end,
+})
 
 vim.lsp.config("rust_analyzer", {
   capabilities = {
