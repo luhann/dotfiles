@@ -10,7 +10,8 @@ hl.workspace_rule({ workspace = "name:dev", layout = "master" })
 
 -- Window rules
 hl.window_rule({ match = { class = "^firefox" },                        opacity = "1.0 override" })
-hl.window_rule({ match = { class = "^(mpv|vlc)$" },                    opacity = "1.0 override" })
+hl.window_rule({ match = { title = "Firefox - Choose a profile" },      float = true })
+hl.window_rule({ match = { class = "^(mpv|vlc)$" },                     opacity = "1.0 override" })
 hl.window_rule({ match = { fullscreen = true },                         opacity = "1.0 override" })
 hl.window_rule({ match = { class = "^(pavucontrol|blueman-manager)$" }, float = true })
 hl.window_rule({ match = { class = ".*" },                              suppress_event = "maximize" })

@@ -140,13 +140,13 @@
       "tooltip": true,
       "tooltip-format": "{player}: {artist} - {title} ({position}/{length})",
       "player-icons": {
-          "default": "🎵",
-          "spotify": "",
-          "firefox": "",
-          "mpv": "🎬"
+          "default": "🎵 ",
+          "spotify": "  ",
+          "firefox": "  ",
+          "mpv": "🎬  "
       },
       "status-icons": {
-          "paused": "⏸"
+          "paused": "⏸ "
       }
     },
     {{- end }}
@@ -163,7 +163,7 @@
         "on-click": "dunstctl set-paused toggle",
         "on-click-middle": "dunstctl history-clear",
         "on-click-right": "dunstctl history-pop",
-        "return-type": "json",
+        "return-type": "json"
     },
     "custom/writeback": {
         "format": "󰾆 {}",
