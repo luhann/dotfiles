@@ -146,6 +146,14 @@ vim.lsp.enable("tinymist")
 vim.lsp.enable("ty")
 vim.lsp.enable("ruff")
 
+-- Air Configuration (Formatting)
+vim.lsp.config("air", {
+  on_attach = function(client, bufnr)
+    -- Ensure Air is recognized as the formatter
+    client.server_capabilities.documentFormattingProvider = true
+  end,
+})
+
 vim.lsp.config("jarl", {
   cmd = { 'jarl', 'server' },
   filetypes = { 'r', 'rmd', 'quarto' },
@@ -156,12 +164,21 @@ vim.lsp.config("jarl", {
   end,
 })
 
--- Air Configuration (Formatting)
-vim.lsp.config("air", {
-  on_attach = function(client, bufnr)
-    -- Ensure Air is recognized as the formatter
-    client.server_capabilities.documentFormattingProvider = true
-  end,
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
 })
 
 vim.lsp.config("rust_analyzer", {

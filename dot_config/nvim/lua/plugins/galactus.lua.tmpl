@@ -1,7 +1,13 @@
 -- Eviline config for lualine
--- Author: shadmansaleh
+-- Author: luhann
 -- Credit: glepnir
 local lualine = require('lualine')
+
+-- Hide Neovim's default mode text (e.g. -- INSERT --) when using a statusline.
+vim.opt.showmode = false
+vim.opt.showcmd = false
+vim.opt.ruler = false
+vim.opt.shortmess:append('q')
 
 -- Color table for highlights using kanagawa-inspired cyberpunk theme
 -- stylua: ignore
@@ -42,6 +48,8 @@ local conditions = {
 local config = {
   options = {
     disabled_filetypes = { 'packer', 'NvimTree', 'Lazy' },
+    globalstatus = true,
+    always_divide_middle = true,
     -- Disable sections and component separators
     component_separators = '',
     section_separators = '',
@@ -64,13 +72,19 @@ local config = {
     lualine_x = {},
   },
   inactive_sections = {
-    -- these are to remove the defaults
+    -- Keep inactive windows informative but minimal
     lualine_a = {},
     lualine_b = {},
+    lualine_c = {
+      {
+        'filename',
+        cond = conditions.buffer_not_empty,
+        color = { fg = colors.subtext },
+      },
+    },
+    lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {},
-    lualine_c = {},
-    lualine_x = {},
   },
 }
 
@@ -103,13 +117,13 @@ ins_left {
       n = colors.blue,    -- Normal: blue accent
       i = colors.green,   -- Insert: green
       v = colors.magenta, -- Visual: pink
-      [''] = colors.magenta,
+      [string.char(22)] = colors.magenta, -- Visual block
       V = colors.magenta,
       c = colors.yellow, -- Command: yellow
       no = colors.red,
       s = colors.orange,
       S = colors.orange,
-      [''] = colors.orange,
+      [string.char(19)] = colors.orange, -- Select block
       ic = colors.yellow,
       R = colors.violet,
       Rv = colors.violet,
@@ -121,7 +135,7 @@ ins_left {
       ['!'] = colors.red,
       t = colors.teal, -- Terminal: teal
     }
-    return { fg = mode_color[vim.fn.mode()] }
+    return { fg = mode_color[vim.fn.mode()] or colors.fg }
   end,
   padding = { right = 1 },
 }
@@ -136,6 +150,14 @@ ins_left {
 ins_left {
   'filename',
   cond = conditions.buffer_not_empty,
+  path = 1,
+  shorting_target = 40,
+  symbols = {
+    modified = ' [+]',
+    readonly = ' [RO]',
+    unnamed = '[No Name]',
+    newfile = ' [New]',
+  },
   color = { fg = colors.cyan, gui = 'bold' }, -- Sky blue for filename
 }
 
@@ -152,11 +174,13 @@ ins_left {
 ins_left {
   'diagnostics',
   sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
+  update_in_insert = false,
+  symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
   diagnostics_color = {
     error = { fg = colors.red },
     warn = { fg = colors.yellow },
     info = { fg = colors.cyan },
+    hint = { fg = colors.teal },
   },
 }
 
@@ -171,24 +195,33 @@ ins_left {
   -- Lsp server name
   function()
     local msg = 'No Active Lsp'
-    local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-    local clients = vim.lsp.get_clients()
+    local clients = vim.lsp.get_clients { bufnr = 0 }
     if next(clients) == nil then
       return msg
     end
+    local names, seen = {}, {}
     for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
+      if not seen[client.name] then
+        seen[client.name] = true
+        table.insert(names, client.name)
       end
     end
-    return msg
+    table.sort(names)
+    return table.concat(names, ', ')
   end,
   icon = ' LSP:',
   color = { fg = colors.teal, gui = 'bold' }, -- Teal for LSP info
 }
 
 -- Add components to right sections
+ins_right {
+  'searchcount',
+  maxcount = 999,
+  timeout = 500,
+  cond = conditions.hide_in_width,
+  color = { fg = colors.subtext },
+}
+
 ins_right {
   'o:encoding',
   fmt = string.upper,
@@ -200,12 +233,24 @@ ins_right {
   'fileformat',
   fmt = string.upper,
   icons_enabled = false,
+  cond = conditions.hide_in_width,
   color = { fg = colors.green, gui = 'bold' },
+}
+
+ins_right {
+  function()
+    return 'REC @' .. vim.fn.reg_recording()
+  end,
+  cond = function()
+    return vim.fn.reg_recording() ~= ''
+  end,
+  color = { fg = colors.red, gui = 'bold' },
 }
 
 ins_right {
   'branch',
   icon = '',
+  cond = conditions.check_git_workspace,
   color = { fg = colors.violet, gui = 'bold' },
 }
 
@@ -217,7 +262,9 @@ ins_right {
     modified = { fg = colors.orange },
     removed = { fg = colors.red },
   },
-  cond = conditions.hide_in_width,
+  cond = function()
+    return conditions.hide_in_width() and conditions.check_git_workspace()
+  end,
 }
 
 -- ▊
