@@ -4,13 +4,11 @@
 {{- if gt (len .monitors) 1 -}}
 {{-   $secondary = (index .monitors 1).output -}}
 {{- end -}}
-[
-{{- if $secondary }}
-{
+{{- /* Keys shared by every bar; per-bar output and module lists follow. */ -}}
+{{- define "bar_common" }}
     "layer": "bottom",
     "position": "top",
-    "mod": "dock",
-    "output": ["{{ $primary }}"],
+    "mode": "dock",
     "include": [
         "~/.config/waybar/default-modules.json"
     ],
@@ -22,6 +20,12 @@
     "spacing": 5,
     "passthrough": false,
     "height": 32,
+{{- end -}}
+[
+{{- if $secondary }}
+{
+{{- template "bar_common" }}
+    "output": ["{{ $primary }}"],
     "modules-left": [
         "custom/os_button"
     ],
@@ -40,21 +44,8 @@
     ]
 },
 {
-    "layer": "bottom",
-    "position": "top",
-    "mod": "dock",
+{{- template "bar_common" }}
     "output": ["{{ $secondary }}"],
-    "include": [
-        "~/.config/waybar/default-modules.json"
-    ],
-    "exclusive": true,
-    "gtk-layer-shell": true,
-    "margin-bottom": 2,
-    "margin-left": 10,
-    "margin-right": 10,
-    "spacing": 5,
-    "passthrough": false,
-    "height": 32,
     "modules-left": [
         "custom/os_button",
         "mpris"
@@ -74,23 +65,10 @@
 }
 {{- else }}
 {
-    "layer": "bottom",
-    "position": "top",
-    "mod": "dock",
+{{- template "bar_common" }}
 {{- if $primary }}
     "output": ["{{ $primary }}"],
 {{- end }}
-    "include": [
-        "~/.config/waybar/default-modules.json"
-    ],
-    "exclusive": true,
-    "gtk-layer-shell": true,
-    "margin-bottom": 2,
-    "margin-left": 10,
-    "margin-right": 10,
-    "spacing": 5,
-    "passthrough": false,
-    "height": 32,
     "modules-left": [
         "custom/os_button",
         "user",
