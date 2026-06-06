@@ -18,7 +18,7 @@ output {{ .output | quote }} {
 {{- if and .scale (ne .scale "auto") }}
     scale {{ .scale }}
 {{- end }}
-{{- if .niri_x }}
+{{- if hasKey . "niri_x" }}
     position x={{ .niri_x }} y={{ .niri_y }}
 {{- end }}
 }
@@ -309,6 +309,10 @@ spawn-at-startup "dunst"
 spawn-at-startup "waybar"
 spawn-at-startup "awww-daemon"
 spawn-at-startup "systemctl --user start hyprpolkitagent"
+// clipboard history + survive source window closing
+spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+spawn-at-startup "wl-clip-persist" "--clipboard" "regular"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -391,6 +395,8 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match title="floating alacritty"
+    // Mod+Shift+E spawns alacritty with --class floating
+    match app-id="^floating$"
     // match app-id="swayimg"
     open-floating true
 }
@@ -430,10 +436,13 @@ binds {
     Mod+E { spawn-sh "XDG_CURRENT_DESKTOP=kde dolphin &"; }
     Mod+Shift+E { spawn "alacritty" "--class" "floating" "-e" "yazi"; }
 
-    // Extra programs 
+    // Extra programs
     Mod+Z { spawn "zotero"; }
     Mod+Space { spawn "search"; }
     Mod+Backslash { spawn "wallpaper"; }
+
+    // Clipboard history (cliphist)
+    Mod+Ctrl+V { spawn-sh "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.

@@ -70,11 +70,20 @@ hl.workspace_rule({ workspace = 10, default_name = "alt_ext", monitor = {{ $prim
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 hl.on("hyprland.start", function()
-    hl.exec_cmd("hypridle")
-    hl.exec_cmd("waybar")
-    hl.exec_cmd("dunst")
-    hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("alacritty --daemon")
+    local autostart = {
+        "hypridle",
+        "waybar",
+        "dunst",
+        "awww-daemon",
+        "alacritty --daemon",
+        -- clipboard history + survive source window closing
+        "wl-paste --type text --watch cliphist store",
+        "wl-paste --type image --watch cliphist store",
+        "wl-clip-persist --clipboard regular",
+    }
+    for _, cmd in ipairs(autostart) do
+        hl.exec_cmd(cmd)
+    end
 end)
 
 -------------------------------
