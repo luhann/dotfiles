@@ -22,8 +22,8 @@ window {
     /* surface1 for a sleek, thin border */
     border-radius: 14px;
 
-    /* 5-10% Desktop size constraints */
-    width: 18%;
+    /* wider on the smaller laptop screen, 5-10% on desktop */
+    width: {{ if eq .chassis_type "laptop" }}25%{{ else }}18%{{ end }};
     location: center;
     anchor: center;
 }
