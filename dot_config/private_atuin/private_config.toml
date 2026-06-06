@@ -43,15 +43,17 @@ search_mode = "daemon-fuzzy"
 ## which filter mode to use by default
 ## possible values: "global", "host", "session", "directory", "workspace"
 ## consider using search.filters to customize the enablement and order of filter modes
-filter_mode = "host"
+## workspace applies inside a git repo (any subdirectory); atuin skips it elsewhere
+## and falls back to the next mode in search.filters
+filter_mode = "workspace"
 
 ## With workspace filtering enabled, Atuin will filter for commands executed
 ## in any directory within a git repository tree (default: false).
 ##
 ## To use workspace mode by default when available, set this to true and
-## set filter_mode to "workspace" or leave it unspecified and 
+## set filter_mode to "workspace" or leave it unspecified and
 ## set search.filters to include "workspace" before other filter modes.
-# workspaces = false
+workspaces = true
 
 ## which filter mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "filter_mode"
@@ -143,7 +145,8 @@ history_format = "{time}\t{host}\t{command}\t{duration}"
 # auto_hide_height = 8
 
 # Configures whether to store commands that failed (those with non-zero exit status) or not.
-store_failed = false
+# Kept on: a long command you typo'd once is often exactly the one you want back.
+store_failed = true
 
 ## Defaults to true. This matches history against a set of default regex, and will not save it if we get a match. Defaults include
 ## 1. AWS key id
@@ -283,4 +286,4 @@ sync_frequency = 300
 ## The list of enabled filter modes, in order of priority.
 ## The "workspace" mode is skipped when not in a workspace or workspaces = false.
 ## Default filter mode can be overridden with the filter_mode setting.
-# filters = [ "global", "host", "session", "workspace", "directory" ]
+filters = [ "workspace", "host", "global", "directory" ]
