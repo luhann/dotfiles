@@ -87,7 +87,7 @@ function seek_to()
 end
 
 function backspace()
-    if cursor_position ~= 9 or current_time[9] == 0 then
+    if cursor_position ~= 9 or history[history_position][9] == 0 then
         shift_cursor(true)
     end
     if history[history_position][cursor_position] ~= 0 then
