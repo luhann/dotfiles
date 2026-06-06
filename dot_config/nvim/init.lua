@@ -139,6 +139,7 @@ require("lazy").setup({
 vim.lsp.inlay_hint.enable(true)
 vim.lsp.enable("air")
 vim.lsp.enable("jarl")
+vim.lsp.enable("hls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("texlab")

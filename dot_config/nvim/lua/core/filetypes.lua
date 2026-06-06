@@ -17,16 +17,22 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- Auto-set compiler for specific languages
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "rust",
-  callback = function() vim.opt_local.makeprg = "cargo build" end,
+  pattern = { "c", "cpp" },
+  callback = function() vim.opt_local.makeprg = "make" end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "c", "cpp" },
-  callback = function() vim.opt_local.makeprg = "make" end,
+  pattern = "haskell",
+  callback = function() vim.opt_local.makeprg = "cabal build" end, -- Runs current file
 })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "python",
   callback = function() vim.opt_local.makeprg = "python3 %" end, -- Runs current file
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rust",
+  callback = function() vim.opt_local.makeprg = "cargo build" end,
+})
+
