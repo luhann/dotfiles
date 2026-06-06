@@ -89,6 +89,17 @@ hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),        { locked = t
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"),  { locked = true })
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"),  { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),    { locked = true })
+-- Screenshots (grim + slurp): save to ~/pictures/screenshots and copy to clipboard
+-- Same keys and filename format as the niri config
+local screenshotFile = [["$HOME/pictures/screenshots/screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"]]
+local function screenshot(capture)
+    return hl.dsp.exec_cmd('mkdir -p "$HOME/pictures/screenshots" && '
+        .. capture .. " - | tee " .. screenshotFile .. " | wl-copy")
+end
+hl.bind("Print",        screenshot([[grim -g "$(slurp)"]]))
+hl.bind("CTRL + Print", screenshot([[grim -o "$(hyprctl monitors -j | jq -r '.[] | select(.focused).name')"]]))
+hl.bind("ALT + Print",  screenshot([[grim -g "$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')"]]))
+
 
 --------------------
 ---- GESTURES ----
