@@ -36,11 +36,7 @@ require("lazy").setup({
     init = function()
       vim.o.timeoutlen = 300
     end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
+    opts = {}
   },
   {
     "nvim-tree/nvim-tree.lua",
@@ -56,9 +52,13 @@ require("lazy").setup({
     'nvim-telescope/telescope.nvim', version = '*',
     dependencies = {
         'nvim-lua/plenary.nvim',
-        -- optional but recommended
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    }
+    },
+    config = function()
+      require("telescope").setup({})
+      -- use the compiled fzf sorter instead of the default Lua one
+      require("telescope").load_extension("fzf")
+    end
   },
 
   -- Language support
@@ -258,6 +258,11 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, { command = "checktime" })
+
+-- Briefly highlight yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function() vim.hl.on_yank() end,
+})
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
