@@ -23,7 +23,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "haskell",
-  callback = function() vim.opt_local.makeprg = "cabal build" end, -- Runs current file
+  callback = function() vim.opt_local.makeprg = "cabal build" end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
