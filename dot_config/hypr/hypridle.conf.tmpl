@@ -14,7 +14,7 @@ listener {
 
 listener {
     timeout = 330
-    on-timeout = {{ if eq .wm "hyprland" }}hyprctl dispatch dpms on{{ else }}niri msg action power-off-monitors{{ end }}
+    on-timeout = {{ if eq .wm "hyprland" }}hyprctl dispatch dpms off{{ else }}niri msg action power-off-monitors{{ end }}
     on-resume = {{ if eq .wm "hyprland" }}hyprctl dispatch dpms on{{ else }}niri msg action power-on-monitors{{ end }}
 }
 
