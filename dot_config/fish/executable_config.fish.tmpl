@@ -81,6 +81,8 @@ alias preview="fzf --preview 'bat --color=always {}'"
 alias weather="curl -4 wttr.in/Cape+Town"
 
 abbr --add scu "systemctl --user"
+abbr --add scus "systemctl --user status"
+abbr --add scs "systemctl status"
 
 # OS-specific package management
 {{- if $isVoid }}
