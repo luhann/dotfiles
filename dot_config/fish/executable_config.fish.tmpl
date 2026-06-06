@@ -20,7 +20,6 @@ if status --is-login; or not set -q __fish_path_initialized
 end
 
 # Environment variables
-set -gx GPG_TTY (tty)
 set -gx EDITOR nvim
 set -gx VISUAL nvim
 set -gx BROWSER firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
@@ -122,6 +121,9 @@ abbr --add cze "chezmoi edit"
 abbr --add czs "chezmoi status"
 
 if status --is-interactive
+    # only interactive shells have a tty for gpg to prompt on
+    set -gx GPG_TTY (tty)
+
     function fish_greeting
       echo
       echo -e (uname -ro | awk '{print " \\\\e[1mOS: \\\\e[0;32m"$0"\\\\e[0m"}')
@@ -140,7 +142,7 @@ if status --is-interactive
     if command -q starship
         starship init fish | source
     end
-    
+
     if command -q atuin
         atuin init fish | source
     end
@@ -150,6 +152,6 @@ if status --is-interactive
     end
 
     if command -q pixi
-      pixi completion --shell fish | source
+        pixi completion --shell fish | source
     end
 end
