@@ -76,19 +76,6 @@ hl.bind(mainMod .. " + mouse_up",       hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272",      hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273",      hl.dsp.window.resize(), { mouse = true })
 
--- Volume and brightness
-hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true})
-hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true})
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl s 5%+"),                            { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"),                            { locked = true, repeating = true })
-
--- Media keys (playerctl)
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),        { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"),  { locked = true })
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"),  { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),    { locked = true })
 -- Screenshots (grim + slurp): save to ~/pictures/screenshots and copy to clipboard
 -- Same keys and filename format as the niri config
 local screenshotFile = [["$HOME/pictures/screenshots/screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"]]
@@ -100,6 +87,25 @@ hl.bind("Print",        screenshot([[grim -g "$(slurp)"]]))
 hl.bind("CTRL + Print", screenshot([[grim -o "$(hyprctl monitors -j | jq -r '.[] | select(.focused).name')"]]))
 hl.bind("ALT + Print",  screenshot([[grim -g "$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')"]]))
 
+-- Clipboard history (cliphist)
+hl.bind(mainMod .. " + CTRL + V",       hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p clipboard | cliphist decode | wl-copy"))
+
+-- Volume, brightness and media keys (playerctl)
+local mediaBinds = {
+    { key = "XF86AudioRaiseVolume",  cmd = "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+", repeating = true },
+    { key = "XF86AudioLowerVolume",  cmd = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",       repeating = true },
+    { key = "XF86AudioMute",         cmd = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" },
+    { key = "XF86AudioMicMute",      cmd = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" },
+    { key = "XF86MonBrightnessUp",   cmd = "brightnessctl s 5%+", repeating = true },
+    { key = "XF86MonBrightnessDown", cmd = "brightnessctl s 5%-", repeating = true },
+    { key = "XF86AudioNext",         cmd = "playerctl next" },
+    { key = "XF86AudioPause",        cmd = "playerctl play-pause" },
+    { key = "XF86AudioPlay",         cmd = "playerctl play-pause" },
+    { key = "XF86AudioPrev",         cmd = "playerctl previous" },
+}
+for _, b in ipairs(mediaBinds) do
+    hl.bind(b.key, hl.dsp.exec_cmd(b.cmd), { locked = true, repeating = b.repeating })
+end
 
 --------------------
 ---- GESTURES ----
