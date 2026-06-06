@@ -28,6 +28,7 @@
   manyFiles = true
 [fetch]
   writeCommitGraph = true
+  prune = true
 [help]
   autocorrect = prompt
 [init]
@@ -39,8 +40,11 @@
   strategy = incremental
 [merge]
   conflictStyle = zdiff3
+[push]
+  autoSetupRemote = true
 [rebase]
   updateRefs = true
+  autoStash = true
 [rerere]
   enabled = true
   autoupdate = true
