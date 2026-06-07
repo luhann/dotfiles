@@ -27,6 +27,17 @@ bin/backlight # only manage on desktop
 .config/pipewire/pipewire.conf.d
 {{- end }}
 
-{{- if eq .codespaces true }}
+# remove all these configs from vm
+{{- if (or (eq .chassis_type "vm") (eq .codespaces true)) }}
 .config/Code
+.config/dunst
+.config/hypr
+.config/mpv
+.config/niri
+.config/pipewire
+.config/rofi
+.config/swayimg
+.config/waybar
+.config/xdg-desktop-portal
+.config/zathura
 {{- end }}
