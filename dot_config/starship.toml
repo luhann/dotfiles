@@ -22,10 +22,10 @@ disabled = false
 min_time = 2000
 format = "took [$duration](bold yellow)"
 
-[rlang]
-format = "with [󰟔 $version](blue bold) "
-detect_files = [".R", ".Rd", ".Rmd", ".Rproj", ".Rsx", ".Rproj.user"]
-
 [python]
 symbol = ""
 format = 'via [${symbol} ${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[rlang]
+format = "with [󰟔 $version](blue bold) "
+detect_files = [".R", ".Rd", ".Rmd", ".Rproj", ".Rsx", ".Rproj.user"]

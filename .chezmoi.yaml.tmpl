@@ -5,6 +5,7 @@ pager: delta
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 
 {{- /* Determine chassis type across supported operating systems. */ -}}
+{{- /* On VPS servers this will automatically detect them as "vm". */ -}}
 {{- $chassis_type := "desktop" }}
 {{- if eq .chezmoi.os "darwin" }}
 {{-   if contains "MacBook" (output "system_profiler" "SPHardwareDataType") }}
