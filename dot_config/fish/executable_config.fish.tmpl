@@ -20,7 +20,7 @@ set -gx VISUAL nvim
 set -gx BROWSER firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 
-{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (eq .chezmoi.osRelease.idLike "gentoo"))}}
+{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (contains (get .chezmoi.osRelease "idLike") "gentoo"))}}
 # Clang/LLVM toolchain
 set -gx CC clang
 set -gx CXX clang++
@@ -37,7 +37,7 @@ set -gx READELF llvm-readelf
 
 set -gx CFLAGS "-march=native -O2 -flto=thin"
 set -gx CXXFLAGS "-march=native -O2 -flto=thin"
-set -gx LDFLAGS "-fuse-ld=lld"
+set -gx LDFLAGS "-fuse-ld=lld -Wl,-O1 -Wl,--as-needed"
 set -gx RUSTFLAGS "-C target-cpu=native -C opt-level=3"
 set -gx MAKEFLAGS "--jobs" (nproc)
 {{- end}}
@@ -82,7 +82,7 @@ abbr --add xup "sudo xbps-install -Su"
 abbr --add xrm "sudo xbps-remove -R"
 abbr --add xinstall "sudo xbps-install -S"
 {{- end}}
-{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (eq .chezmoi.osRelease.idLike "gentoo"))}}
+{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (contains (get .chezmoi.osRelease "idLike") "gentoo"))}}
 abbr --add einstall "sudo emerge --ask --verbose"
 abbr --add eremove "sudo emerge --ask --depclean"
 abbr --add eupdate "sudo emerge --ask --verbose --quiet --newuse --update --deep @world"
