@@ -27,6 +27,6 @@ symbol = ""
 format = 'via [${symbol} ${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 
 [rlang]
-symbol = "󰟔 "
+symbol = "󰟔"
 format = "with [$symbol $version](blue bold) "
 detect_files = [".R", ".Rd", ".Rmd", ".Rproj", ".Rsx", ".Rproj.user"]

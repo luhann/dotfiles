@@ -1,3 +1,9 @@
+{{- /* OS detection: osRelease only exists on Linux, ID_LIKE may be absent, and
+       chezmoi only strips double quotes from os-release values (Gentoo uses ID='gentoo'). */ -}}
+{{- $osRelease := default (dict) (get .chezmoi "osRelease") -}}
+{{- $osId := trimAll `"` (trimAll "'" (default "" (get $osRelease "id"))) -}}
+{{- $isGentoo := or (eq $osId "gentoo") (contains "gentoo" (default "" (get $osRelease "idLike"))) -}}
+{{- $isVoid := eq $osId "void" -}}
 if status --is-login; or not set -q __fish_path_initialized
     # Using fish_add_path instead of manually modifying PATH
     fish_add_path --global ~/bin
@@ -8,8 +14,8 @@ if status --is-login; or not set -q __fish_path_initialized
     fish_add_path --global ~/applications/texlive/2026/bin/x86_64-linux
     fish_add_path --global ~/applications/cmdstan/bin
     fish_add_path --global ~/applications/xbps/usr/bin
-     
-     # Mark that we've initialized paths
+
+    # Mark that we've initialized paths
     set -g __fish_path_initialized 1
 end
 
@@ -20,7 +26,7 @@ set -gx VISUAL nvim
 set -gx BROWSER firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 
-{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (eq .chezmoi.osRelease.idLike "gentoo"))}}
+{{- if $isGentoo }}
 # Clang/LLVM toolchain
 set -gx CC clang
 set -gx CXX clang++
@@ -37,7 +43,7 @@ set -gx READELF llvm-readelf
 
 set -gx CFLAGS "-march=native -O2 -flto=thin"
 set -gx CXXFLAGS "-march=native -O2 -flto=thin"
-set -gx LDFLAGS "-fuse-ld=lld"
+set -gx LDFLAGS "-fuse-ld=lld -Wl,-O1 -Wl,--as-needed"
 set -gx RUSTFLAGS "-C target-cpu=native -C opt-level=3"
 set -gx MAKEFLAGS "--jobs" (nproc)
 {{- end}}
@@ -77,12 +83,12 @@ alias weather="curl -4 wttr.in/Cape+Town"
 abbr --add scu "systemctl --user"
 
 # OS-specific package management
-{{- if eq .chezmoi.osRelease.id "'void'"}}
+{{- if $isVoid }}
 abbr --add xup "sudo xbps-install -Su"
 abbr --add xrm "sudo xbps-remove -R"
 abbr --add xinstall "sudo xbps-install -S"
 {{- end}}
-{{- if (or (eq .chezmoi.osRelease.id "'gentoo'") (eq .chezmoi.osRelease.idLike "gentoo"))}}
+{{- if $isGentoo }}
 abbr --add einstall "sudo emerge --ask --verbose"
 abbr --add eremove "sudo emerge --ask --depclean"
 abbr --add eupdate "sudo emerge --ask --verbose --quiet --newuse --update --deep @world"
