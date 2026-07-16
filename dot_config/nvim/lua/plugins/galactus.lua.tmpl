@@ -34,20 +34,33 @@ local conditions = {
   buffer_not_empty = function()
     return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
   end,
+  -- globalstatus: the statusline spans the whole screen, not the current window
   hide_in_width = function()
-    return vim.fn.winwidth(0) > 80
+    return vim.o.columns > 80
   end,
   check_git_workspace = function()
-    local filepath = vim.fn.expand('%:p:h')
-    local gitdir = vim.fn.finddir('.git', filepath .. ';')
-    return gitdir and #gitdir > 0 and #gitdir < #filepath
+    return vim.b.galactus_in_git_repo == true
   end,
 }
+
+-- Cache the git lookup per buffer instead of hitting the filesystem on every redraw
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'DirChanged' }, {
+  group = vim.api.nvim_create_augroup('galactus_git', { clear = true }),
+  callback = function()
+    local filepath = vim.fn.expand('%:p:h')
+    -- .git is a directory in normal repos, but a file in worktrees/submodules
+    local gitdir = vim.fn.finddir('.git', filepath .. ';')
+    if gitdir == '' then
+      gitdir = vim.fn.findfile('.git', filepath .. ';')
+    end
+    vim.b.galactus_in_git_repo = gitdir ~= '' and #gitdir < #filepath
+  end,
+})
 
 -- Config
 local config = {
   options = {
-    disabled_filetypes = { 'packer', 'NvimTree', 'Lazy' },
+    disabled_filetypes = { 'NvimTree', 'Lazy' },
     globalstatus = true,
     always_divide_middle = true,
     -- Disable sections and component separators
@@ -192,12 +205,15 @@ ins_left {
 }
 
 ins_left {
-  -- Lsp server name
+  -- Lsp server names, or their progress while they're busy (e.g. rust-analyzer indexing)
   function()
-    local msg = 'No Active Lsp'
+    local progress = vim.lsp.status()
+    if progress ~= '' then
+      return progress:sub(1, 60)
+    end
     local clients = vim.lsp.get_clients { bufnr = 0 }
     if next(clients) == nil then
-      return msg
+      return 'No Active Lsp'
     end
     local names, seen = {}, {}
     for _, client in ipairs(clients) do
@@ -213,6 +229,12 @@ ins_left {
   color = { fg = colors.teal, gui = 'bold' }, -- Teal for LSP info
 }
 
+-- Progress messages arrive between redraws; refresh so the component updates live
+vim.api.nvim_create_autocmd('LspProgress', {
+  group = vim.api.nvim_create_augroup('galactus_lsp_progress', { clear = true }),
+  callback = function() vim.cmd.redrawstatus() end,
+})
+
 -- Add components to right sections
 ins_right {
   'searchcount',
@@ -223,18 +245,30 @@ ins_right {
 }
 
 ins_right {
-  'o:encoding',
+  'filetype',
+  colored = true,
+  cond = conditions.buffer_not_empty,
+}
+
+-- Encoding/format act as anomaly flags: only shown when not the usual utf-8/unix
+ins_right {
+  'encoding',
   fmt = string.upper,
-  cond = conditions.hide_in_width,
-  color = { fg = colors.green, gui = 'bold' },
+  cond = function()
+    local fenc = vim.bo.fileencoding
+    return fenc ~= '' and fenc ~= 'utf-8'
+  end,
+  color = { fg = colors.orange, gui = 'bold' },
 }
 
 ins_right {
   'fileformat',
   fmt = string.upper,
   icons_enabled = false,
-  cond = conditions.hide_in_width,
-  color = { fg = colors.green, gui = 'bold' },
+  cond = function()
+    return vim.bo.fileformat ~= 'unix'
+  end,
+  color = { fg = colors.orange, gui = 'bold' },
 }
 
 ins_right {
@@ -249,7 +283,6 @@ ins_right {
 
 ins_right {
   'branch',
-  icon = '',
   cond = conditions.check_git_workspace,
   color = { fg = colors.violet, gui = 'bold' },
 }
