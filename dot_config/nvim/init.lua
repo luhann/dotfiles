@@ -125,12 +125,30 @@ require("lazy").setup({
   -- LSP/Completion
   { "neovim/nvim-lspconfig", lazy = false },
   {
+    -- Configures lua_ls with the Neovim runtime lazily, per module actually
+    -- used, instead of indexing the whole runtime up front
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {},
+  },
+  {
     "saghen/blink.cmp",
     version = '1.*',
     opts = {
       keymap = { preset = 'super-tab' },
       fuzzy = {
         implementation = "rust",
+      },
+      sources = {
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority
+            score_offset = 100,
+          },
+        },
       },
     },
   }
@@ -168,11 +186,8 @@ vim.lsp.config("jarl", {
 vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
+      -- runtime/library setup is handled lazily by lazydev.nvim
       workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
         checkThirdParty = false,
       },
       telemetry = {
