@@ -23,8 +23,16 @@ pager: delta
 {{- $has_nvidia := false }}
 {{- if eq .chezmoi.hostname "gestalt" }}{{-   $has_nvidia = true }}{{- end }}
 
+{{- /* Resolve the CPU temperature sensor to its stable device path;
+       /sys/class/hwmon numbering is not stable across boots. Empty if absent. */ -}}
 {{- $hwmon_path := "" }}
-{{- if eq $chassis_type "desktop" }}{{-   $hwmon_path = "/sys/devices/pci0000:00/0000:00:18.3/hwmon" }}{{- end }}
+{{- if eq .chezmoi.os "linux" }}
+{{-   $cpu_sensor := "" }}
+{{-   if eq $chassis_type "desktop" }}{{ $cpu_sensor = "k10temp" }}{{ else if eq $chassis_type "laptop" }}{{ $cpu_sensor = "coretemp" }}{{ end }}
+{{-   if $cpu_sensor }}
+{{-     $hwmon_path = output "sh" "-c" (print "grep -ls ^" $cpu_sensor " /sys/class/hwmon/hwmon*/name | head -n1 | xargs -r readlink -f | xargs -r dirname | xargs -r dirname") | trim }}
+{{-   end }}
+{{- end }}
 
 {{- /* Prompt once for theme selection and load that palette. */ -}}
 {{- $color_scheme := promptStringOnce . "color_scheme" "What color scheme to use" "patroclus" -}}
