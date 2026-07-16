@@ -39,7 +39,6 @@
         "disk",
         "wireplumber",
         "network",
-        "battery",
         "clock"
     ]
 },
@@ -88,7 +87,9 @@
         "disk",
         "wireplumber",
         "network",
+{{- if ne .chassis_type "desktop" }}
         "battery",
+{{- end }}
         "clock"
     ]
 }
