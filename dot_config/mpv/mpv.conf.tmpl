@@ -3,7 +3,6 @@
 border=no
 msg-color=yes
 msg-module=yes
-x11-bypass-compositor=yes
 keep-open=yes                           # keeps the player open after a video/playlist ends
 save-position-on-quit=yes               # resume where you left off on next open
 hls-bitrate=max                         # uses max quality for HLS streams
@@ -48,6 +47,7 @@ slang=eng,en
 
 # ===== Video =====
 profile=high-quality
+# gpu-next stutters on the nvidia machine, so only use it elsewhere
 {{ if not .has_nvidia -}}
 vo=gpu-next
 interpolation=no
