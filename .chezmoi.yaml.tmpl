@@ -23,6 +23,17 @@ pager: delta
 {{- $has_nvidia := false }}
 {{- if eq .chezmoi.hostname "gestalt" }}{{-   $has_nvidia = true }}{{- end }}
 
+{{- /* Pick the monitor layout profile from .chezmoitemplates/monitors:
+       a hostname file wins, then chassis type, then the bare default. */ -}}
+{{- $monitors_dir := joinPath .chezmoi.sourceDir ".chezmoitemplates" "monitors" }}
+{{- $monitor_profile := "default" }}
+{{- if stat (joinPath $monitors_dir (printf "%s.yaml" $chassis_type)) }}
+{{-   $monitor_profile = $chassis_type }}
+{{- end }}
+{{- if stat (joinPath $monitors_dir (printf "%s.yaml" .chezmoi.hostname)) }}
+{{-   $monitor_profile = .chezmoi.hostname }}
+{{- end }}
+
 {{- /* Resolve the CPU temperature sensor to its stable device path;
        /sys/class/hwmon numbering is not stable across boots. Empty if absent. */ -}}
 {{- $hwmon_path := "" }}
@@ -54,40 +65,8 @@ data:
     {{ $key }}: {{ $val | quote }}
 {{- end }}
 
-  # Monitor layout varies by detected chassis type.
+  # Monitor layout: per-host profile if one exists, else per-chassis.
+  # To add a machine, drop a <hostname>.yaml in .chezmoitemplates/monitors.
+  monitor_profile: {{ $monitor_profile | quote }}
   monitors:
-{{- if eq $chassis_type "desktop" }}
-    - output: "DP-1"
-      mode: "2560x1440@165"
-      position: "auto"
-      scale: "auto"
-      bitdepth: 10
-      icc: "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"
-    - output: "DP-2"
-      mode: "2560x1440@165"
-      position: "auto-left"
-      niri_x: -2560
-      niri_y: 0
-      scale: "auto"
-      bitdepth: 10
-      icc: "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"
-    - output: ""
-      mode: "preferred"
-      position: "auto"
-      scale: "1"
-{{- else if eq $chassis_type "laptop" }}
-    - output: "eDP-1"
-      mode: "preferred"
-      position: "auto"
-      scale: "auto"
-      bitdepth: 10
-    - output: ""
-      mode: "preferred"
-      position: "auto"
-      scale: "1"
-{{- else }}
-    - output: ""
-      mode: "preferred"
-      position: "auto"
-      scale: "1"
-{{- end }}
+{{ includeTemplate (printf "monitors/%s.yaml" $monitor_profile) . | trim | indent 4 }}

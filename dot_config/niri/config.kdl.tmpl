@@ -8,7 +8,7 @@
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
-// Outputs — defined in .chezmoi.toml.tmpl alongside Hyprland monitor config
+// Outputs — defined in .chezmoitemplates/monitors, shared with the Hyprland config
 {{- range .monitors }}
 {{- if .output }}
 output {{ .output | quote }} {

@@ -62,7 +62,7 @@ overwrite_null:
   album: []
   track: []
 
-plugins: [play, random, info, musicbrainz, duplicates, fetchart, lastgenre, zero]
+plugins: [play, random, info, musicbrainz, lyrics, duplicates, fetchart, lastgenre, zero, scrub]
 pluginpath: []
 threaded: yes
 timeout: 5.0
@@ -160,3 +160,6 @@ fetchart:
 
 lastgenre:
   count: 2
+
+scrub:
+  auto: yes

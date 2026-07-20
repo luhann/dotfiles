@@ -1,0 +1,18 @@
+- output: "DP-1"
+  mode: "2560x1440@165"
+  position: "auto"
+  scale: "auto"
+  bitdepth: 10
+  icc: "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"
+- output: "DP-2"
+  mode: "2560x1440@165"
+  position: "auto-left"
+  niri_x: -2560
+  niri_y: 0
+  scale: "auto"
+  bitdepth: 10
+  icc: "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"
+- output: ""
+  mode: "preferred"
+  position: "auto"
+  scale: "1"
