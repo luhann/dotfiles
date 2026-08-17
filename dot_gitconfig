@@ -1,7 +1,9 @@
 [user]
   email = luke@lukehannan.com
   name = Luke Hannan
-  signingKey = CD004543DFCA0390
+  # Trailing ! pins the [S] subkey. Without it gpg picks a signing key itself,
+  # which is how commits ended up signed by the old laptop key's primary.
+  signingKey = 804B7DFF994E58D5!
 [gpg]
   program = /bin/gpg
 [branch]

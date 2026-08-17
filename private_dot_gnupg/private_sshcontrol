@@ -1,0 +1,4 @@
+# Keygrips offered to ssh clients by gpg-agent.
+# BE098B7F... is the [A] subkey 2E010883268BB156 (card slot OPENPGP.3).
+# The secret is never here -- scdaemon forwards the operation to the YubiKey.
+BE098B7F05510C7893A296B41878BA94AE53A87E
