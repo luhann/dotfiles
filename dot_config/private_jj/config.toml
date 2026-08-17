@@ -31,6 +31,7 @@ bookmark-advance-to = "closest_pushable(@)"
 "why_immutable(r)" = "(r & immutable()) | roots(r:: & immutable_heads())"
 
 [aliases]
+chore = ["log", "-r", "description(glob:'chore:*')"]
 la = ["log", "-r", "all()"]
 lla = ["log", "-r", "all() | hidden()"]
 sr = ["show", "-r", "@"]
