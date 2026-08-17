@@ -12,12 +12,18 @@ fish_add_path --global ~/.ghcup/bin
 fish_add_path --global ~/applications/texlive/2026/bin/x86_64-linux
 fish_add_path --global ~/applications/cmdstan/bin
 fish_add_path --global ~/applications/xbps/usr/bin
+fish_add_path --global ~/.opencode/bin
 
 # Environment variables
 set -gx EDITOR nvim
 set -gx VISUAL nvim
 set -gx BROWSER {{ .browser }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
+
+# gpg-agent acts as the ssh agent, serving the YubiKey's [A] subkey.
+# Set outside the interactive guard so scripts and non-login shells inherit it;
+# the socket is systemd-activated, so it works before any gpg command has run.
+set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
 {{- if $isGentoo }}
 # Clang/LLVM toolchain
