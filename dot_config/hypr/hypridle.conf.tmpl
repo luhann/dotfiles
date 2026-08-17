@@ -1,7 +1,7 @@
 general {
     lock_cmd = pidof hyprlock || hyprlock
     before_sleep_cmd = loginctl lock-session
-    after_sleep_cmd = {{ if eq .wm "hyprland" }}hyprctl dispatch dpms on{{ else }}niri msg action power-on-monitors{{ end }}
+    after_sleep_cmd = hyprctl dispatch dpms on
     ignore_dbus_inhibit = false             # whether to ignore dbus-sent idle-inhibit requests (used by e.g. firefox or steam)
     ignore_systemd_inhibit = false          # whether to ignore systemd-inhibit --what=idle inhibitors
 }
@@ -14,8 +14,8 @@ listener {
 
 listener {
     timeout = 330
-    on-timeout = {{ if eq .wm "hyprland" }}hyprctl dispatch dpms off{{ else }}niri msg action power-off-monitors{{ end }}
-    on-resume = {{ if eq .wm "hyprland" }}hyprctl dispatch dpms on{{ else }}niri msg action power-on-monitors{{ end }}
+    on-timeout = hyprctl dispatch dpms off
+    on-resume = hyprctl dispatch dpms on
 }
 
 {{ if ne .chassis_type "desktop" -}}

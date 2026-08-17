@@ -4,45 +4,12 @@ pager: delta
 {{- /* Detect whether we're running in Codespaces. */ -}}
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 
-{{- /* Determine chassis type across supported operating systems. */ -}}
-{{- /* On VPS servers this will automatically detect them as "vm". */ -}}
-{{- $chassis_type := "desktop" }}
-{{- if eq .chezmoi.os "darwin" }}
-{{-   if contains "MacBook" (output "system_profiler" "SPHardwareDataType") }}
-{{-     $chassis_type = "laptop" }}
-{{-   else }}
-{{-     $chassis_type = "desktop" }}
-{{-   end }}
-{{- else if eq .chezmoi.os "linux" }}
-{{-   $chassis_type = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
-{{- else if eq .chezmoi.os "windows" }}
-{{-   $chassis_type = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim }}
-{{- end }}
-
-{{- /* Host-specific hardware flags. */ -}}
-{{- $has_nvidia := false }}
-{{- if eq .chezmoi.hostname "gestalt" }}{{-   $has_nvidia = true }}{{- end }}
-
-{{- /* Pick the monitor layout profile from .chezmoitemplates/monitors:
-       a hostname file wins, then chassis type, then the bare default. */ -}}
-{{- $monitors_dir := joinPath .chezmoi.sourceDir ".chezmoitemplates" "monitors" }}
-{{- $monitor_profile := "default" }}
-{{- if stat (joinPath $monitors_dir (printf "%s.yaml" $chassis_type)) }}
-{{-   $monitor_profile = $chassis_type }}
-{{- end }}
-{{- if stat (joinPath $monitors_dir (printf "%s.yaml" .chezmoi.hostname)) }}
-{{-   $monitor_profile = .chezmoi.hostname }}
-{{- end }}
-
-{{- /* Resolve the CPU temperature sensor to its stable device path;
-       /sys/class/hwmon numbering is not stable across boots. Empty if absent. */ -}}
-{{- $hwmon_path := "" }}
-{{- if eq .chezmoi.os "linux" }}
-{{-   $cpu_sensor := "" }}
-{{-   if eq $chassis_type "desktop" }}{{ $cpu_sensor = "k10temp" }}{{ else if eq $chassis_type "laptop" }}{{ $cpu_sensor = "coretemp" }}{{ end }}
-{{-   if $cpu_sensor }}
-{{-     $hwmon_path = output "sh" "-c" (print "grep -ls ^" $cpu_sensor " /sys/class/hwmon/hwmon*/name | head -n1 | xargs -r readlink -f | xargs -r dirname | xargs -r dirname") | trim }}
-{{-   end }}
+{{- /* Per-host record lives in .chezmoitemplates/hosts/<hostname>.yaml.tmpl,
+       which owns chassis, nvidia, hwmon resolution, and the monitor profile.
+       Unregistered machines fall back to hosts/_default.yaml. */ -}}
+{{- $host := includeTemplate "hosts/_default.yaml.tmpl" . | fromYaml }}
+{{- if stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" (printf "%s.yaml.tmpl" .chezmoi.hostname)) }}
+{{-   $host = merge (includeTemplate (printf "hosts/%s.yaml.tmpl" .chezmoi.hostname) . | fromYaml) $host }}
 {{- end }}
 
 {{- /* Prompt once for theme selection and load that palette. */ -}}
@@ -50,12 +17,12 @@ pager: delta
 {{- $color_palette := (includeTemplate (print $color_scheme ".yaml") | fromYaml).colors }}
 
 data:
-  wm: hyprland
-  chassis_type: {{ $chassis_type | quote }}
+  browser: {{ $host.browser | quote }}
+  chassis_type: {{ $host.chassis_type | quote }}
   codespaces: {{ $codespaces }}
   color_scheme: {{ $color_scheme | quote }}
-  has_nvidia: {{ $has_nvidia }}
-  hwmon_path: {{ $hwmon_path | quote }}
+  has_nvidia: {{ $host.has_nvidia }}
+  hwmon_path: {{ $host.hwmon_path | quote }}
 
   colors:
     # Defaults not provided by the selected color palette.
@@ -65,8 +32,7 @@ data:
     {{ $key }}: {{ $val | quote }}
 {{- end }}
 
-  # Monitor layout: per-host profile if one exists, else per-chassis.
-  # To add a machine, drop a <hostname>.yaml in .chezmoitemplates/monitors.
-  monitor_profile: {{ $monitor_profile | quote }}
+  # Monitor layout is named by the host file; see .chezmoitemplates/monitors/.
+  monitor_profile: {{ $host.monitor_profile | quote }}
   monitors:
-{{ includeTemplate (printf "monitors/%s.yaml" $monitor_profile) . | trim | indent 4 }}
+{{ includeTemplate (printf "monitors/%s.yaml" $host.monitor_profile) . | trim | indent 4 }}

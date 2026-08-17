@@ -2,27 +2,20 @@ README.md
 LICENSE
 install.sh
 
-{{- if ne .wm "niri"}}
+# niri is kept around as an alternative config but not actively used
 .config/niri
-{{- end }}
-
-{{- if ne .wm "hyprland"}}
-.config/hypr
-{{- end }}
 
 # machine specific configs
 {{- if ne .chassis_type "desktop" }}
 bin/backlight # only manage on desktop
-.config/pipewire/pipewire.conf.d
 {{- end }}
 
-# remove all these configs from vm
-{{- if (or (eq .chassis_type "vm") (eq .codespaces true)) }}
+# remove all these configs from codespaces
+{{- if .codespaces }}
 .config/Code
 .config/dunst
 .config/hypr
 .config/mpv
-.config/niri
 .config/pipewire
 .config/rofi
 .config/swayimg
