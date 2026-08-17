@@ -1,0 +1,9 @@
+{{- $hwmon := "" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $hwmon = output "sh" "-c" "grep -ls ^k10temp /sys/class/hwmon/hwmon*/name | head -n1 | xargs -r readlink -f | xargs -r dirname | xargs -r dirname" | trim -}}
+{{- end -}}
+chassis_type: desktop
+has_nvidia: false
+hwmon_path: {{ $hwmon | quote }}
+monitor_profile: desktop
+browser: firefox

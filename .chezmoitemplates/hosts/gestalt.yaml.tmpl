@@ -1,0 +1,11 @@
+{{- /* Resolve coretemp to its stable hwmon path; /sys/class/hwmon numbering
+      is not stable across boots. Empty if absent or non-linux. */ -}}
+{{- $hwmon := "" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $hwmon = output "sh" "-c" "grep -ls ^coretemp /sys/class/hwmon/hwmon*/name | head -n1 | xargs -r readlink -f | xargs -r dirname | xargs -r dirname" | trim -}}
+{{- end -}}
+chassis_type: laptop
+has_nvidia: true
+hwmon_path: {{ $hwmon | quote }}
+monitor_profile: laptop
+browser: firefox-bin

@@ -1,9 +1,4 @@
-{{- $make_jobs := "4" -}}
-{{- if eq .chezmoi.os "linux" -}}
-{{- $make_jobs = (output "nproc" | trim) -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{- $make_jobs = (output "sysctl" "-n" "hw.logicalcpu" | trim) -}}
-{{- end -}}
+{{- $make_jobs := (output "nproc" | trim) -}}
 NOT_CRAN=true
 DOWNLOAD_STATIC_LIBV8=1
 MAKEFLAGS=-j{{ $make_jobs }}

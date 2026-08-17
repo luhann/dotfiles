@@ -34,7 +34,7 @@ end
 ---------------------
 
 local terminal = "alacritty"
-local browser = "firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}"
+local browser = "{{ .browser }}"
 local fileManager = "nemo"
 local menu = "rofi -show drun"
 local mainMod = "SUPER"

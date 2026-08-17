@@ -1,9 +1,8 @@
-{{- /* OS detection: osRelease only exists on Linux, ID_LIKE may be absent, and
+{{- /* Gentoo is the only OS in the fleet; osRelease only exists on Linux, and
        chezmoi only strips double quotes from os-release values (Gentoo uses ID='gentoo'). */ -}}
 {{- $osRelease := default (dict) (get .chezmoi "osRelease") -}}
 {{- $osId := trimAll `"` (trimAll "'" (default "" (get $osRelease "id"))) -}}
 {{- $isGentoo := or (eq $osId "gentoo") (contains "gentoo" (default "" (get $osRelease "idLike"))) -}}
-{{- $isVoid := eq $osId "void" -}}
 # Using fish_add_path instead of manually modifying PATH; it is idempotent
 fish_add_path --global ~/bin
 fish_add_path --global ~/.cargo/bin
@@ -17,7 +16,7 @@ fish_add_path --global ~/applications/xbps/usr/bin
 # Environment variables
 set -gx EDITOR nvim
 set -gx VISUAL nvim
-set -gx BROWSER firefox{{ if eq .chassis_type "laptop" }}-bin{{ end }}
+set -gx BROWSER {{ .browser }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 
 {{- if $isGentoo }}
@@ -76,11 +75,6 @@ if status --is-interactive
     abbr --add scs "systemctl status"
 
     # OS-specific package management
-{{- if $isVoid }}
-    abbr --add xup "sudo xbps-install -Su"
-    abbr --add xrm "sudo xbps-remove -R"
-    abbr --add xinstall "sudo xbps-install -S"
-{{- end}}
 {{- if $isGentoo }}
     abbr --add einstall "sudo emerge --ask --verbose"
     abbr --add eremove "sudo emerge --ask --depclean"
