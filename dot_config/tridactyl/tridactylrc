@@ -1,0 +1,8 @@
+" Tridactyl snapshots CSS into browser storage; re-run :colourscheme after
+" regenerating tokens in ~/dev/patroclus.
+colourscheme patroclus
+
+" Cap the History section (history + bookmarks) so the completion box fits on
+" screen; the patroclus theme unsets its max-height, so the data has to be
+" capped rather than the box.
+set historyresults 20
