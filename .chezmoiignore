@@ -19,6 +19,7 @@ bin/backlight # only manage on desktop
 .config/pipewire
 .config/rofi
 .config/swayimg
+.config/tridactyl
 .config/waybar
 .config/wireplumber
 .config/xdg-desktop-portal
