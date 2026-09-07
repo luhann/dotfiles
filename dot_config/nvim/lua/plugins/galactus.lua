@@ -9,26 +9,10 @@ vim.opt.showcmd = false
 vim.opt.ruler = false
 vim.opt.shortmess:append('q')
 
--- Color table for highlights using kanagawa-inspired cyberpunk theme
--- stylua: ignore
-local colors = {
-  bg       = '{{ .colors.base }}',     -- Dark base background
-  fg       = '{{ .colors.text }}',     -- Main text color
-  yellow   = '{{ .colors.yellow }}',   -- Warm yellow
-  cyan     = '{{ .colors.sky }}',      -- Sky blue instead of harsh cyan
-  darkblue = '{{ .colors.sapphire }}', -- Muted cyber blue
-  green    = '{{ .colors.green }}',    -- Matrix green
-  orange   = '{{ .colors.peach }}',    -- Warm cyber orange
-  violet   = '{{ .colors.mauve }}',    -- Kanagawa purple
-  magenta  = '{{ .colors.pink }}',     -- Soft cyber pink
-  blue     = '{{ .colors.accent }}',   -- Primary blue accent
-  red      = '{{ .colors.error }}',    -- Error red
-
-  -- Additional colors for better theme integration
-  surface  = '{{ .colors.surface0 }}', -- For subtle backgrounds
-  subtext  = '{{ .colors.subtext1 }}', -- For muted text
-  teal     = '{{ .colors.teal }}',     -- Kanagawa teal
-}
+-- Palette and lualine theme come from the generated patroclus module, so the
+-- bar cannot drift from the editor. Change design.yaml, regenerate, apply.
+local patroclus = require("patroclus")
+local colors = patroclus.colors
 
 local conditions = {
   buffer_not_empty = function()
@@ -66,13 +50,9 @@ local config = {
     -- Disable sections and component separators
     component_separators = '',
     section_separators = '',
-    theme = {
-      -- We are going to use lualine_c an lualine_x as left and
-      -- right section. Both are highlighted by c theme .  So we
-      -- are just setting default looks o statusline
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.subtext, bg = colors.bg } },
-    },
+    -- lualine_c and lualine_x act as the left and right sections; both are
+    -- highlighted by the theme's `c` entry.
+    theme = patroclus.lualine,
   },
   sections = {
     -- these are to remove the defaults
@@ -125,7 +105,7 @@ ins_left {
     return ''
   end,
   color = function()
-    -- auto change color according to neovims mode with kanagawa-inspired colors
+    -- auto change color according to neovims mode, from the patroclus palette
     local mode_color = {
       n = colors.blue,    -- Normal: blue accent
       i = colors.green,   -- Insert: green

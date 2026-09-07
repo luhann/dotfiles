@@ -160,3 +160,30 @@ if status --is-interactive
         atuin init fish | source
     end
 end
+
+# --- patroclus ---------------------------------------------------------------
+# Generated palette, same source as the editor and the terminal. fish takes
+# colours without the leading '#'.
+set -g fish_color_normal         {{ .colors.text | replace "#" "" }}
+set -g fish_color_command        {{ .colors.accent | replace "#" "" }}
+set -g fish_color_keyword        {{ .colors.red | replace "#" "" }}
+set -g fish_color_quote          {{ .colors.blue | replace "#" "" }}
+set -g fish_color_redirection    {{ .colors.teal | replace "#" "" }}
+set -g fish_color_end            {{ .colors.subtext0 | replace "#" "" }}
+set -g fish_color_error          {{ .colors.error | replace "#" "" }}
+set -g fish_color_param          {{ .colors.text | replace "#" "" }}
+set -g fish_color_option         {{ .colors.subtext1 | replace "#" "" }}
+set -g fish_color_comment        {{ .colors.comment | replace "#" "" }}
+set -g fish_color_operator       {{ .colors.teal | replace "#" "" }}
+set -g fish_color_escape         {{ .colors.peach | replace "#" "" }}
+set -g fish_color_autosuggestion {{ .colors.overlay1 | replace "#" "" }}
+set -g fish_color_cwd            {{ .colors.accent | replace "#" "" }}
+set -g fish_color_valid_path     --underline
+set -g fish_color_search_match   --background={{ .colors.selection | replace "#" "" }}
+set -g fish_color_selection      --background={{ .colors.selection | replace "#" "" }}
+
+set -g fish_pager_color_progress    {{ .colors.subtext0 | replace "#" "" }}
+set -g fish_pager_color_prefix      {{ .colors.accent | replace "#" "" }} --bold
+set -g fish_pager_color_completion  {{ .colors.text | replace "#" "" }}
+set -g fish_pager_color_description {{ .colors.subtext0 | replace "#" "" }}
+set -g fish_pager_color_selected_background --background={{ .colors.selection | replace "#" "" }}

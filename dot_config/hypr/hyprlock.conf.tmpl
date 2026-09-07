@@ -14,7 +14,7 @@ background {
 label {
   monitor =
   text = cmd[update:1000] echo "$(date "+%F %T %z")"
-  color = rgba({{ .colors.cyber_red | replace "#" "" }}80)
+  color = rgba({{ .colors.accent | replace "#" "" }}80)
   font_size = 22
   font_family = Monaspace Krypton Var
   position = 2%, 4%
@@ -32,7 +32,7 @@ input-field {
     dots_size = 0.75
     dots_spacing = 0.25
     inner_color = rgba({{ .colors.surface0 | replace "#" "" }}00)
-    font_color = rgba({{ .colors.cyber_red | replace "#" "" }}cc)
+    font_color = rgba({{ .colors.accent | replace "#" "" }}cc)
     check_color = rgba({{ .colors.warning | replace "#" "" }}00)
     fail_text = <span weight="bold">ACCESS DENIED</span>
     fail_color = rgba({{ .colors.error | replace "#" "" }}00)

@@ -19,6 +19,8 @@ background = "{{ .colors.base }}"
 foreground = "{{ .colors.text }}"
 
 [urgency_critical]
-background = "{{ .colors.cyber_red }}"
-foreground = "{{ .colors.text }}"
+# Alizarin ground with the headline on it. A light-on-light pairing here was
+# unreadable; this reads at APCA Lc 79.
+background = "{{ .colors.maroon }}"
+foreground = "{{ .colors.bright_white }}"
 frame_color = "{{ .colors.error }}"

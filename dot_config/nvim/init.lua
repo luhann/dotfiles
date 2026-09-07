@@ -25,7 +25,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- UI/Appearance
-  { "rebelot/kanagawa.nvim" },
   "nvim-lualine/lualine.nvim",
   "nvim-tree/nvim-web-devicons",
 
@@ -250,10 +249,7 @@ vim.diagnostic.config({
   float = { border = "rounded", source = "if_many" },
 })
 
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#c87171", italic = true })
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#c8a871", italic = true })
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#7192c8", italic = true })
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#71c8a8", italic = true })
+-- Diagnostic virtual text is coloured by the patroclus colorscheme.
 
 vim.opt.undofile = true
 
@@ -290,7 +286,9 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = false
 vim.opt.foldnestmax = 4
 
-vim.cmd.colorscheme("kanagawa")
+-- patroclus: generated from ~/dev/patroclus/design.yaml, so the editor,
+-- the statusline and the terminal all read from one palette.
+vim.cmd.colorscheme("patroclus")
 
 -- core functionality
 require("core.keybinds")
