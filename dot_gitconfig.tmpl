@@ -21,6 +21,23 @@
 [delta]
   navigate = true
   side-by-side = true
+  # patroclus. `ansi` makes delta's syntax highlighting defer to the terminal
+  # palette, so it follows the theme without a bat theme file of its own. The
+  # diff tints are design.yaml's ins_bg/del_bg/chg_bg, which until now had no
+  # consumer outside neovim.
+  syntax-theme = ansi
+  plus-style = syntax "{{ .colors.diff_add_bg }}"
+  plus-emph-style = syntax "{{ .colors.diff_add_emph }}"
+  minus-style = syntax "{{ .colors.diff_del_bg }}"
+  minus-emph-style = syntax "{{ .colors.diff_del_emph }}"
+  line-numbers-plus-style = "{{ .colors.success }}"
+  line-numbers-minus-style = "{{ .colors.error }}"
+  line-numbers-zero-style = "{{ .colors.overlay1 }}"
+  file-style = "{{ .colors.accent }}" bold
+  file-decoration-style = "{{ .colors.border }}" ul
+  hunk-header-style = "{{ .colors.subtext0 }}" line-number
+  hunk-header-decoration-style = "{{ .colors.border }}" box
+  blame-palette = "{{ .colors.base }}" "{{ .colors.mantle }}" "{{ .colors.surface0 }}" "{{ .colors.surface1 }}"
 [diff]
   algorithm = histogram
   colorMoved = plain

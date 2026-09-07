@@ -127,7 +127,7 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border = "{{ .colors.teal }}80",
+            active_border = "{{ .colors.accent }}80",
             inactive_border = "{{ .colors.surface1 }}b3",
         },
 
@@ -150,7 +150,7 @@ hl.config({
             enabled = {{ if eq .chassis_type "laptop" }}false{{ else }}true{{ end }},
             range = 4,
             render_power = 3,
-            color = "#1a1a1aee",
+            color = "{{ .colors.base }}ee",
         },
 
         blur = {

@@ -1,20 +1,28 @@
+/* patroclus. GTK's alpha() multiplies a colour's alpha, so the palette stays
+   the single source and only the transparency lives here. */
+
 /*base background color*/
-@define-color bg_main rgba(25, 25, 25, 0.0);
-@define-color bg_main_tooltip rgba(0, 0, 0, 0.7);
+@define-color bg_main alpha({{ .colors.base }}, 0.0);
+@define-color bg_main_tooltip alpha({{ .colors.mantle }}, 0.92);
 
 
 /*base background color of selections */
-@define-color bg_hover rgba(200, 200, 200, 0);
+@define-color bg_hover alpha({{ .colors.selection }}, 0.0);
 /*base background color of active elements */
-@define-color bg_active rgba(254, 248, 3, 0.25);
+@define-color bg_active alpha({{ .colors.accent }}, 0.25);
 
 /*base border color*/
-@define-color border_main rgba(255, 255, 255, 0.0);
+@define-color border_main alpha({{ .colors.border }}, 0.0);
 
 /*text color for entries, views and content in general */
-@define-color content_main rgba(254,248,3, 1);
+@define-color content_main {{ .colors.accent }};
 /*text color for entries that are unselected */
-@define-color content_inactive rgba(0, 255, 255, 0.5);
+@define-color content_inactive alpha({{ .colors.subtext0 }}, 0.7);
+
+/* Used by the urgent/warning/critical rules below. These were referenced but
+   never defined, so GTK could not resolve them and dropped those declarations. */
+@define-color warning_color {{ .colors.warning }};
+@define-color error_color {{ .colors.error }};
 
 * {
 	text-shadow: none;
@@ -101,7 +109,7 @@ tooltip label {
 }
 
 #workspaces button.urgent {
-	background: rgba(255, 200, 0, 0.35);
+	background: alpha(@warning_color, 0.35);
 	border-bottom: 3px dashed @warning_color;
 	color: @warning_color;
 }
@@ -114,7 +122,7 @@ tooltip label {
 #taskbar {}
 
 #taskbar button {
-	border-bottom: 3px solid rgba(0, 255, 255, 0.3);
+	border-bottom: 3px solid alpha({{ .colors.teal }}, 0.3);
 	margin-left: 2px;
 	margin-right: 2px;
 	padding-left: 8px;
@@ -187,16 +195,16 @@ tooltip label {
 
 #battery.charging {
   color: {{ .colors.green }};
-  background: rgba(0, 0, 0, 0);
+  background: transparent;
 }
 
 #battery.warning {
-  background: rgba(0, 0, 0, 0);
+  background: transparent;
 }
 
 #battery.critical {
-  color: rgba(178, 34, 34, 1);
-  background: rgba(0, 0, 0, 0);
+  color: @error_color;
+  background: transparent;
 }
 
 #wireplumber {
