@@ -57,17 +57,32 @@ require("lazy").setup({
 
   -- Language support
   {
+    -- main branch only installs parsers; highlight/indent are started below
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     config = function()
-      local configs = require("nvim-treesitter.config")
+      local ts = require("nvim-treesitter")
+      ts.install({ "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex", "rust", "fish", "toml", "typst" })
 
-      configs.setup({
-        ensure_installed = { "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex", "rust", "fish", "toml" },
-        sync_install = false,
-        auto_install = true,
-        highlight = { enable = true },
-        indent = { enable = true },
+      local function attach(buf, lang)
+        if not (vim.api.nvim_buf_is_valid(buf) and pcall(vim.treesitter.start, buf, lang)) then
+          return false
+        end
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        return true
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("treesitter", { clear = true }),
+        callback = function(ev)
+          local lang = vim.treesitter.language.get_lang(ev.match)
+          -- stands in for master's auto_install
+          if not attach(ev.buf, lang) and vim.list_contains(ts.get_available(), lang) then
+            ts.install(lang):await(vim.schedule_wrap(function() attach(ev.buf, lang) end))
+          end
+        end,
       })
     end
   },

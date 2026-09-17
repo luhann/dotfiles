@@ -1,0 +1,3 @@
+#!/bin/sh
+# Shadows x11-misc/prime-run, which only works with the proprietary driver.
+DRI_PRIME=1 exec "$@"

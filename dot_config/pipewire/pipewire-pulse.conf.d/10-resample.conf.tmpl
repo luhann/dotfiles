@@ -1,0 +1,6 @@
+# pipewire-pulse ignores client.conf.d, so the shared block is included here
+# too; otherwise every libpulse client falls back to resample.quality = 4.
+#
+# Verify the merged result with:
+#   pw-config -n pipewire-pulse.conf list stream.properties
+{{ template "pipewire-resample.conf" . -}}

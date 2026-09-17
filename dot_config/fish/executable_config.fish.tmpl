@@ -3,16 +3,17 @@
 {{- $osRelease := default (dict) (get .chezmoi "osRelease") -}}
 {{- $osId := trimAll `"` (trimAll "'" (default "" (get $osRelease "id"))) -}}
 {{- $isGentoo := or (eq $osId "gentoo") (contains "gentoo" (default "" (get $osRelease "idLike"))) -}}
-# Using fish_add_path instead of manually modifying PATH; it is idempotent
-fish_add_path --global ~/bin
-fish_add_path --global ~/.cargo/bin
-fish_add_path --global ~/.local/bin
-fish_add_path --global ~/.cabal/bin
-fish_add_path --global ~/.ghcup/bin
-fish_add_path --global ~/applications/texlive/2026/bin/x86_64-linux
-fish_add_path --global ~/applications/cmdstan/bin
-fish_add_path --global ~/applications/xbps/usr/bin
-fish_add_path --global ~/.opencode/bin
+# fish_add_path is idempotent; one call instead of one per directory saves ~8ms
+fish_add_path --global \
+    ~/bin \
+    ~/.cargo/bin \
+    ~/.local/bin \
+    ~/.cabal/bin \
+    ~/.ghcup/bin \
+    ~/applications/texlive/2026/bin/x86_64-linux \
+    ~/applications/cmdstan/bin \
+    ~/applications/xbps/usr/bin \
+    ~/.opencode/bin
 
 # Environment variables
 set -gx EDITOR nvim
@@ -20,10 +21,11 @@ set -gx VISUAL nvim
 set -gx BROWSER {{ .browser }}
 set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
 
-# gpg-agent acts as the ssh agent, serving the YubiKey's [A] subkey.
-# Set outside the interactive guard so scripts and non-login shells inherit it;
-# the socket is systemd-activated, so it works before any gpg command has run.
-set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+# gpg-agent is the ssh agent (YubiKey [A] subkey). Outside the interactive
+# guard so scripts inherit it; the fixed path is resolved at apply time.
+{{- if lookPath "gpgconf" }}
+set -gx SSH_AUTH_SOCK {{ output "gpgconf" "--list-dirs" "agent-ssh-socket" | trim }}
+{{- end }}
 
 {{- if $isGentoo }}
 # Clang/LLVM toolchain
@@ -44,37 +46,37 @@ set -gx CFLAGS "-march=native -O2 -flto=thin"
 set -gx CXXFLAGS "-march=native -O2 -flto=thin"
 set -gx LDFLAGS "-fuse-ld=lld -Wl,-O1 -Wl,--as-needed"
 set -gx RUSTFLAGS "-C target-cpu=native -C opt-level=3"
-set -gx MAKEFLAGS "--jobs" (nproc)
+set -gx MAKEFLAGS -j{{ output "nproc" | trim }}
 {{- end}}
 
 if status --is-interactive
     # only interactive shells have a tty for gpg to prompt on
     set -gx GPG_TTY (tty)
 
-    # All my aliases
-    # Kept inside the interactive guard so fish scripts get the real commands
-    alias sudo="run0"
+    # Interactive only, so scripts get the real commands. Functions, not
+    # `alias`, which costs ~9ms at startup.
+    function sudo --wraps=run0; run0 $argv; end
     # Modern command replacements
-    alias cat="bat --paging=never"
-    alias ls="eza --long --header --git --color=auto --group-directories-first"
-    alias find="fd"
-    alias top="btop"
-    alias grep="rg"
-    alias vim="nvim"
+    function cat --wraps=bat; bat --paging=never $argv; end
+    function ls --wraps=eza; eza --long --header --git --color=auto --group-directories-first $argv; end
+    function find --wraps=fd; fd $argv; end
+    function top --wraps=btop; btop $argv; end
+    function grep --wraps=rg; rg $argv; end
+    function vim --wraps=nvim; nvim $argv; end
 
     # System management
-    alias off="sudo poweroff"
-    alias cp="cp -v --reflink=auto"
-    alias mv="mv -v"
-    alias xo="xdg-open"
+    function off; sudo poweroff; end
+    function cp --wraps=cp; command cp -v --reflink=auto $argv; end
+    function mv --wraps=mv; command mv -v $argv; end
+    function xo --wraps=xdg-open; xdg-open $argv; end
 
     # Process management
-    alias psa="ps aux"
-    alias psg="ps aux | rg -i"
+    function psa; ps aux $argv; end
+    function psg; ps aux | rg -i $argv; end
 
     # Helper utilities
-    alias preview="fzf --preview 'bat --color=always {}'"
-    alias weather="curl -4 wttr.in/Cape+Town"
+    function preview --wraps=fzf; fzf --preview 'bat --color=always {}' $argv; end
+    function weather; curl -4 wttr.in/Cape+Town; end
 
     abbr --add scu "systemctl --user"
     abbr --add scus "systemctl --user status"
@@ -125,40 +127,41 @@ if status --is-interactive
     abbr --add czs "chezmoi status"
 
     function fish_greeting
-      echo
-      echo -e (uname -ro | awk '{print " \\\\e[1mOS: \\\\e[0;32m"$0"\\\\e[0m"}')
-      echo -e (uname -n | awk '{print " \\\\e[1mHostname: \\\\e[0;32m"$0"\\\\e[0m"}')
+        set -l label (set_color --bold)
+        set -l value (set_color normal; set_color green)
+        echo
+        echo " $label""OS: $value"(uname -ro)(set_color normal)
+        echo " $label""Hostname: $value$hostname"(set_color normal)
     end
 
-    # Completion scripts are generated into the autoload dir and refreshed
-    # only when the binary is newer than the generated file, instead of being
-    # sourced on every shell (gh + pixi alone cost ~170ms that way).
-    # Local-only, not managed by chezmoi.
+    # Cache generated shell code, regenerating only when the binary is newer
+    # (saves ~190ms per shell). Fails if the binary is missing or nothing
+    # usable was generated; a failed run never overwrites the cache.
+    function __cached_gen -a out bin
+        command -q $bin; or return 1
+        test $out -nt (command -v $bin); and return
+        if $argv[3..] > $out.tmp
+            mv $out.tmp $out
+        else
+            rm -f $out.tmp
+            test -s $out
+        end
+    end
+
+    # Completions go to the autoload dir, so fish loads them on first use
     set -l comp_dir ~/.config/fish/completions
     test -d $comp_dir; or mkdir -p $comp_dir
-    if command -q gh; and not test $comp_dir/gh.fish -nt (command -v gh)
-        gh completion --shell fish > $comp_dir/gh.fish
-    end
-    if command -q pixi; and not test $comp_dir/pixi.fish -nt (command -v pixi)
-        pixi completion --shell fish > $comp_dir/pixi.fish
-    end
-    if command -q jj; and not test $comp_dir/jj.fish -nt (command -v jj)
-        COMPLETE=fish jj > $comp_dir/jj.fish
-    end
+    __cached_gen $comp_dir/gh.fish gh gh completion --shell fish
+    __cached_gen $comp_dir/pixi.fish pixi pixi completion --shell fish
+    __cached_gen $comp_dir/jj.fish jj env COMPLETE=fish jj
 
-    # These are shell init hooks (prompt, cd hook, keybindings), not
-    # completions -- they have to run in each shell and are cheap (~10ms each)
-    if command -q zoxide
-        zoxide init fish | source
-    end
-
-    if command -q starship
-        starship init fish | source
-    end
-
-    if command -q atuin
-        atuin init fish | source
-    end
+    # Init hooks are sourced per shell; session IDs are computed at source time.
+    set -l init_dir ~/.cache/fish/init
+    test -d $init_dir; or mkdir -p $init_dir
+    __cached_gen $init_dir/zoxide.fish zoxide zoxide init fish; and source $init_dir/zoxide.fish
+    __cached_gen $init_dir/starship.fish starship starship init fish --print-full-init; and source $init_dir/starship.fish
+    __cached_gen $init_dir/atuin.fish atuin atuin init fish; and source $init_dir/atuin.fish
+    functions --erase __cached_gen
 end
 
 # --- patroclus ---------------------------------------------------------------
