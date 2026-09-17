@@ -1,3 +1,5 @@
 # Unused autostart entries apps wrote for themselves; uwsm would now start them.
 .config/autostart/easyeffects-service.desktop
 .config/autostart/netbird.desktop
+# Superseded always-on combine sink; combine-sink.conf is run on demand instead.
+.config/pipewire/pipewire.conf.d/combine_sink.conf
