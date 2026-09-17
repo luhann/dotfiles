@@ -1,0 +1,5 @@
+# Masks the system entry now that uwsm runs XDG autostart; waybar is the tray.
+[Desktop Entry]
+Type=Application
+Name=XApp Status Notifier Watcher
+Hidden=true

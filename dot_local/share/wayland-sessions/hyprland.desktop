@@ -1,0 +1,7 @@
+# Shadows the system entry, whose dbus-run-session wrapper hides Hyprland from
+# uwsm. -e -D keeps "start-hyprland" out of XDG_CURRENT_DESKTOP.
+[Desktop Entry]
+Name=Hyprland
+Comment=Hyprland under uwsm
+Exec=uwsm start -e -D Hyprland -N Hyprland start-hyprland
+Type=Application

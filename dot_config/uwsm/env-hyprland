@@ -1,0 +1,6 @@
+# Hyprland session environment, also exported to systemd services.
+export TERMINAL=alacritty
+export XCURSOR_SIZE=24
+export XCURSOR_THEME=phinger-cursors-light
+export HYPRCURSOR_SIZE=24
+export QT_QPA_PLATFORM=wayland

@@ -36,7 +36,7 @@ hl.bind(mainMod .. " + SHIFT + P", function()
 end)
 
 -- Extra programs
-hl.bind(mainMod .. " + Z",              hl.dsp.exec_cmd("zotero"))
+hl.bind(mainMod .. " + Z",              hl.dsp.exec_cmd("uwsm app -- zotero"))
 hl.bind(mainMod .. " + backslash",      hl.dsp.exec_cmd("wallpaper"))
 hl.bind(mainMod .. " + space",          hl.dsp.exec_cmd("search"))
 
