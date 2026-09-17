@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'DirChanged' }, {
 -- Config
 local config = {
   options = {
-    disabled_filetypes = { 'NvimTree', 'Lazy' },
+    disabled_filetypes = { 'snacks_layout_box', 'snacks_picker_list', 'snacks_picker_input', 'Lazy' },
     globalstatus = true,
     always_divide_middle = true,
     -- Disable sections and component separators
