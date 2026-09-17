@@ -121,6 +121,9 @@
         "format": "{volume}%",
         "format-muted": "silence",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "~/.config/waybar/scripts/audio-switch sink",
+        "on-click-middle": "~/.config/waybar/scripts/audio-switch source",
+        "tooltip-format": "{node_name}\nleft: mute · right: output · middle: input",
         "max-volume": 100,
         "scroll-step": 5
     },

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Pick the default audio sink or source from a rofi menu.
+#
+# Usage: audio-switch [sink|source]
+#
+# Only the default changes, so untargeted streams follow without being pinned.
+# Monitor sources are hidden.
+set -euo pipefail
+
+kind=${1:-sink}
+case $kind in
+    sink)   prompt="output" ;;
+    source) prompt="input" ;;
+    *) echo "usage: ${0##*/} [sink|source]" >&2; exit 2 ;;
+esac
+
+nodes=$(pactl -f json list "${kind}s" |
+    jq -r '.[] | select(.properties."device.class" != "monitor") | "\(.name)\t\(.description)"')
+[[ -n $nodes ]] || { notify-send "Audio" "No ${kind}s available"; exit 1; }
+
+current=$(pactl "get-default-$kind")
+names=$(cut -f1 <<<"$nodes")
+selected=$(grep -nxF -- "$current" <<<"$names" | cut -d: -f1 || true)
+
+choice=$(cut -f2 <<<"$nodes" |
+    rofi -dmenu -i -p "$prompt" -format i -no-custom \
+        ${selected:+-selected-row $((selected - 1))}) || exit 0
+
+name=$(sed -n "$((choice + 1))p" <<<"$names")
+description=$(sed -n "$((choice + 1))p" <<<"$nodes" | cut -f2)
+
+pactl "set-default-$kind" "$name"
+notify-send -a audio-switch -h string:x-dunst-stack-tag:audio-switch \
+    "Audio $prompt" "$description"
