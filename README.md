@@ -37,7 +37,7 @@ Here is a list of the main dependencies and programs I use in my setup.
 | `dunst` | Notification daemon | (explains itself) |
 | `awww` | Wallpaper daemon | Wallpapers |
 | `grim` + `slurp` | Screenshot tools | Screenshot keybinds |
-| `cliphist` + `wl-clip-persist` | Clipboard history and persistence | Clipboard keybinds |
+| `cliphist` | Clipboard history | Clipboard keybinds |
 | `fzf` | A command-line fuzzy finder | An interactive Unix filter for command-line that can be used with any list |
 | `eza` | A modern version of ‘ls’ | (explains itself) |
 | `playerctl` | Mpris command-line controller | Used to set media control keybinds |
