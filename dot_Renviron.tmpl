@@ -1,5 +1,0 @@
-{{- $make_jobs := (output "nproc" | trim) -}}
-NOT_CRAN=true
-DOWNLOAD_STATIC_LIBV8=1
-MAKEFLAGS=-j{{ $make_jobs }}
-R_LIBS_USER=~/rlibrary/
