@@ -38,26 +38,21 @@ require("lazy").setup({
     opts = {}
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    config = function()
-      require("nvim-tree").setup({
-        view = {
-          width = "15%",
-        }
-      })
-    end
-  },
-  {
-    'nvim-telescope/telescope.nvim', version = '*',
-    dependencies = {
-        'nvim-lua/plenary.nvim',
-        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    -- picker (replaces telescope) and explorer (replaces nvim-tree)
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      explorer = {},
+      picker = {
+        sources = {
+          explorer = {
+            -- the sidebar preset has a 40-column minimum; drop it so 15% applies
+            layout = { layout = { width = 0.15, min_width = 20 } },
+          },
+        },
+      },
     },
-    config = function()
-      require("telescope").setup({})
-      -- use the compiled fzf sorter instead of the default Lua one
-      require("telescope").load_extension("fzf")
-    end
   },
 
   -- Language support
@@ -92,6 +87,7 @@ require("lazy").setup({
         R_args = { "--quiet", "--no-save" },
         R_app = "arf",
         R_cmd = "R",
+        bracketed_paste = true,
         min_editor_width = 72,
         rconsole_width = 78,
         objbr_mappings = {                                -- Object browser keymap

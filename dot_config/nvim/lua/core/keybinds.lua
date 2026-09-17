@@ -1,6 +1,5 @@
 -- More efficient keybindings
 local map = vim.keymap.set
-local builtin = require("telescope.builtin")
 
 -- Better defaults
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
@@ -29,8 +28,8 @@ map("n", ",", ";", { desc = "Repeat last f/t jump" })
 -- F11 toggles spellcheck
 map({ "n", "i" }, "<F11>", function() vim.o.spell = not vim.o.spell end, { desc = "Toggle spellcheck" })
 
--- NvimTree
-map("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+-- File explorer
+map("n", "<leader>e", function() Snacks.explorer() end, { desc = "Toggle explorer" })
 
 -- Stay in visual mode when indenting
 map("v", "<", "<gv", { desc = "Indent left" })
@@ -69,10 +68,10 @@ map("n", "<leader>ih", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hi
 map("n", "<leader>bc", "<cmd>make<CR>", { desc = "Build project" })
 
 -- Standard LSP keybinds
-map("n", "gd", builtin.lsp_definitions, { desc = "Go to definition" })
-map("n", "gt", builtin.lsp_type_definitions, { desc = "Go to type definition" })
-map("n", "gr", builtin.lsp_references, { desc = "Show references" })
-map("n", "gi", builtin.lsp_implementations, { desc = "Go to implementation" })
+map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Go to definition" })
+map("n", "gt", function() Snacks.picker.lsp_type_definitions() end, { desc = "Go to type definition" })
+map("n", "gr", function() Snacks.picker.lsp_references() end, { desc = "Show references" })
+map("n", "gi", function() Snacks.picker.lsp_implementations() end, { desc = "Go to implementation" })
 map("n", "K", vim.lsp.buf.hover, { desc = "Show hover info" })
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 map({ "n", "v" }, "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
@@ -85,14 +84,14 @@ map("n", "]e", function() vim.diagnostic.jump({ count = 1, severity = vim.diagno
   { desc = "Next error" })
 map("n", "<leader>xl", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 
--- Telescope keybinds
-map("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-map("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-map("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-map("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-map("n", "<leader>fr", builtin.resume, { desc = "Telescope resume last search" })
-map("n", "<leader>sd", builtin.lsp_document_symbols, { desc = "Document Symbols" })
-map("n", "<leader>sw", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
-map("n", "<leader>xd", function() builtin.diagnostics({ bufnr = 0, sort_by = "severity" }) end,
+-- Picker keybinds
+map("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Find files" })
+map("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Live grep" })
+map("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
+map("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Help tags" })
+map("n", "<leader>fr", function() Snacks.picker.resume() end, { desc = "Resume last search" })
+map("n", "<leader>sd", function() Snacks.picker.lsp_symbols() end, { desc = "Document Symbols" })
+map("n", "<leader>sw", function() Snacks.picker.lsp_workspace_symbols() end, { desc = "Workspace Symbols" })
+map("n", "<leader>xd", function() Snacks.picker.diagnostics_buffer() end,
   { desc = "Buffer diagnostics" })
-map("n", "<leader>xw", function() builtin.diagnostics({ sort_by = "severity" }) end, { desc = "Workspace diagnostics" })
+map("n", "<leader>xw", function() Snacks.picker.diagnostics() end, { desc = "Workspace diagnostics" })
