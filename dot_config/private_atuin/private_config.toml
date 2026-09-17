@@ -1,68 +1,36 @@
-# Only deviations from atuin's defaults are listed here; the full annotated
-# default config lives at https://docs.atuin.sh/configuration/config/
+# Only deviations from atuin's defaults are listed here (checked against the
+# 18.16 settings source); the full annotated default config lives at
+# https://docs.atuin.sh/configuration/config/
 
-## date format used, either "us" or "uk"
+## self-hosted sync server (CT 311 `shade`); internal horizon, so off the
+## mesh a sync fails fast and retries later
+sync_address = "https://atuin.luhann.com"
 dialect = "uk"
 
-## which search mode to use
-## possible values: prefix, fulltext, fuzzy, skim
+## prefix, fulltext, fuzzy, skim, daemon-fuzzy (in-memory index served by the daemon)
 search_mode = "daemon-fuzzy"
 
-## which filter mode to use by default
-## workspace applies inside a git repo (any subdirectory); atuin skips it elsewhere
-## and falls back to the next mode in search.filters
-filter_mode = "workspace"
-
-## With workspace filtering enabled, Atuin will filter for commands executed
-## in any directory within a git repository tree (default: false).
+## Starting filter is the first available entry of search.filters. filter_mode is
+## deliberately unset: an explicit value skips the availability check, so
+## "workspace" outside a git repo would filter on the current directory tree
+## rather than falling through to "host".
 workspaces = true
 
-## which style to use: auto, full, compact
+## default is "compact"
 style = "auto"
-
-## default history list format - can also be specified with the --format arg
 history_format = "{time}\t{host}\t{command}\t{duration}"
 
-# Configures whether to store commands that failed (those with non-zero exit status) or not.
-# Kept on: a long command you typo'd once is often exactly the one you want back.
-store_failed = true
-
-## Skip saving commands matching default secret regexes (AWS, GitHub, Slack, Stripe keys)
-secrets_filter = true
-
-## Upon hitting enter Atuin will immediately execute the command. Press tab to
-## return to the shell and edit.
+## Enter executes; tab returns to the shell for editing (default: false)
 enter_accept = true
 
 [stats]
-## Set commands that should be totally stripped and ignored from stats
-common_prefix = ["sudo"]
-
-## Set commands that will be completely ignored from stats
-ignored_commands = [
-  "cd",
-  "ls",
-  "z",
-  "vi"
-]
-
-[sync]
-# Enable sync v2 by default
-# This ensures that sync v2 is enabled for new installs only
-# In a later release it will become the default across the board
-records = true
+ignored_commands = ["cd", "ls", "z", "vi"]
 
 [daemon]
-## Enables using the daemon to sync. Requires the daemon to be running in the
-## background, started via the systemd socket rather than autostart.
+## Socket-activated by atuin-daemon.socket
 enabled = true
-autostart = false
 systemd_socket = true
-
-## How often the daemon should sync in seconds
-sync_frequency = 300
+sync_frequency = 60
 
 [search]
-## The list of enabled filter modes, in order of priority.
-## The "workspace" mode is skipped when not in a workspace or workspaces = false.
-filters = [ "workspace", "host", "global", "directory" ]
+filters = ["workspace", "host", "global", "directory"]
