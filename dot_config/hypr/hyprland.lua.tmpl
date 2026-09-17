@@ -85,10 +85,9 @@ hl.on("hyprland.start", function()
     local autostart = {
         "awww-daemon",
         "alacritty --daemon",
-        -- clipboard history + survive source window closing
+        -- clipboard history
         "wl-paste --type text --watch cliphist store",
         "wl-paste --type image --watch cliphist store",
-        "wl-clip-persist --clipboard regular",
     }
     for _, cmd in ipairs(autostart) do
         hl.exec_cmd("uwsm app -- " .. cmd)
