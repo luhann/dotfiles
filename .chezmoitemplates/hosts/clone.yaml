@@ -1,0 +1,5 @@
+chassis_type: desktop
+has_nvidia: false
+hwmon_chip: coretemp
+monitor_profile: clone
+browser: firefox

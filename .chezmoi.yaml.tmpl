@@ -4,12 +4,19 @@ pager: delta
 {{- /* Detect whether we're running in Codespaces. */ -}}
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 
-{{- /* Per-host record lives in .chezmoitemplates/hosts/<hostname>.yaml.tmpl,
-       which owns chassis, nvidia, hwmon resolution, and the monitor profile.
+{{- /* Per-host record lives in .chezmoitemplates/hosts/<hostname>.yaml,
+       which owns chassis, nvidia, temperature chip, and the monitor profile.
        Unregistered machines fall back to hosts/_default.yaml. */ -}}
-{{- $host := includeTemplate "hosts/_default.yaml.tmpl" . | fromYaml }}
-{{- if stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" (printf "%s.yaml.tmpl" .chezmoi.hostname)) }}
-{{-   $host = merge (includeTemplate (printf "hosts/%s.yaml.tmpl" .chezmoi.hostname) . | fromYaml) $host }}
+{{- $host := includeTemplate "hosts/_default.yaml" . | fromYaml }}
+{{- if stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" (printf "%s.yaml" .chezmoi.hostname)) }}
+{{-   $host = merge (includeTemplate (printf "hosts/%s.yaml" .chezmoi.hostname) . | fromYaml) $host }}
+{{- end }}
+
+{{- /* Resolve the host's temperature chip to its stable hwmon path;
+       /sys/class/hwmon numbering is not stable across boots. */ -}}
+{{- $hwmon := "" }}
+{{- if and $host.hwmon_chip (eq .chezmoi.os "linux") }}
+{{-   $hwmon = output "sh" "-c" (printf "grep -ls ^%s /sys/class/hwmon/hwmon*/name | head -n1 | xargs -r readlink -f | xargs -r dirname | xargs -r dirname" $host.hwmon_chip) | trim }}
 {{- end }}
 
 {{- /* Prompt once for theme selection and load that palette. */ -}}
@@ -22,7 +29,7 @@ data:
   codespaces: {{ $codespaces }}
   color_scheme: {{ $color_scheme | quote }}
   has_nvidia: {{ $host.has_nvidia }}
-  hwmon_path: {{ $host.hwmon_path | quote }}
+  hwmon_path: {{ $hwmon | quote }}
 
   colors:
     # Defaults not provided by the selected color palette.

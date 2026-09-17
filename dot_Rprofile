@@ -17,12 +17,7 @@ options(
   warnPartialMatchArgs = TRUE, # Also warn about partial argument matches
   warnPartialMatchAttr = TRUE, # And partial attribute matches
   width = ifelse(interactive(), 120, 80), # Set width conditionally
-  help_type = "html",
-  # radian options
-  radian.global_history_file = "~/.config/.radian_history",
-  radian.history_size = 20000,
-  radian.highlight_matching_bracket = TRUE,
-  radian.completion_timeout = 0.05
+  help_type = "html"
 )
 
 # Interactive session options

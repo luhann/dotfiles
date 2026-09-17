@@ -1,6 +1,6 @@
 /*
  * Modern Rofi Configuration
- * Consistent with Kanagawa-inspired, minimal, editorial dotfiles
+ * Themed by patroclus
  */
 configuration {
     terminal: "alacritty";

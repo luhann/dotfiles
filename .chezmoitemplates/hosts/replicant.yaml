@@ -1,0 +1,5 @@
+chassis_type: desktop
+has_nvidia: false
+hwmon_chip: k10temp
+monitor_profile: desktop
+browser: firefox

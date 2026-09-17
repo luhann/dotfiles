@@ -1,0 +1,5 @@
+chassis_type: laptop
+has_nvidia: true
+hwmon_chip: coretemp
+monitor_profile: laptop
+browser: firefox-bin

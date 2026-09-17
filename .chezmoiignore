@@ -9,6 +9,9 @@ install.sh
 {{- if ne .chassis_type "desktop" }}
 bin/backlight # only manage on desktop
 {{- end }}
+{{- if not .has_nvidia }}
+bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
+{{- end }}
 
 # remove all these configs from codespaces
 {{- if .codespaces }}
