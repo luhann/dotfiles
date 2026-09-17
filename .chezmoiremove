@@ -3,3 +3,6 @@
 .config/autostart/netbird.desktop
 # Superseded always-on combine sink; combine-sink.conf is run on demand instead.
 .config/pipewire/pipewire.conf.d/combine_sink.conf
+# mpv scripts superseded by built-ins (Ctrl+v append, autocreate-playlist)
+.config/mpv/scripts/append_url.lua
+.config/mpv/scripts/autoload.lua
