@@ -1,0 +1,24 @@
+# Sourced by uwsm after /etc/profile, which on Gentoo resets PATH and EDITOR.
+# Replays only what config.fish sets (diff against a --no-config fish), one
+# NAME=value per line; multi-line values are skipped with a journal warning.
+while IFS= read -r __var__; do
+	case $__var__ in
+	*=*) export "${__var__}" ;;
+	esac
+done <<EOF_FISH
+$(fish --no-config -c '
+set -l base (env -0 | string split0)
+for kv in (fish -c "env -0" | string split0)
+    contains -- $kv $base; and continue
+    if string match -qr "\n" -- $kv; or not string match -qr "^[A-Za-z_][A-Za-z0-9_]*=" -- $kv
+        echo "uwsm env: skipping unexportable variable "(string split -m1 -f1 = -- $kv) >&2
+        continue
+    end
+    printf "%s\n" $kv
+end')
+EOF_FISH
+unset __var__
+
+# Login shell/tty state; a leaked ATUIN_SESSION would be shared by every terminal.
+unset GPG_TTY ATUIN_SESSION ATUIN_SHLVL ATUIN_TMUX_POPUP STARSHIP_SESSION_KEY STARSHIP_SHELL \
+	COLUMNS LINES HUSHLOGIN MOTD_SHOWN MAIL

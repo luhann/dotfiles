@@ -33,9 +33,11 @@ end
 ---- MY PROGRAMS ----
 ---------------------
 
+-- GUI apps go through `uwsm app` for their own scope; the terminal doesn't,
+-- as `alacritty msg` only talks to the daemon.
 local terminal = "alacritty"
-local browser = "{{ .browser }}"
-local fileManager = "nemo"
+local browser = "uwsm app -- {{ .browser }}"
+local fileManager = "uwsm app -- nemo"
 local menu = "rofi -show drun"
 local mainMod = "SUPER"
 
@@ -77,11 +79,10 @@ end
 -------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
+-- waybar, dunst and hypridle are systemd services (graphical-session.target.wants);
+-- the rest have no units, so they run as uwsm app scopes.
 hl.on("hyprland.start", function()
     local autostart = {
-        "hypridle",
-        "waybar",
-        "dunst",
         "awww-daemon",
         "alacritty --daemon",
         -- clipboard history + survive source window closing
@@ -90,7 +91,7 @@ hl.on("hyprland.start", function()
         "wl-clip-persist --clipboard regular",
     }
     for _, cmd in ipairs(autostart) do
-        hl.exec_cmd(cmd)
+        hl.exec_cmd("uwsm app -- " .. cmd)
     end
 end)
 
@@ -98,12 +99,7 @@ end)
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
 
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
-hl.env("TERMINAL", terminal)
-hl.env("XCURSOR_SIZE", "24")
-hl.env("XCURSOR_THEME", "phinger-cursors-light")
-hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("QT_QPA_PLATFORM", "wayland")
+-- In ~/.config/uwsm/env-hyprland, so systemd services get them too.
 
 -----------------------
 ---- LOOK AND FEEL ----

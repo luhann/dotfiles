@@ -1,0 +1,3 @@
+# Unused autostart entries apps wrote for themselves; uwsm would now start them.
+.config/autostart/easyeffects-service.desktop
+.config/autostart/netbird.desktop

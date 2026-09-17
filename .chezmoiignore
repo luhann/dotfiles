@@ -16,15 +16,19 @@ bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
 # remove all these configs from codespaces
 {{- if .codespaces }}
 .config/Code
+.config/autostart
 .config/dunst
 .config/hypr
 .config/mpv
 .config/pipewire
 .config/rofi
+.config/systemd/user/graphical-session.target.wants
 .config/swayimg
 .config/tridactyl
+.config/uwsm
 .config/waybar
 .config/wireplumber
 .config/xdg-desktop-portal
 .config/zathura
+.local/share/wayland-sessions
 {{- end }}
