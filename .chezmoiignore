@@ -8,6 +8,9 @@ install.sh
 # machine specific configs
 {{- if ne .chassis_type "desktop" }}
 bin/backlight # only manage on desktop
+.config/llama.cpp # local LLM server, only on the desktop GPU
+.config/systemd/user/llama-server.service
+.config/systemd/user/default.target.wants/llama-server.service
 {{- end }}
 {{- if not .has_nvidia }}
 bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
@@ -15,6 +18,7 @@ bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
 
 # remove all these configs from codespaces
 {{- if .codespaces }}
+.R
 .config/Code
 .config/autostart
 .config/dunst

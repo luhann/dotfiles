@@ -1,0 +1,7 @@
+# R package builds, which do not see make.conf. Same flags as CFLAGS/LDFLAGS
+# there, plus --undefined-version: oneTBB's version script (lin64-tbb.def)
+# marks libstdc++ symbols global, which lld treats as an error, so
+# RcppParallel's bundled TBB fails to link without it. RcppParallel forwards
+# this LDFLAGS into that build; everything downstream of it (rstan, brms,
+# dada2, ...) fails without it.
+LDFLAGS = -fuse-ld=lld -Wl,-O1 -Wl,--as-needed -Wl,--undefined-version
