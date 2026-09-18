@@ -7,10 +7,10 @@ map("n", "n", "nzzzv", { desc = "Next result (centered)" })
 map("n", "N", "Nzzzv", { desc = "Prev result (centered)" })
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Quick save" })
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
-map({ "n", "v", "x" }, "<leader>y", '"+y', { desc = "System copy" })
-map({ "n", "v", "x" }, "<leader>d", '"+d', { desc = "System delete" })
-map({ "n" }, "<leader>p", '"+p', { desc = "System paste" })
-map({ "v", "x" }, "<leader>p", '"+P', { desc = "System paste (keep register)" })
+map({ "n", "x" }, "<leader>y", '"+y', { desc = "System copy" })
+map({ "n", "x" }, "<leader>d", '"+d', { desc = "System delete" })
+map("n", "<leader>p", '"+p', { desc = "System paste" })
+map("x", "<leader>p", '"+P', { desc = "System paste (keep register)" })
 map("n", "dd", function()
   if vim.api.nvim_get_current_line():match("^%s*$") then
     return '"_dd'
@@ -18,8 +18,10 @@ map("n", "dd", function()
     return "dd"
   end
 end, { expr = true, desc = "Smart dd" })
-map({ "n", "v", "x" }, "<leader>o", function()
-  if vim.bo.buftype == "" then vim.cmd("set wrap!") end
+map({ "n", "x" }, "<leader>o", function()
+  -- window-local: `set wrap!` also flips the global value, which then leaks
+  -- into every buffer opened afterwards
+  if vim.bo.buftype == "" then vim.wo.wrap = not vim.wo.wrap end
 end, { desc = "Toggle line wrap" })
 -- remap normal mode command to semi-colon
 map("n", ";", ":")
@@ -72,7 +74,8 @@ map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Go to d
 map("n", "gt", function() Snacks.picker.lsp_type_definitions() end, { desc = "Go to type definition" })
 map("n", "gr", function() Snacks.picker.lsp_references() end, { desc = "Show references" })
 map("n", "gi", function() Snacks.picker.lsp_implementations() end, { desc = "Go to implementation" })
-map("n", "K", vim.lsp.buf.hover, { desc = "Show hover info" })
+-- K is left alone: nvim maps it to vim.lsp.buf.hover on attach, but only where
+-- 'keywordprg' is still the default, so :help/man lookups survive elsewhere
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 map({ "n", "v" }, "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 map({ "n", "v" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format code" })

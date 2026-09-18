@@ -22,24 +22,7 @@ local conditions = {
   hide_in_width = function()
     return vim.o.columns > 80
   end,
-  check_git_workspace = function()
-    return vim.b.galactus_in_git_repo == true
-  end,
 }
-
--- Cache the git lookup per buffer instead of hitting the filesystem on every redraw
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'DirChanged' }, {
-  group = vim.api.nvim_create_augroup('galactus_git', { clear = true }),
-  callback = function()
-    local filepath = vim.fn.expand('%:p:h')
-    -- .git is a directory in normal repos, but a file in worktrees/submodules
-    local gitdir = vim.fn.finddir('.git', filepath .. ';')
-    if gitdir == '' then
-      gitdir = vim.fn.findfile('.git', filepath .. ';')
-    end
-    vim.b.galactus_in_git_repo = gitdir ~= '' and #gitdir < #filepath
-  end,
-})
 
 -- Config
 local config = {
@@ -53,6 +36,24 @@ local config = {
     -- lualine_c and lualine_x act as the left and right sections; both are
     -- highlighted by the theme's `c` entry.
     theme = patroclus.lualine,
+    refresh = {
+      -- lualine's defaults plus LspProgress. lualine pushes a precomputed
+      -- string into 'statusline' rather than an expression, so :redrawstatus
+      -- cannot re-run the LSP component -- only a refresh can.
+      events = {
+        'WinEnter',
+        'BufEnter',
+        'BufWritePost',
+        'SessionLoadPost',
+        'FileChangedShellPost',
+        'VimResized',
+        'Filetype',
+        'CursorMoved',
+        'CursorMovedI',
+        'ModeChanged',
+        'LspProgress',
+      },
+    },
   },
   sections = {
     -- these are to remove the defaults
@@ -64,21 +65,8 @@ local config = {
     lualine_c = {},
     lualine_x = {},
   },
-  inactive_sections = {
-    -- Keep inactive windows informative but minimal
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {
-      {
-        'filename',
-        cond = conditions.buffer_not_empty,
-        color = { fg = colors.subtext },
-      },
-    },
-    lualine_x = { 'location' },
-    lualine_y = {},
-    lualine_z = {},
-  },
+  -- No inactive_sections: globalstatus draws one bar, always for the focused
+  -- window, so lualine never consults them.
 }
 
 -- Inserts a component in lualine_c at left section
@@ -189,7 +177,8 @@ ins_left {
   function()
     local progress = vim.lsp.status()
     if progress ~= '' then
-      return progress:sub(1, 60)
+      -- by character, not byte: progress messages can carry non-ASCII paths
+      return vim.fn.strcharpart(progress, 0, 60)
     end
     local clients = vim.lsp.get_clients { bufnr = 0 }
     if next(clients) == nil then
@@ -208,12 +197,6 @@ ins_left {
   icon = ' LSP:',
   color = { fg = colors.teal, gui = 'bold' }, -- Teal for LSP info
 }
-
--- Progress messages arrive between redraws; refresh so the component updates live
-vim.api.nvim_create_autocmd('LspProgress', {
-  group = vim.api.nvim_create_augroup('galactus_lsp_progress', { clear = true }),
-  callback = function() vim.cmd.redrawstatus() end,
-})
 
 -- Add components to right sections
 ins_right {
@@ -262,22 +245,28 @@ ins_right {
 }
 
 ins_right {
+  -- no cond: the component watches .git/HEAD itself and renders '' outside a repo
   'branch',
-  cond = conditions.check_git_workspace,
   color = { fg = colors.violet, gui = 'bold' },
 }
 
 ins_right {
   'diff',
   symbols = { added = '+', modified = 'm', removed = '-' },
+  -- gitsigns already tracks hunk counts per buffer; without a source lualine
+  -- spawns `git diff --shortstat` jobs of its own to recompute them
+  source = function()
+    local gs = vim.b.gitsigns_status_dict
+    if gs then
+      return { added = gs.added, modified = gs.changed, removed = gs.removed }
+    end
+  end,
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },
     removed = { fg = colors.red },
   },
-  cond = function()
-    return conditions.hide_in_width() and conditions.check_git_workspace()
-  end,
+  cond = conditions.hide_in_width,
 }
 
 -- ▊
