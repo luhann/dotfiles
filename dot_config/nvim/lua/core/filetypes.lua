@@ -1,18 +1,17 @@
--- Override template filetype for chezmoi files in dotfiles directory
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'template',
-  callback = function()
-    local filepath = vim.fn.expand('%:p')
-    local filename = vim.fn.expand('%:t')
-
-    -- Only override if it's in dotfiles directory and matches our pattern
-    if filepath:match(vim.fn.expand('~') .. '/dotfiles/') and filename:match('%..*%.tmpl$') then
-      local base_ext = filename:match('%.([^%.]+)%.tmpl$')
-      if base_ext then
-        vim.bo.filetype = base_ext
-      end
-    end
-  end,
+-- chezmoi templates keep the base extension's filetype: dot_gitconfig.tmpl
+-- stays `template`, but .chezmoi.yaml.tmpl becomes `yaml`.
+--
+-- Resolved during detection rather than patched afterwards in a FileType
+-- autocmd, which had to reassign 'filetype' mid-event (re-triggering FileType,
+-- and looping outright on a name like foo.template.tmpl). Patterns with
+-- non-negative priority are matched ahead of the `tmpl = 'template'` extension
+-- rule, and returning nil here falls back to it.
+vim.filetype.add({
+  pattern = {
+    ['.*/dotfiles/.*%.tmpl'] = function(path)
+      return path:match('%.([^%./]+)%.tmpl$')
+    end,
+  },
 })
 
 -- Auto-set compiler for specific languages

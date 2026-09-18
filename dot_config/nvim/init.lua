@@ -43,6 +43,22 @@ require("lazy").setup({
     priority = 1000,
     lazy = false,
     opts = {
+      bigfile = {
+        -- mirrors snacks' own hook, minus the mini.* flags, plus spell:
+        -- 'spell' is set globally and is pure overhead on a 7MB data file
+        setup = function(ctx)
+          if vim.fn.exists(":NoMatchParen") ~= 0 then
+            vim.cmd([[NoMatchParen]])
+          end
+          Snacks.util.wo(0, { foldmethod = "manual", statuscolumn = "", conceallevel = 0, spell = false })
+          vim.b.completion = false
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(ctx.buf) then
+              vim.bo[ctx.buf].syntax = ctx.ft
+            end
+          end)
+        end,
+      },
       explorer = {},
       picker = {
         sources = {
@@ -55,6 +71,14 @@ require("lazy").setup({
     },
   },
 
+  {
+    -- sign column + hunk counts. The GitSigns* highlight groups are already
+    -- defined by the patroclus colorscheme.
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
+
   -- Language support
   {
     -- main branch only installs parsers; highlight/indent are started below
@@ -64,7 +88,27 @@ require("lazy").setup({
     build = ":TSUpdate",
     config = function()
       local ts = require("nvim-treesitter")
-      ts.install({ "r", "markdown", "markdown_inline", "rnoweb", "python", "c", "lua", "yaml", "latex", "rust", "fish", "toml", "typst" })
+      local languages = {
+        -- prose and documents
+        "markdown", "markdown_inline", "latex", "rnoweb", "typst", "vimdoc",
+        -- languages
+        "r", "python", "rust", "c", "lua", "haskell", "bash", "fish",
+        -- web (zola templates, patroclus stylesheets)
+        "html", "css", "scss",
+        -- data and config
+        "csv", "tsv", "json", "yaml", "toml", "xml", "ini",
+        "hyprlang", "rasi", "ssh_config", "just", "make",
+        -- version control. jjdescription for the colocated jj repos
+        "diff", "gitcommit", "gitignore", "jjdescription",
+        -- injected into string literals elsewhere
+        "regex",
+      }
+      ts.install(languages)
+
+      local declared = {}
+      for _, lang in ipairs(languages) do
+        declared[lang] = true
+      end
 
       local function attach(buf, lang)
         if not (vim.api.nvim_buf_is_valid(buf) and pcall(vim.treesitter.start, buf, lang)) then
@@ -78,8 +122,10 @@ require("lazy").setup({
         group = vim.api.nvim_create_augroup("treesitter", { clear = true }),
         callback = function(ev)
           local lang = vim.treesitter.language.get_lang(ev.match)
-          -- stands in for master's auto_install
-          if not attach(ev.buf, lang) and vim.list_contains(ts.get_available(), lang) then
+          -- only ever install what is declared above: installing anything
+          -- merely *available* meant opening a stray filetype git-cloned and
+          -- compiled a parser mid-session
+          if not attach(ev.buf, lang) and lang and declared[lang] then
             ts.install(lang):await(vim.schedule_wrap(function() attach(ev.buf, lang) end))
           end
         end,
@@ -175,14 +221,6 @@ vim.lsp.enable("tinymist")
 vim.lsp.enable("ty")
 vim.lsp.enable("ruff")
 
--- Air Configuration (Formatting)
-vim.lsp.config("air", {
-  on_attach = function(client, bufnr)
-    -- Ensure Air is recognized as the formatter
-    client.server_capabilities.documentFormattingProvider = true
-  end,
-})
-
 vim.lsp.config("jarl", {
   cmd = { 'jarl', 'server' },
   filetypes = { 'r', 'rmd', 'quarto' },
@@ -211,9 +249,6 @@ vim.lsp.config("rust_analyzer", {
   capabilities = {
     experimental = { serverStatusNotification = true },
   },
-  filetypes = { "rust", "toml.Cargo" },
-  root_markers = { "Cargo.toml", "Cargo.lock", "build.rs" },
-  -- See more: https://rust-analyzer.github.io/book/configuration.html
   settings = {
     ["rust-analyzer"] = {
       cargo = {
@@ -243,19 +278,15 @@ vim.lsp.config("tinymist", {
   filetypes = { "typst" },
   settings = {
     formatterMode = "typstyle",
-    exportPdf = "onType",
+    exportPdf = "onSave",
     semanticTokens = "disable"
   }
 })
 
 vim.diagnostic.config({
-  virtual_text = {
-    virt_text_pos = "eol_right_align",
-    format = function(d)
-      return d.message
-    end,
-  },
-  signs = true,
+  -- no `format`: supplying one deepcopies every diagnostic on each redraw,
+  -- and the default already renders `message`
+  virtual_text = { virt_text_pos = "eol_right_align" },
   underline = true,
   float = { border = "rounded", source = "if_many" },
 })
