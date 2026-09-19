@@ -71,13 +71,13 @@ map("n", "<leader>bc", "<cmd>make<CR>", { desc = "Build project" })
 
 -- Standard LSP keybinds
 map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Go to definition" })
-map("n", "gt", function() Snacks.picker.lsp_type_definitions() end, { desc = "Go to type definition" })
-map("n", "gr", function() Snacks.picker.lsp_references() end, { desc = "Show references" })
-map("n", "gi", function() Snacks.picker.lsp_implementations() end, { desc = "Go to implementation" })
+-- override nvim's default gr* LSP maps in place: a bare `gr` would be a prefix
+-- of them all and stall on 'timeoutlen'
+map("n", "grr", function() Snacks.picker.lsp_references() end, { desc = "Show references" })
+map("n", "gri", function() Snacks.picker.lsp_implementations() end, { desc = "Go to implementation" })
+map("n", "grt", function() Snacks.picker.lsp_type_definitions() end, { desc = "Go to type definition" })
 -- K is left alone: nvim maps it to vim.lsp.buf.hover on attach, but only where
 -- 'keywordprg' is still the default, so :help/man lookups survive elsewhere
-map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
-map({ "n", "v" }, "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 map({ "n", "v" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format code" })
 map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
 map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic" })
