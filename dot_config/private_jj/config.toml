@@ -34,6 +34,9 @@ bookmark-advance-to = "closest_pushable(@)"
 chore = ["log", "-r", "description(glob:'chore:*')"]
 la = ["log", "-r", "all()"]
 lla = ["log", "-r", "all() | hidden()"]
+# heads(): falls back to trunk() (an empty diff) once everything is pushed
+out = ["diff", "--from", "trunk()", "--to", "heads(trunk() | closest_pushable(@))"]
+lout = ["log", "-p", "-r", "trunk()..closest_pushable(@)"]
 sr = ["show", "-r", "@"]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
 tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
