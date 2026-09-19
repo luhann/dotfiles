@@ -60,6 +60,17 @@ require("lazy").setup({
         end,
       },
       explorer = {},
+      input = {},
+      notifier = {},
+      quickfile = {},
+      scope = {},
+      -- normal mode only: the default also fires a documentHighlight request
+      -- on every typing pause in insert and cmdline mode
+      words = { modes = { "n" } },
+      terminal = {
+        -- snacks' double-<Esc> would shadow the global t-mode <Esc> in keybinds
+        win = { keys = { term_normal = false } },
+      },
       picker = {
         sources = {
           explorer = {
