@@ -35,7 +35,17 @@ require("lazy").setup({
     init = function()
       vim.o.timeoutlen = 300
     end,
-    opts = {}
+    opts = {
+      spec = {
+        { "<leader>b", group = "buffer" },
+        { "<leader>f", group = "find" },
+        { "<leader>g", group = "git (repo)" },
+        { "<leader>h", group = "hunk" },
+        { "<leader>s", group = "symbols" },
+        { "<leader>t", group = "terminal" },
+        { "<leader>x", group = "diagnostics" },
+      },
+    },
   },
   {
     -- picker (replaces telescope) and explorer (replaces nvim-tree)

@@ -70,7 +70,7 @@ map("n", "<leader>ih", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hi
   { desc = "Toggle inlay hints" })
 
 -- Runs the 'makeprg' (default is 'make')
-map("n", "<leader>bc", "<cmd>make<CR>", { desc = "Build project" })
+map("n", "<leader>m", "<cmd>make<CR>", { desc = "Build project" })
 
 -- Standard LSP keybinds
 map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Go to definition" })
