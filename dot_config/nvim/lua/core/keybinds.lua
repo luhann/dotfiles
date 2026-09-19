@@ -54,8 +54,11 @@ map("n", "<C-k>", "<C-w>k")
 map("n", "<C-l>", "<C-w>l")
 
 -- Terminal keybinds
-map("n", "<leader>th", ":split | terminal<CR>", { desc = "Terminal Horizontal" })
-map("n", "<leader>tv", ":vsplit | terminal<CR>", { desc = "Terminal Vertical" })
+-- distinct counts give each position its own persistent terminal to toggle
+map("n", "<leader>th", function() Snacks.terminal.toggle(nil, { count = 1, win = { position = "bottom" } }) end,
+  { desc = "Terminal Horizontal" })
+map("n", "<leader>tv", function() Snacks.terminal.toggle(nil, { count = 2, win = { position = "right" } }) end,
+  { desc = "Terminal Vertical" })
 map("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit Terminal Mode" })
 
 -- Replace submenu
@@ -98,3 +101,26 @@ map("n", "<leader>sw", function() Snacks.picker.lsp_workspace_symbols() end, { d
 map("n", "<leader>xd", function() Snacks.picker.diagnostics_buffer() end,
   { desc = "Buffer diagnostics" })
 map("n", "<leader>xw", function() Snacks.picker.diagnostics() end, { desc = "Workspace diagnostics" })
+map("n", "<leader>fu", function() Snacks.picker.undo() end, { desc = "Undo history" })
+-- a count (`3z=`) still takes the nth suggestion directly, as in stock vim
+map("n", "z=", function()
+  if vim.v.count > 0 then
+    vim.cmd.normal({ vim.v.count .. "z=", bang = true })
+  else
+    Snacks.picker.spelling()
+  end
+end, { desc = "Spelling suggestions" })
+
+-- Git: repo-wide pickers. Hunk actions on the current buffer are <leader>h*,
+-- set per buffer in gitsigns' on_attach (init.lua)
+map("n", "<leader>gl", function() Snacks.picker.git_log() end, { desc = "Git log" })
+map("n", "<leader>gL", function() Snacks.picker.git_log_file() end, { desc = "Git log (file)" })
+map("n", "<leader>gs", function() Snacks.picker.git_status() end, { desc = "Git status" })
+map("n", "<leader>gd", function() Snacks.picker.git_diff() end, { desc = "Changed hunks (repo)" })
+
+-- Buffers
+map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete buffer (keep layout)" })
+
+-- LSP reference jumps (snacks.words)
+map("n", "]r", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next reference" })
+map("n", "[r", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Previous reference" })
