@@ -7,7 +7,6 @@ install.sh
 
 # machine specific configs
 {{- if ne .chassis_type "desktop" }}
-bin/backlight # only manage on desktop
 .config/llama.cpp # local LLM server, only on the desktop GPU
 .config/systemd/user/llama-server.service
 .config/systemd/user/default.target.wants/llama-server.service
