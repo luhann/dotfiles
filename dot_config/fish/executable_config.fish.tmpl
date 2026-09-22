@@ -45,7 +45,6 @@ set -gx READELF llvm-readelf
 set -gx CFLAGS "-march=native -O2 -flto=thin"
 set -gx CXXFLAGS "-march=native -O2 -flto=thin"
 set -gx LDFLAGS "-fuse-ld=lld -Wl,-O1 -Wl,--as-needed"
-set -gx RUSTFLAGS "-C target-cpu=native -C opt-level=3"
 set -gx MAKEFLAGS -j{{ output "nproc" | trim }}
 {{- end}}
 
