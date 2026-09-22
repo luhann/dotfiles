@@ -1,0 +1,14 @@
+# target-cpu is set here rather than exported as RUSTFLAGS: cargo appends
+# RUSTFLAGS after the profile's own flags, so an opt-level there overrode the
+# dev profile as well, and any RUSTFLAGS export replaces this setting wholesale.
+[build]
+rustflags = ["-C", "target-cpu=native"]
+
+# ThinLTO in the global CFLAGS breaks C/asm deps built through cc-rs: with
+# -flto=thin clang emits bitcode instead of running the integrated assembler,
+# so cc-rs flag probes false-positive on -Wa,* arguments the assembler later
+# rejects (e.g. aws-lc-sys's -Wa,--debug-prefix-map). Strip it for cargo only.
+# force = true is required — the shell already exports CFLAGS/CXXFLAGS.
+[env]
+CFLAGS = { value = "-march=native -O2", force = true }
+CXXFLAGS = { value = "-march=native -O2", force = true }
