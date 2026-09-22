@@ -1,0 +1,107 @@
+{{- define "rgb" -}}
+{ Rgb = [{{ range $i := list 1 3 5 }}{{ if ne $i 1 }}, {{ end }}{{ (printf "v = 0x%s" (substr $i (add $i 2 | int) $)) | fromToml | dig "v" 0 }}{{ end }}] }
+{{- end -}}
+#:schema https://raw.githubusercontent.com/eitsupi/arf/main/artifacts/arf.schema.json
+# arf configuration file
+#
+# Documentation: https://github.com/eitsupi/arf
+
+[startup]
+r_source = "auto"
+show_banner = true
+
+[editor]
+mode = "vi"
+auto_match = false
+auto_suggestions = "all"
+highlight_matching_bracket = true
+
+# setting this table replaces arf's defaults rather than extending them, so
+# the default <- and |> bindings are restated here
+[editor.key_map]
+"alt-hyphen" = " <- "
+"alt-p" = " |> "
+"alt-=" = " == "
+
+[prompt]
+format = "{status}R {version}> "
+continuation = "+  "
+shell_format = "[{shell}] $ "
+mode_indicator = "prefix"
+
+[prompt.indicators]
+reprex = "[reprex] "
+reprex_format = "[format] "
+
+[prompt.status]
+override_prompt_color = false
+
+[prompt.status.symbol]
+success = ""
+error = "✗ "
+
+[prompt.vi.symbol]
+insert = "[I] "
+normal = "[N] "
+non_vi = ""
+
+[completion]
+enabled = true
+timeout_ms = 50
+debounce_ms = 100
+max_height = 10
+auto_paren_limit = 50
+
+[history]
+menu_max_height = 15
+mode = "persistent"
+
+[reprex]
+formatter = "air"
+
+# Patroclus, mirroring the nvim colorscheme's syntax roles.
+[colors.r]
+comment = {{ template "rgb" .colors.comment }}
+string = {{ template "rgb" .colors.blue }}
+number = {{ template "rgb" .colors.teal }}
+keyword = {{ template "rgb" .colors.red }}
+constant = {{ template "rgb" .colors.mauve }}
+operator = {{ template "rgb" .colors.subtext0 }}
+punctuation = {{ template "rgb" .colors.subtext0 }}
+identifier = "Default"
+matching_bracket = {{ template "rgb" .colors.selection }}
+
+[colors.meta]
+command = {{ template "rgb" .colors.blue }}
+
+[colors.prompt]
+main = {{ template "rgb" .colors.peach }}
+continuation = {{ template "rgb" .colors.subtext0 }}
+shell = {{ template "rgb" .colors.yellow }}
+indicator = {{ template "rgb" .colors.mauve }}
+duration = {{ template "rgb" .colors.subtext0 }}
+
+[colors.prompt.status]
+success = {{ template "rgb" .colors.green }}
+error = {{ template "rgb" .colors.red }}
+
+[colors.prompt.vi]
+insert = {{ template "rgb" .colors.green }}
+normal = {{ template "rgb" .colors.peach }}
+non_vi = "Default"
+
+[experimental.history_forget]
+enabled = false
+delay = 2
+on_exit_only = false
+
+[experimental.prompt_spinner]
+frames = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+color = {{ template "rgb" .colors.peach }}
+
+[experimental.prompt_duration]
+format = "{value} "
+threshold_ms = 2000
+
+[experimental.r_completion]
+fuzzy = true
