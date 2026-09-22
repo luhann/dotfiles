@@ -82,11 +82,10 @@ map("n", "grt", function() Snacks.picker.lsp_type_definitions() end, { desc = "G
 -- K is left alone: nvim maps it to vim.lsp.buf.hover on attach, but only where
 -- 'keywordprg' is still the default, so :help/man lookups survive elsewhere
 map({ "n", "v" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format code" })
-map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
-map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic" })
-map("n", "[e", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end,
+-- [d/]d are nvim defaults; the error-only variants take a count the same way
+map("n", "[e", function() vim.diagnostic.jump({ count = -vim.v.count1, severity = vim.diagnostic.severity.ERROR }) end,
   { desc = "Previous error" })
-map("n", "]e", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end,
+map("n", "]e", function() vim.diagnostic.jump({ count = vim.v.count1, severity = vim.diagnostic.severity.ERROR }) end,
   { desc = "Next error" })
 map("n", "<leader>xl", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 
