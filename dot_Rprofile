@@ -1,13 +1,3 @@
-# Safe require function to avoid errors when packages aren't available
-safe_require = function(pkg) {
-  if (!requireNamespace(pkg, quietly = TRUE)) {
-    message(paste("Package", pkg, "not available. Some functionality may be limited."))
-    return(FALSE)
-  }
-  TRUE
-}
-
-
 # Global options
 options(
   repos = c(CRAN = "https://packagemanager.posit.co/cran/latest"),
@@ -20,32 +10,35 @@ options(
   help_type = "html"
 )
 
-# Interactive session options
-if (interactive()) {
-  # Code that will only run in interactive sessions goes here
+# Interactive session options. Helpers go in an attached "rprofile"
+# environment rather than the global one, so ls() doesn't list them and
+# rm(list = ls()) doesn't remove them; search() shows where they come from.
+if (interactive()) local({
+  helpers = new.env()
 
   # Use functions from my package if available
-  if (safe_require("lumisc")) {
+  if (requireNamespace("lumisc", quietly = TRUE)) {
     # This replaces the default quit with the quit without save from my package
-    q = lumisc::q
+    helpers$q = lumisc::q
     # adds view as an alias for View
-    view = lumisc::view
+    helpers$view = lumisc::view
 
     lumisc::set_startup_options()
+  } else {
+    message("Package lumisc not available. Some functionality may be limited.")
   }
 
-  # Add convenient alias
-  rownames = row.names
-}
+  attach(helpers, name = "rprofile", warn.conflicts = FALSE)
+})
 
 if (interactive() && Sys.getenv("DISPLAY") != "") {
   grDevices::X11.options(family = "Iosevka", type = "cairo")
 }
 
 # VSCode R integration
-if (interactive() && Sys.getenv("RSTUDIO") == "") {
+if (interactive() && Sys.getenv("RSTUDIO") == "") local({
   vscode_init_file = file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R")
   if (file.exists(vscode_init_file)) {
     source(vscode_init_file)
   }
-}
+})
