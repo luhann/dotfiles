@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+# Claude Code status line: a single line of colour-coded segments for
+# project, jj/git revision, model, context, session activity and plan
+# usage. Colours come from the chezmoi palette, so re-run `chezmoi init`
+# after palette edits.
+
+ESC=$'\e'
+US=$'\x1f'
+
+rgb() {
+    # $1 = variable name, $2 = #rrggbb
+    local h=${2#\#}
+    printf -v "$1" '%d;%d;%d' "0x${h:0:2}" "0x${h:2:2}" "0x${h:4:2}"
+}
+
+rgb C_TEXT    '{{ .colors.text }}'
+rgb C_PROJECT '{{ .colors.blue }}'
+rgb C_VCS     '{{ .colors.mauve }}'
+rgb C_MODEL   '{{ .colors.teal }}'
+rgb C_MODE    '{{ .colors.accent }}'
+rgb C_OK      '{{ .colors.success }}'
+rgb C_WARN    '{{ .colors.warning }}'
+rgb C_BAD     '{{ .colors.error }}'
+rgb C_ADD     '{{ .colors.bright_green }}'
+rgb C_DEL     '{{ .colors.bright_red }}'
+
+# One jq pass straight off stdin; fields are joined on the unit separator
+# because read collapses runs of whitespace IFS, which would shift empty
+# fields.
+IFS=$US read -r cwd project_dir model ctx_pct added removed duration_ms \
+    five_hour seven_day cost style vim_mode < <(
+    jq -r '
+        def n: if . == null then "" else floor end;
+        [
+            (.workspace.current_dir // .cwd // ""),
+            (.workspace.project_dir // ""),
+            (.model.display_name // ""),
+            (.context_window.used_percentage | n),
+            (.cost.total_lines_added | n),
+            (.cost.total_lines_removed | n),
+            (.cost.total_duration_ms | n),
+            (.rate_limits.five_hour.used_percentage | n),
+            (.rate_limits.seven_day.used_percentage | n),
+            (.cost.total_cost_usd // ""),
+            (.output_style.name // ""),
+            (.vim.mode // "")
+        ] | map(tostring) | join("\u001f")'
+)
+
+line=""
+
+seg() {
+    # $1 = foreground rgb, $2 = text (may carry its own escapes)
+    [ -n "$2" ] || return
+    line+="${line:+  }${ESC}[38;2;${1}m$2"
+}
+
+level() {
+    # $1 = variable name, $2 = percentage; green below 50, yellow below 80, red above
+    if   [ "$2" -lt 50 ]; then printf -v "$1" '%s' "$C_OK"
+    elif [ "$2" -lt 80 ]; then printf -v "$1" '%s' "$C_WARN"
+    else                       printf -v "$1" '%s' "$C_BAD"
+    fi
+}
+
+# Project: project dir basename, plus the subpath when Claude has cd'd deeper.
+[ -n "$project_dir" ] || project_dir=$cwd
+project=${project_dir##*/}
+[ -n "$project" ] || project="~"
+if [ -n "$cwd" ] && [ "$cwd" != "$project_dir" ] && [ "${cwd#"$project_dir"/}" != "$cwd" ]; then
+    project+="/${cwd#"$project_dir"/}"
+fi
+seg "$C_PROJECT" " $project"
+
+[ -n "$cwd" ] && cd "$cwd" 2>/dev/null
+
+# Find the nearest .jj or .git with shell builtins so neither tool is
+# spawned outside a repo, and jj is not spawned in git-only repos.
+vcs="" dir=$PWD
+while :; do
+    if   [ -d "$dir/.jj" ];  then vcs=jj;  break
+    elif [ -e "$dir/.git" ]; then vcs=git; break
+    fi
+    [ -n "$dir" ] || break
+    dir=${dir%/*}
+done
+
+# Revision: jj first, git as fallback. --ignore-working-copy stops jj
+# snapshotting on every refresh, so the dirty marker reflects the last
+# snapshot rather than the live tree.
+rev="" jj_out=""
+[ "$vcs" = jj ] && jj_out=$(jj log --ignore-working-copy --no-graph --color never \
+    -r '@ | heads(::@ & bookmarks())' \
+    -T 'if(current_working_copy, "@", "b") ++ "\x1f" ++ change_id.shortest(4) ++ "\x1f" ++ local_bookmarks.map(|b| b.name()).join(",") ++ "\x1f" ++ if(empty, "", "*") ++ if(conflict, "!", "") ++ "\n"' \
+    2>/dev/null)
+if [ -n "$jj_out" ]; then
+    change="" bookmark="" marks=""
+    while IFS=$US read -r kind id names flags; do
+        if [ "$kind" = "@" ]; then
+            change=$id marks=$flags
+            [ -n "$names" ] && bookmark=$names
+        elif [ -z "$bookmark" ]; then
+            bookmark=$names
+        fi
+    done <<< "$jj_out"
+    rev="$change${bookmark:+ ($bookmark)}$marks"
+elif [ -n "$vcs" ] && status=$(git --no-optional-locks status --porcelain=v2 --branch --untracked-files=no 2>/dev/null); then
+    head="" oid="" ab="" dirty=""
+    while read -r a b c d; do
+        case "$a $b" in
+            "# branch.head") head=$c ;;
+            "# branch.oid")  oid=${c:0:7} ;;
+            "# branch.ab")
+                [ "$c" != "+0" ] && ab+=" ↑${c#+}"
+                [ "$d" != "-0" ] && ab+=" ↓${d#-}" ;;
+            "#"*) ;;
+            *) dirty="*" ;;
+        esac
+    done <<< "$status"
+    [ "$head" = "(detached)" ] && head=$oid
+    rev="$head$dirty$ab"
+fi
+seg "$C_VCS" "${rev:+ $rev}"
+
+seg "$C_MODEL" "${model:+󰚩 $model}"
+
+if [ -n "$ctx_pct" ]; then
+    filled=$(( (ctx_pct + 10) / 20 ))
+    (( filled > 5 )) && filled=5
+    bar=""
+    for ((i = 0; i < 5; i++)); do
+        (( i < filled )) && bar+="▰" || bar+="▱"
+    done
+    level fg "$ctx_pct"
+    seg "$fg" "$bar $ctx_pct%"
+fi
+
+# Session activity: lines changed and wall-clock time.
+activity=""
+if [ -n "$added" ] && [ -n "$removed" ] && (( added + removed > 0 )); then
+    activity+="${ESC}[38;2;${C_ADD}m+$added ${ESC}[38;2;${C_DEL}m−$removed${ESC}[38;2;${C_TEXT}m"
+fi
+if [ -n "$duration_ms" ]; then
+    mins=$(( duration_ms / 60000 ))
+    if (( mins >= 60 )); then
+        elapsed="$(( mins / 60 ))h$(( mins % 60 ))m"
+    else
+        elapsed="${mins}m"
+    fi
+    activity+="${activity:+  }󱎫 $elapsed"
+fi
+seg "$C_TEXT" "$activity"
+
+# Plan usage on a subscription; the notional dollar cost otherwise.
+if [ -n "$five_hour" ] || [ -n "$seven_day" ]; then
+    # Each window is coloured by its own usage.
+    usage="󰔟"
+    if [ -n "$five_hour" ]; then
+        level fg "$five_hour"
+        usage+=" 5h ${ESC}[38;2;${fg}m$five_hour%${ESC}[38;2;${C_TEXT}m"
+    fi
+    if [ -n "$seven_day" ]; then
+        level fg "$seven_day"
+        usage+=" 7d ${ESC}[38;2;${fg}m$seven_day%"
+    fi
+    seg "$C_TEXT" "$usage"
+elif [ -n "$cost" ]; then
+    printf -v cost_fmt '$%.2f' "$cost"
+    seg "$C_TEXT" "$cost_fmt"
+fi
+
+[ -n "$style" ] && [ "$style" != "default" ] && seg "$C_MODE" "$style"
+seg "$C_MODE" "$vim_mode"
+
+printf '%s\n' "$line${ESC}[0m"
