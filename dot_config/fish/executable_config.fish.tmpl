@@ -161,6 +161,18 @@ if status --is-interactive
     __cached_gen $init_dir/starship.fish starship starship init fish --print-full-init; and source $init_dir/starship.fish
     __cached_gen $init_dir/atuin.fish atuin atuin init fish; and source $init_dir/atuin.fish
     functions --erase __cached_gen
+
+    # ~ is on a ZFS network share, so starship's directory scan always
+    # overruns scan_timeout there. Skipping the scan is harmless; hide the
+    # warning in ~ only.
+    function __starship_quiet_home --on-variable PWD
+        if test "$PWD" = "$HOME"
+            set -gx STARSHIP_LOG error
+        else
+            set -e STARSHIP_LOG
+        end
+    end
+    __starship_quiet_home # --on-variable doesn't fire for the starting dir
 end
 
 # --- patroclus ---------------------------------------------------------------
