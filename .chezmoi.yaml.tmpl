@@ -1,5 +1,8 @@
 sourceDir: "{{ .chezmoi.homeDir }}/dotfiles"
 pager: delta
+{{- /* chezmoi creates targets with the login umask, which is 0002 on Debian.
+       Pinned so every host gets the same modes. */}}
+umask: 0o022
 {{- /* The source is a colocated jj repo, where git's HEAD is detached and the
        default `git pull` fails. Fetch, then rebase local work onto trunk:
        jj's form of `git pull --rebase`. */ -}}
