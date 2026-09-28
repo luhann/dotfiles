@@ -177,8 +177,10 @@ ins_left {
   function()
     local progress = vim.lsp.status()
     if progress ~= '' then
-      -- by character, not byte: progress messages can carry non-ASCII paths
-      return vim.fn.strcharpart(progress, 0, 60)
+      -- by character, not byte: progress messages can carry non-ASCII paths.
+      -- Escape '%' after truncating: status() renders ' 45%: title', and a
+      -- bare '%:' in 'statusline' is E539.
+      return (vim.fn.strcharpart(progress, 0, 60):gsub('%%', '%%%%'))
     end
     local clients = vim.lsp.get_clients { bufnr = 0 }
     if next(clients) == nil then
