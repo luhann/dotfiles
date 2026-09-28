@@ -1,0 +1,8 @@
+# shard1: the Rackzar VPS. Headless and outside the home network, so it gets
+# the shell and editor config but nothing graphical, no YubiKey-backed agent,
+# and a local-only atuin (its sync server is not reachable from there).
+chassis_type: server
+has_nvidia: false
+hwmon_chip: ""
+monitor_profile: default
+browser: ""  # unused: fish sets no BROWSER on a server, and merge() would refill an empty value

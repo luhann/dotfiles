@@ -15,18 +15,21 @@ install.sh
 bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
 {{- end }}
 
-# remove all these configs from codespaces
-{{- if .codespaces }}
+# remove all these configs from codespaces and servers
+{{- if or .codespaces (eq .chassis_type "server") }}
 .R
+.claude
 .config/Code
+.config/alacritty
 .config/autostart
 .config/dunst
 .config/hypr
 .config/mpv
 .config/pipewire
 .config/rofi
+.config/systemd/user/atuin-daemon.service.d
 .config/systemd/user/graphical-session.target.wants
-.config/systemd/user/sockets.target.wants/pipewire.socket
+.config/systemd/user/sockets.target.wants
 .config/swayimg
 .config/tridactyl
 .config/uwsm
@@ -34,5 +37,6 @@ bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
 .config/wireplumber
 .config/xdg-desktop-portal
 .config/zathura
+.gnupg
 .local/share/wayland-sessions
 {{- end }}

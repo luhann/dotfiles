@@ -3,6 +3,9 @@
 {{- $osRelease := default (dict) (get .chezmoi "osRelease") -}}
 {{- $osId := trimAll `"` (trimAll "'" (default "" (get $osRelease "id"))) -}}
 {{- $isGentoo := or (eq $osId "gentoo") (contains "gentoo" (default "" (get $osRelease "idLike"))) -}}
+{{- /* Debian ships bat and fd as batcat and fdfind. */ -}}
+{{- $bat := "bat" }}{{ if and (not (lookPath "bat")) (lookPath "batcat") }}{{ $bat = "batcat" }}{{ end -}}
+{{- $fd := "fd" }}{{ if and (not (lookPath "fd")) (lookPath "fdfind") }}{{ $fd = "fdfind" }}{{ end -}}
 # fish_add_path is idempotent; one call instead of one per directory saves ~8ms
 fish_add_path --global \
     ~/bin \
@@ -18,12 +21,14 @@ fish_add_path --global \
 # Environment variables
 set -gx EDITOR nvim
 set -gx VISUAL nvim
+{{- if ne .chassis_type "server" }}
 set -gx BROWSER {{ .browser }}
-set -gx FZF_DEFAULT_COMMAND "fd --type file --color=always"
+{{- end }}
+set -gx FZF_DEFAULT_COMMAND "{{ $fd }} --type file --color=always"
 
 # gpg-agent is the ssh agent (YubiKey [A] subkey). Outside the interactive
 # guard so scripts inherit it; the fixed path is resolved at apply time.
-{{- if lookPath "gpgconf" }}
+{{- if and (lookPath "gpgconf") (ne .chassis_type "server") }}
 set -gx SSH_AUTH_SOCK {{ output "gpgconf" "--list-dirs" "agent-ssh-socket" | trim }}
 {{- end }}
 
@@ -56,12 +61,24 @@ if status --is-interactive
     # `alias`, which costs ~9ms at startup.
     function sudo --wraps=run0; run0 $argv; end
     # Modern command replacements
-    function cat --wraps=bat; bat --paging=never $argv; end
+{{- if lookPath $bat }}
+    function cat --wraps={{ $bat }}; {{ $bat }} --paging=never $argv; end
+{{- end }}
+{{- if lookPath "eza" }}
     function ls --wraps=eza; eza --long --header --git --color=auto --group-directories-first $argv; end
-    function find --wraps=fd; fd $argv; end
+{{- end }}
+{{- if lookPath $fd }}
+    function find --wraps={{ $fd }}; {{ $fd }} $argv; end
+{{- end }}
+{{- if lookPath "btop" }}
     function top --wraps=btop; btop $argv; end
+{{- end }}
+{{- if lookPath "rg" }}
     function grep --wraps=rg; rg $argv; end
+{{- end }}
+{{- if lookPath "nvim" }}
     function vim --wraps=nvim; nvim $argv; end
+{{- end }}
 
     # System management
     function off; sudo poweroff; end
@@ -74,7 +91,7 @@ if status --is-interactive
     function psg; ps aux | rg -i $argv; end
 
     # Helper utilities
-    function preview --wraps=fzf; fzf --preview 'bat --color=always {}' $argv; end
+    function preview --wraps=fzf; fzf --preview '{{ $bat }} --color=always {}' $argv; end
     function weather; curl -4 wttr.in/Cape+Town; end
 
     abbr --add scu "systemctl --user"

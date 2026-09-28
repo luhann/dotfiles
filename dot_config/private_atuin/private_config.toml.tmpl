@@ -5,6 +5,13 @@
 ## self-hosted sync server (CT 311 `shade`); internal horizon, so off the
 ## mesh a sync fails fast and retries later
 sync_address = "https://atuin.luhann.com"
+{{- if eq .chassis_type "server" }}
+## The sync server is on the home network only; this host keeps its own history.
+## sync_address stays set: the daemon fetches its capabilities at every start
+## regardless, and unset it defaults to the hosted api.atuin.sh.
+auto_sync = false
+update_check = false
+{{- end }}
 dialect = "uk"
 
 ## prefix, fulltext, fuzzy, skim, daemon-fuzzy (in-memory index served by the daemon)
@@ -27,9 +34,15 @@ enter_accept = true
 ignored_commands = ["cd", "ls", "z", "vi"]
 
 [daemon]
+{{- if ne .chassis_type "server" }}
 ## Socket-activated by atuin-daemon.socket
 enabled = true
 systemd_socket = true
+{{- else }}
+## No packaged units here, so the client starts the daemon itself.
+enabled = true
+autostart = true
+{{- end }}
 sync_frequency = 60
 
 [search]
