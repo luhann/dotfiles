@@ -1,5 +1,13 @@
 sourceDir: "{{ .chezmoi.homeDir }}/dotfiles"
 pager: delta
+{{- /* The source is a colocated jj repo, where git's HEAD is detached and the
+       default `git pull` fails. Fetch, then rebase local work onto trunk:
+       jj's form of `git pull --rebase`. */ -}}
+{{- if and (lookPath "jj") (stat (joinPath .chezmoi.sourceDir ".jj")) }}
+update:
+  command: sh
+  args: ["-c", "jj git fetch && jj rebase --branch @ --destination 'trunk()'"]
+{{- end }}
 
 {{- /* Detect whether we're running in Codespaces. */ -}}
 {{- $codespaces:= env "CODESPACES" | not | not -}}
