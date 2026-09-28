@@ -153,13 +153,15 @@ if status --is-interactive
     # Cache generated shell code, regenerating only when the binary is newer
     # (saves ~190ms per shell). Fails if the binary is missing or nothing
     # usable was generated; a failed run never overwrites the cache.
+    # `command`: the interactive mv/rm wrappers above are already defined and
+    # would print on every regeneration.
     function __cached_gen -a out bin
         command -q $bin; or return 1
         test $out -nt (command -v $bin); and return
         if $argv[3..] > $out.tmp
-            mv $out.tmp $out
+            command mv $out.tmp $out
         else
-            rm -f $out.tmp
+            command rm -f $out.tmp
             test -s $out
         end
     end
