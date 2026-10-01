@@ -12,6 +12,10 @@ diff-formatter = ":git"
 [signing]
 behavior = "drop"
 backend = "gpg"
+{{- if lookPath "gpg-sq" }}
+# Sequoia's gpg chameleon; secrets still go through gpg-agent
+backends.gpg.program = "gpg-sq"
+{{- end }}
 
 [git]
 sign-on-push = true

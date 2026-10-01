@@ -5,7 +5,13 @@
   # which is how commits ended up signed by the old laptop key's primary.
   signingKey = 804B7DFF994E58D5!
 [gpg]
+  # Sequoia's gpg chameleon where installed. Secrets still go through
+  # gpg-agent and scdaemon, so the YubiKey works unchanged.
+{{- if lookPath "gpg-sq" }}
+  program = gpg-sq
+{{- else }}
   program = /bin/gpg
+{{- end }}
 [branch]
   sort = -committerdate
 [column]
