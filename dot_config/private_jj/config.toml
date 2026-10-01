@@ -2,7 +2,7 @@
 
 [user]
 name = "Luke Hannan"
-email = "luke@lukehannan.com"
+email = "git@luhann.com"
 
 [ui]
 default-command = ["st"]
