@@ -1,0 +1,16 @@
+# fzf defaults, read through FZF_DEFAULT_OPTS_FILE (fzf 0.48+).
+
+# Layout. These are fzf.fish's own defaults, restated because it only applies
+# them while neither FZF_DEFAULT_OPTS nor this file is set.
+--cycle
+--layout=reverse
+--border
+--height=90%
+--preview-window=wrap
+--marker="*"
+
+# patroclus
+--color=fg:{{ .colors.text }},fg+:{{ .colors.bright_white }},bg+:{{ .colors.selection }}
+--color=hl:{{ .colors.yellow }},hl+:{{ .colors.bright_yellow }}
+--color=prompt:{{ .colors.accent }},pointer:{{ .colors.accent }},marker:{{ .colors.accent }}
+--color=info:{{ .colors.subtext0 }},border:{{ .colors.border }},header:{{ .colors.blue }},spinner:{{ .colors.teal }}

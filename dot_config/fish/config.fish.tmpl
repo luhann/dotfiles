@@ -25,6 +25,9 @@ set -gx VISUAL nvim
 set -gx BROWSER {{ .browser }}
 {{- end }}
 set -gx FZF_DEFAULT_COMMAND "{{ $fd }} --type file --color=always"
+set -gx FZF_DEFAULT_OPTS_FILE ~/.config/fzf/fzfrc
+# bat follows the terminal palette, as delta's syntax-theme does
+set -gx BAT_THEME ansi
 
 # gpg-agent is the ssh agent (YubiKey [A] subkey). Outside the interactive
 # guard so scripts inherit it; the fixed path is resolved at apply time.
