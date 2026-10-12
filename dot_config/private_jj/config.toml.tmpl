@@ -27,6 +27,16 @@ auto-update-stale = true
 [working-copy]
 eol-conversion = "input"
 
+[templates]
+# The change's diff under the description, as git's commit.verbose does
+draft_commit_description = '''
+concat(
+  builtin_draft_commit_description,
+  "\nJJ: ignore-rest\n",
+  diff.git(),
+)
+'''
+
 [revsets]
 bookmark-advance-to = "closest_pushable(@)"
 
@@ -44,3 +54,10 @@ lout = ["log", "-p", "-r", "trunk()..closest_pushable(@)"]
 sr = ["show", "-r", "@"]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
 tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+
+# Signature status on `jj show` alone: verifying costs ~8ms per signed commit,
+# which adds up over a log. Scopes go last, after every plain table.
+[[--scope]]
+--when.commands = ["show"]
+[--scope.ui]
+show-cryptographic-signatures = true
