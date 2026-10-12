@@ -6,7 +6,7 @@
 @define-color bg_main_tooltip alpha({{ .colors.mantle }}, 0.92);
 
 
-/*base background color of selections */
+/* workspace-button hover: transparent, to keep GTK from drawing its own */
 @define-color bg_hover alpha({{ .colors.selection }}, 0.0);
 
 /*base border color*/
@@ -60,12 +60,6 @@ tooltip label {
 	font-size: 24px;
 	padding-left: 12px;
 	padding-right: 20px;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-#custom-os_button:hover {
-	background: @bg_hover;
-	color: @content_main;
 }
 
 #custom-dunst {
@@ -164,10 +158,6 @@ tooltip label {
 	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-#tray>widget:hover {
-	background: @bg_hover;
-}
-
 #battery.charging {
   color: {{ .colors.green }};
   background: transparent;
@@ -187,17 +177,11 @@ tooltip label {
 	font-family: "Monaspace Krypton Var";
 	padding-left: 3px;
 	padding-right: 3px;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 #wireplumber.muted {
 	color: @content_inactive;
 	font-weight: bold;
-}
-
-#wireplumber:hover {
-	color: @content_inactive;
-	background: @bg_hover;
 }
 
 #mpris.playing {
@@ -216,9 +200,4 @@ tooltip label {
 #clock {
 	padding-right: 5px;
 	padding-left: 5px;
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-#clock:hover {
-	background: @bg_hover;
 }
