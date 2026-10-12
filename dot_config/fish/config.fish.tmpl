@@ -156,6 +156,13 @@ if status --is-interactive
     abbr --add cze "chezmoi edit"
     abbr --add czs "chezmoi status"
 
+    # Ring the bell when a command that ran for over 30s finishes. An
+    # unfocused alacritty turns that into an urgency hint, which waybar shows
+    # on the workspace; a focused one ignores it.
+    function __bell_after_long_command --on-event fish_postexec
+        test "$CMD_DURATION" -gt 30000; and printf '\a'
+    end
+
     function fish_greeting
         set -l label (set_color --bold)
         set -l value (set_color normal; set_color green)
