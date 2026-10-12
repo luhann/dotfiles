@@ -232,7 +232,13 @@ require("lazy").setup({
     -- used, instead of indexing the whole runtime up front
     "folke/lazydev.nvim",
     ft = "lua",
-    opts = {},
+    opts = {
+      library = {
+        -- Hyprland's own lua_ls stubs for hl.*, loaded only for buffers that
+        -- use it. The path is simply absent on hosts without Hyprland 0.55+.
+        { path = "/usr/share/hypr/stubs", words = { "hl%." } },
+      },
+    },
   },
   {
     "saghen/blink.cmp",

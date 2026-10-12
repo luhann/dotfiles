@@ -94,6 +94,16 @@ if status --is-interactive
     # Helper utilities
     function preview --wraps=fzf; fzf --preview '{{ $bat }} --color=always {}' $argv; end
     function weather; curl -4 wttr.in/Cape+Town; end
+{{- if lookPath "Hyprland" }}
+    function hyprcheck --description "Verify the Hyprland config in the chezmoi source without applying it"
+        set -l tmp (mktemp -d); or return
+        chezmoi archive --format tar ~/.config/hypr | tar -x -C $tmp
+        and Hyprland --verify-config --config $tmp/.config/hypr/hyprland.lua
+        set -l result $status
+        command rm -rf $tmp
+        return $result
+    end
+{{- end }}
 
     abbr --add scu "systemctl --user"
     abbr --add scus "systemctl --user status"
