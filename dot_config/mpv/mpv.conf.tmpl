@@ -48,13 +48,15 @@ slang=eng,en
 
 # ===== Video =====
 profile=high-quality
-# gpu-next stutters on the nvidia machine, so only use it elsewhere
-{{ if not .has_nvidia -}}
+# gpu-next stutters on the nvidia machine. Both are spelled out: mpv 0.41
+# made gpu-next the default, so leaving vo unset no longer avoids it.
+{{ if .has_nvidia -}}
+vo=gpu
+{{- else -}}
 vo=gpu-next
-interpolation=no
 target-colorspace-hint=auto
 target-colorspace-hint-mode=source
-{{ end }}
+{{- end }}
 
 # ===== Hardware Accel =====
 hwdec=auto-safe
