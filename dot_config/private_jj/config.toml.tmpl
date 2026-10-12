@@ -55,6 +55,24 @@ sr = ["show", "-r", "@"]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
 tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
+# `jj fix` formatters. Each reads a file on stdin and writes it to stdout.
+[fix.tools.rustfmt]
+# stdin mode has no Cargo.toml to take the edition from
+command = ["rustfmt", "--emit", "stdout", "--edition", "2024"]
+patterns = ["glob:'**/*.rs'"]
+
+[fix.tools.air]
+command = ["air", "format", "--stdin-file-path", "$path"]
+patterns = ["glob:'**/*.R'", "glob:'**/*.r'"]
+
+[fix.tools.ruff]
+command = ["ruff", "format", "--stdin-filename", "$path", "-"]
+patterns = ["glob:'**/*.py'"]
+
+[fix.tools.fish_indent]
+command = ["fish_indent"]
+patterns = ["glob:'**/*.fish'"]
+
 # Signature status on `jj show` alone: verifying costs ~8ms per signed commit,
 # which adds up over a log. Scopes go last, after every plain table.
 [[--scope]]
