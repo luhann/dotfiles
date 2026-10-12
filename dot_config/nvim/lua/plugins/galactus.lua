@@ -246,9 +246,55 @@ ins_right {
   color = { fg = colors.red, gui = 'bold' },
 }
 
+-- Colocated jj repos always look detached to git, so `branch` would show a
+-- bare hash there. Show the jj change and nearest bookmark instead, as the
+-- prompt and the Claude statusline do. --ignore-working-copy: no snapshot per
+-- refresh, so the * reflects the last one.
+if vim.fn.executable('jj') == 1 then
+  local template = [[if(current_working_copy, change_id.shortest(4) ++ if(empty, "", "*") ++ if(conflict, "!", "")) ++ if(local_bookmarks, " (" ++ local_bookmarks.map(|b| b.name()).join(",") ++ ")")]]
+  local function refresh(buf)
+    local root = vim.bo[buf].buftype == '' and vim.fs.root(buf, '.jj')
+    if not root then
+      vim.b[buf].jj = nil
+      return
+    end
+    vim.system(
+      { 'jj', 'log', '--ignore-working-copy', '--no-graph', '--color', 'never',
+        '-r', '@ | heads(::@ & bookmarks())', '-T', template },
+      { cwd = root, text = true },
+      vim.schedule_wrap(function(result)
+        if vim.api.nvim_buf_is_valid(buf) then
+          local rev = result.code == 0 and vim.trim(result.stdout) or ''
+          vim.b[buf].jj = rev ~= '' and rev or nil
+        end
+      end)
+    )
+  end
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'FocusGained' }, {
+    group = vim.api.nvim_create_augroup('galactus_jj', { clear = true }),
+    callback = function(ev) refresh(ev.buf) end,
+  })
+  -- lualine loads on VeryLazy, after the first buffer's BufEnter
+  refresh(vim.api.nvim_get_current_buf())
+end
+
 ins_right {
-  -- no cond: the component watches .git/HEAD itself and renders '' outside a repo
+  function()
+    return vim.b.jj
+  end,
+  cond = function()
+    return vim.b.jj ~= nil
+  end,
+  icon = 'jj',
+  color = { fg = colors.violet, gui = 'bold' },
+}
+
+ins_right {
+  -- outside jj the component watches .git/HEAD itself and renders '' with no repo
   'branch',
+  cond = function()
+    return vim.b.jj == nil
+  end,
   color = { fg = colors.violet, gui = 'bold' },
 }
 

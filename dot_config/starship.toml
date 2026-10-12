@@ -7,8 +7,9 @@ add_newline = true
 # A minimal left prompt
 format = """$character"""
 
-# move the rest of the prompt to the right
-right_format = """$all"""
+# move the rest of the prompt to the right. Custom modules sort last in $all,
+# so the jj one is placed by hand where git_branch would be.
+right_format = """$username$hostname$directory${custom.jj}$all"""
 
 [character]
 success_symbol = "[▶](bold green)"
@@ -27,3 +28,21 @@ symbol = "󰟔"
 format = "with [$symbol $version](blue bold) "
 # The default [".Rprofile"] would mark ~ as an R project.
 detect_files = ["DESCRIPTION", "renv.lock"]
+
+# Colocated jj repos always look detached to git, so drop the bare hash and
+# show the jj change and nearest bookmark instead.
+[git_branch]
+only_attached = true
+
+[git_commit]
+disabled = true
+
+[custom.jj]
+# walk up for .jj in the shell, so jj is only spawned inside a jj repo
+when = 'd=$PWD; while [ -n "$d" ]; do [ -d "$d/.jj" ] && exit 0; d=${d%/*}; done; exit 1'
+# --ignore-working-copy: no snapshot per prompt, so * reflects the last one
+command = '''jj log --ignore-working-copy --no-graph --color never -r '@ | heads(::@ & bookmarks())' -T 'if(current_working_copy, change_id.shortest(4) ++ if(empty, "", "*") ++ if(conflict, "!", "")) ++ if(local_bookmarks, " (" ++ local_bookmarks.map(|b| b.name()).join(",") ++ ")")' '''
+shell = ["sh"]
+symbol = "jj "
+style = "bold purple"
+format = "on [$symbol$output]($style) "
