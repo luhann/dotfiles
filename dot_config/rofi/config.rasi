@@ -46,7 +46,7 @@ configuration {
 
     /* Run mode */
     /* own scope per app in the uwsm graphical session */
-    run-command: "uwsm app -- {cmd}";
+    run-command: "uwsm-app -- {cmd}";
     run-list-command: "";
     run-shell-command: "{terminal} -e {cmd}";
 

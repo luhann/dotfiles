@@ -33,11 +33,13 @@ end
 ---- MY PROGRAMS ----
 ---------------------
 
--- GUI apps go through `uwsm app` for their own scope; the terminal doesn't,
--- as `alacritty msg` only talks to the daemon.
+-- GUI apps go through `uwsm-app` for their own scope; the terminal doesn't,
+-- as `alacritty msg` only talks to the daemon. uwsm-app is the shell client
+-- for uwsm's app daemon: `uwsm app` starts a Python interpreter per launch.
+local launch = "uwsm-app -- "
 local terminal = "alacritty"
-local browser = "uwsm app -- {{ .browser }}"
-local fileManager = "uwsm app -- nemo"
+local browser = launch .. "{{ .browser }}"
+local fileManager = launch .. "nemo"
 local menu = "rofi -show drun"
 local mainMod = "SUPER"
 
@@ -80,14 +82,14 @@ end
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 -- waybar, dunst and hypridle are systemd services (graphical-session.target.wants);
--- the rest have no units, so they run as uwsm app scopes.
+-- the rest have no units, so they run as uwsm-app scopes.
 hl.on("hyprland.start", function()
     local autostart = {
         "awww-daemon",
         "alacritty --daemon",
     }
     for _, cmd in ipairs(autostart) do
-        hl.exec_cmd("uwsm app -- " .. cmd)
+        hl.exec_cmd(launch .. cmd)
     end
 end)
 
@@ -227,6 +229,7 @@ end
 
 -- Expose program vars and modifier for keybindings.lua and rules.lua
 HY = {
+    launch = launch,
     terminal = terminal,
     browser = browser,
     fileManager = fileManager,

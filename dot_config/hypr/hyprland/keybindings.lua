@@ -4,6 +4,7 @@
 --
 -- See https://wiki.hypr.land/Configuring/Basics/Binds/
 
+local launch      = HY.launch
 local terminal    = HY.terminal
 local browser     = HY.browser
 local fileManager = HY.fileManager
@@ -36,7 +37,7 @@ hl.bind(mainMod .. " + SHIFT + P", function()
 end)
 
 -- Extra programs
-hl.bind(mainMod .. " + Z",              hl.dsp.exec_cmd("uwsm app -- zotero"))
+hl.bind(mainMod .. " + Z",              hl.dsp.exec_cmd(launch .. "zotero"))
 hl.bind(mainMod .. " + backslash",      hl.dsp.exec_cmd("wallpaper"))
 hl.bind(mainMod .. " + space",          hl.dsp.exec_cmd("search"))
 
