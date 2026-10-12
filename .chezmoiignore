@@ -25,7 +25,10 @@ bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
 .config/pipewire
 .config/rofi
 .config/systemd/user/atuin-daemon.service.d
+.config/systemd/user/default.target.wants
 .config/systemd/user/graphical-session.target.wants
+.config/systemd/user/pipewire-session-manager.service
+.config/systemd/user/pipewire.service.wants
 .config/systemd/user/sockets.target.wants
 .config/swayimg
 .config/tridactyl
