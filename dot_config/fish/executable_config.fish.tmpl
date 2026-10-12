@@ -54,8 +54,9 @@ set -gx MAKEFLAGS -j{{ output "nproc" | trim }}
 {{- end}}
 
 if status --is-interactive
-    # only interactive shells have a tty for gpg to prompt on
-    set -gx GPG_TTY (tty)
+    # only interactive shells have a tty for gpg to prompt on; read from
+    # /proc rather than spawning tty(1)
+    set -gx GPG_TTY (path resolve /proc/self/fd/0)
 
     # Interactive only, so scripts get the real commands. Functions, not
     # `alias`, which costs ~9ms at startup.
@@ -176,9 +177,24 @@ if status --is-interactive
     # Init hooks are sourced per shell; session IDs are computed at source time.
     set -l init_dir ~/.cache/fish/init
     test -d $init_dir; or mkdir -p $init_dir
-    __cached_gen $init_dir/zoxide.fish zoxide zoxide init fish; and source $init_dir/zoxide.fish
+    # --no-cmd: zoxide would define z and zi with `alias`; see above
+    if __cached_gen $init_dir/zoxide.fish zoxide zoxide init fish --no-cmd
+        source $init_dir/zoxide.fish
+        function z --wraps=__zoxide_z; __zoxide_z $argv; end
+        function zi --wraps=__zoxide_zi; __zoxide_zi $argv; end
+    end
     __cached_gen $init_dir/starship.fish starship starship init fish --print-full-init; and source $init_dir/starship.fish
-    __cached_gen $init_dir/atuin.fish atuin atuin init fish; and source $init_dir/atuin.fish
+    if __cached_gen $init_dir/atuin.fish atuin atuin init fish
+        # atuin's init spawns `atuin uuid` (~3ms) unless a session is already
+        # set, so seed one from the kernel under the same guard it uses. If
+        # atuin changes that guard this only stops saving the spawn.
+        if not set -q ATUIN_SESSION; or test "$ATUIN_SHLVL" != "$SHLVL"
+            read -l uuid </proc/sys/kernel/random/uuid
+            and set -gx ATUIN_SESSION (string replace --all -- - '' $uuid)
+            and set -gx ATUIN_SHLVL $SHLVL
+        end
+        source $init_dir/atuin.fish
+    end
     functions --erase __cached_gen
 
     # ~ is on a ZFS network share, so starship's directory scan always
