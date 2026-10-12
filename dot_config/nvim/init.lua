@@ -276,6 +276,9 @@ vim.lsp.enable("ruff")
 vim.lsp.config("jarl", {
   cmd = { 'jarl', 'server' },
   filetypes = { 'r', 'rmd', 'quarto' },
+  root_dir = function(bufnr, on_dir)
+    on_dir(vim.fs.root(bufnr, '.git') or vim.uv.os_homedir())
+  end,
   on_attach = function(client, bufnr)
     -- Tell Neovim NOT to use Jarl for general file formatting
     client.server_capabilities.documentFormattingProvider = false

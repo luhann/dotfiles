@@ -6,3 +6,5 @@
 # mpv scripts superseded by built-ins (Ctrl+v append, autocreate-playlist)
 .config/mpv/scripts/append_url.lua
 .config/mpv/scripts/autoload.lua
+# jarl's LSP config is in init.lua; this stray copy disagreed with it
+.config/nvim/lsp/jarl.lua
