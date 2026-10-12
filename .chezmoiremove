@@ -1,11 +1,6 @@
 # Unused autostart entries apps wrote for themselves; uwsm would now start them.
 .config/autostart/easyeffects-service.desktop
 .config/autostart/netbird.desktop
-# Superseded always-on combine sink; combine-sink.conf is run on demand instead.
-.config/pipewire/pipewire.conf.d/combine_sink.conf
-# mpv scripts superseded by built-ins (Ctrl+v append, autocreate-playlist)
-.config/mpv/scripts/append_url.lua
-.config/mpv/scripts/autoload.lua
 # jarl's LSP config is in init.lua; this stray copy disagreed with it
 .config/nvim/lsp/jarl.lua
 # Only added a FileChooser backend (kde) that is not installed; without it
