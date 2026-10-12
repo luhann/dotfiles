@@ -2,9 +2,6 @@ README.md
 LICENSE
 install.sh
 
-# niri is kept around as an alternative config but not actively used
-.config/niri
-
 # machine specific configs
 {{- if ne .chassis_type "desktop" }}
 .config/llama.cpp # local LLM server, only on the desktop GPU

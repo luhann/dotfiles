@@ -86,10 +86,3 @@ colors:
   inactive: "#50565c" # bright black
   urgent:   "#d33949" # alizarin, lifted
   focused:  "#cf7d55" # copper
-
-  # Legacy keys from the kanagawa-era palette this replaced. The names no
-  # longer describe the colours; they track the bright row so the configs
-  # still naming them (hyprlock's clock, niri's focus ring) keep working.
-  cyber_yellow: "#dfb956" # ochre, brightened
-  cyber_teal:   "#5fc4c0" # verdigris, brightened
-  cyber_red:    "#ea696e" # alizarin, brightened
