@@ -21,7 +21,8 @@ hl.bind(mainMod .. " + R",              hl.dsp.exec_cmd(browser))
 -- Session / window management
 hl.bind(mainMod .. " + L",              hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + Q",              hl.dsp.window.close())
-hl.bind(mainMod .. " + SHIFT + Q",      hl.dsp.exit())
+-- not hl.dsp.exit(): under uwsm that skips the session's ordered shutdown
+hl.bind(mainMod .. " + SHIFT + Q",      hl.dsp.exec_cmd("uwsm stop"))
 hl.bind(mainMod .. " + V",              hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D",              hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + J",              hl.dsp.layout("togglesplit"))
@@ -47,6 +48,29 @@ hl.bind(mainMod .. " + right",          hl.dsp.focus({ direction = "r" }))
 hl.bind(mainMod .. " + up",             hl.dsp.focus({ direction = "u" }))
 hl.bind(mainMod .. " + down",           hl.dsp.focus({ direction = "d" }))
 hl.bind(mainMod .. " + f",              hl.dsp.window.fullscreen())
+
+-- Same arrows: CTRL moves the window, SHIFT changes monitor, both move the
+-- window to that monitor
+for key, dir in pairs({ left = "l", right = "r", up = "u", down = "d" }) do
+    -- With no monitor that way the dispatchers raise "monitor doesn't
+    -- exist" rather than doing nothing, so only dispatch when there is one.
+    local function towards(dispatcher)
+        return function()
+            if hl.get_monitor(dir) then
+                hl.dispatch(dispatcher)
+            end
+        end
+    end
+    hl.bind(mainMod .. " + CTRL + " .. key,         hl.dsp.window.move({ direction = dir }))
+    hl.bind(mainMod .. " + SHIFT + " .. key,        towards(hl.dsp.focus({ monitor = dir })))
+    hl.bind(mainMod .. " + SHIFT + CTRL + " .. key, towards(hl.dsp.window.move({ monitor = dir })))
+end
+
+-- Resize: minus/equal for width, with SHIFT for height
+for key, step in pairs({ minus = -40, equal = 40 }) do
+    hl.bind(mainMod .. " + " .. key,         hl.dsp.window.resize({ x = step, y = 0, relative = true }), { repeating = true })
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.resize({ x = 0, y = step, relative = true }), { repeating = true })
+end
 
 -- Scrolling
 hl.bind(mainMod .. " + period", hl.dsp.layout("move +col"))
