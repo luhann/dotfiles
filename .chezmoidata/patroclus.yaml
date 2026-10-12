@@ -4,9 +4,9 @@
 # design.yaml. Do not edit here; change design.yaml, regenerate, and
 # `chezmoi apply`. `gen_tokens.py --check` verifies freshness.
 #
-# The chezmoi colour scheme chosen in .chezmoi.yaml.tmpl. Everything that
-# reads `.colors.*` is downstream of this file: alacritty, dunst, hyprland,
-# hyprlock, waybar, niri and nvim.
+# chezmoi reads .chezmoidata/ on every run, so no `chezmoi init` is needed.
+# Everything that reads `.colors.*` is downstream of this file: alacritty,
+# dunst, hyprland, hyprlock, waybar and nvim.
 #
 # Values come from themes.screen.palettes.dark (the editorial palette) and
 # themes.screen.desktop (the ANSI rows). Each is noted with the token it

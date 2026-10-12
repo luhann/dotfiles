@@ -2,7 +2,7 @@
 
 Personal dotfiles for fish, Hyprland, Neovim, and more.
 
-Colour palette: [patroclus](.chezmoitemplates/patroclus.yaml), generated from the patroclus design system and consumed by every themed config.
+Colour palette: [patroclus](.chezmoidata/patroclus.yaml), generated from the patroclus design system and consumed by every themed config.
 
 ## OS
 

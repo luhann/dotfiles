@@ -30,25 +30,15 @@ update:
 {{-   $hwmon = output "sh" "-c" (printf "grep -ls ^%s /sys/class/hwmon/hwmon*/name | head -n1 | xargs -r readlink -f | xargs -r dirname | xargs -r dirname" $host.hwmon_chip) | trim }}
 {{- end }}
 
-{{- /* Prompt once for theme selection and load that palette. */ -}}
-{{- $color_scheme := promptStringOnce . "color_scheme" "What color scheme to use" "patroclus" -}}
-{{- $color_palette := (includeTemplate (print $color_scheme ".yaml") | fromYaml).colors }}
+{{- /* The palette is not baked in here: .chezmoidata/patroclus.yaml is read on
+       every run, so a regenerated palette needs only `chezmoi apply`. */}}
 
 data:
   browser: {{ $host.browser | quote }}
   chassis_type: {{ $host.chassis_type | quote }}
   codespaces: {{ $codespaces }}
-  color_scheme: {{ $color_scheme | quote }}
   has_nvidia: {{ $host.has_nvidia }}
   hwmon_path: {{ $hwmon | quote }}
-
-  colors:
-    # Defaults not provided by the selected color palette.
-    white: "#ffffff"
-    black: "#000000"
-{{- range $key, $val := $color_palette }}
-    {{ $key }}: {{ $val | quote }}
-{{- end }}
 
   # Monitor layout is named by the host file; see .chezmoitemplates/monitors/.
   monitor_profile: {{ $host.monitor_profile | quote }}
