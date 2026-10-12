@@ -95,8 +95,13 @@ map("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Live grep"
 map("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
 map("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Help tags" })
 map("n", "<leader>fr", function() Snacks.picker.resume() end, { desc = "Resume last search" })
+map({ "n", "x" }, "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "Grep word or selection" })
+map("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "Recent files" })
+map("n", "<leader>fk", function() Snacks.picker.keymaps() end, { desc = "Keymaps" })
 map("n", "<leader>sd", function() Snacks.picker.lsp_symbols() end, { desc = "Document Symbols" })
 map("n", "<leader>sw", function() Snacks.picker.lsp_workspace_symbols() end, { desc = "Workspace Symbols" })
+map("n", "<leader>si", function() Snacks.picker.lsp_incoming_calls() end, { desc = "Incoming calls" })
+map("n", "<leader>so", function() Snacks.picker.lsp_outgoing_calls() end, { desc = "Outgoing calls" })
 map("n", "<leader>xd", function() Snacks.picker.diagnostics_buffer() end,
   { desc = "Buffer diagnostics" })
 map("n", "<leader>xw", function() Snacks.picker.diagnostics() end, { desc = "Workspace diagnostics" })
@@ -116,6 +121,8 @@ map("n", "<leader>gl", function() Snacks.picker.git_log() end, { desc = "Git log
 map("n", "<leader>gL", function() Snacks.picker.git_log_file() end, { desc = "Git log (file)" })
 map("n", "<leader>gs", function() Snacks.picker.git_status() end, { desc = "Git status" })
 map("n", "<leader>gd", function() Snacks.picker.git_diff() end, { desc = "Changed hunks (repo)" })
+map("n", "<leader>gp", function() Snacks.picker.gh_pr() end, { desc = "GitHub pull requests" })
+map("n", "<leader>gi", function() Snacks.picker.gh_issue() end, { desc = "GitHub issues" })
 
 -- Buffers
 map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete buffer (keep layout)" })

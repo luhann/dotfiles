@@ -250,6 +250,8 @@ require("lazy").setup({
     event = { "InsertEnter", "CmdlineEnter" },
     opts = {
       keymap = { preset = 'super-tab' },
+      -- off by default; the patroclus colorscheme already styles the window
+      signature = { enabled = true },
       fuzzy = {
         implementation = "rust",
       },
