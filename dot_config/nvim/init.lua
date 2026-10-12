@@ -25,7 +25,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- UI/Appearance
-  "nvim-lualine/lualine.nvim",
+  {
+    -- after first paint: building the bar is ~5ms of startup otherwise
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    config = function() require("plugins.galactus") end,
+  },
   "nvim-tree/nvim-web-devicons",
 
   -- Editor enhancements
@@ -232,6 +237,11 @@ require("lazy").setup({
   {
     "saghen/blink.cmp",
     version = '1.*',
+    -- Loading it runs git and sha256sum against its fuzzy library, ~10ms.
+    -- A server that attaches before the first insert is offered nvim's own
+    -- completion capabilities, which lack only blink's resolve/insert-mode
+    -- extras.
+    event = { "InsertEnter", "CmdlineEnter" },
     opts = {
       keymap = { preset = 'super-tab' },
       fuzzy = {
@@ -378,5 +388,3 @@ vim.cmd.colorscheme("patroclus")
 require("core.keybinds")
 require("core.linenumbers")
 require("core.filetypes")
--- galaxyline theme
-require("plugins.galactus")
