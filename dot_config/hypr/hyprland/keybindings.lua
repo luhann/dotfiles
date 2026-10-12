@@ -76,20 +76,6 @@ hl.bind(mainMod .. " + mouse_up",       hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272",      hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273",      hl.dsp.window.resize(), { mouse = true })
 
--- Screenshots (grim + slurp): save to ~/pictures/screenshots and copy to clipboard
--- Same keys and filename format as the niri config
-local screenshotFile = [["$HOME/pictures/screenshots/screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"]]
-local function screenshot(capture)
-    return hl.dsp.exec_cmd('mkdir -p "$HOME/pictures/screenshots" && '
-        .. capture .. " - | tee " .. screenshotFile .. " | wl-copy")
-end
-hl.bind("Print",        screenshot([[grim -g "$(slurp)"]]))
-hl.bind("CTRL + Print", screenshot([[grim -o "$(hyprctl monitors -j | jq -r '.[] | select(.focused).name')"]]))
-hl.bind("ALT + Print",  screenshot([[grim -g "$(hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')"]]))
-
--- Clipboard history (cliphist)
-hl.bind(mainMod .. " + CTRL + V",       hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p clipboard | cliphist decode | wl-copy"))
-
 -- Volume, brightness and media keys (playerctl)
 local mediaBinds = {
     { key = "XF86AudioRaiseVolume",  cmd = "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+", repeating = true },
