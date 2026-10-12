@@ -1,8 +1,8 @@
--- disable netrw at the very start of your init.lua
+-- netrw is not used: the snacks explorer replaces it
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- optionally enable 24-bit colour
+-- 24-bit colour
 vim.opt.termguicolors = true
 
 -- Example using a list of specs with the default options

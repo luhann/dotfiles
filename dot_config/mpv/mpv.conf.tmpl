@@ -1,11 +1,9 @@
 [default]
 # ===== Player =====
 border=no
-msg-color=yes
 msg-module=yes
 keep-open=yes                           # keeps the player open after a video/playlist ends
 save-position-on-quit=yes               # resume where you left off on next open
-hls-bitrate=max                         # uses max quality for HLS streams
 pause=yes                               # disables autoplay
 prefetch-playlist=yes                   # prefetches the playlist
 autocreate-playlist=filter              # playlist from the file's directory (replaces autoload.lua)
@@ -14,8 +12,6 @@ osd-font-size=16
 # ===== Screenshots =====
 screenshot-template="%F - [%P]v%#01n"
 screenshot-format=png
-screenshot-high-bit-depth=yes
-screenshot-tag-colorspace=yes
 screenshot-png-compression=1
 screenshot-directory="~/pictures/screenshots"
 
@@ -23,7 +19,6 @@ screenshot-directory="~/pictures/screenshots"
 sub-auto=fuzzy
 sub-color="{{ .colors.bright_yellow }}"
 demuxer-mkv-subtitle-preroll=yes
-sub-ass-use-video-data=all
 sub-fix-timing=yes
 sub-font-size=16
 sub-border-size=1.0
@@ -48,13 +43,10 @@ slang=eng,en
 
 # ===== Video =====
 profile=high-quality
-# gpu-next stutters on the nvidia machine. Both are spelled out: mpv 0.41
-# made gpu-next the default, so leaving vo unset no longer avoids it.
+# gpu-next, the default since mpv 0.41, stutters on the nvidia machine
 {{ if .has_nvidia -}}
 vo=gpu
 {{- else -}}
-vo=gpu-next
-target-colorspace-hint=auto
 target-colorspace-hint-mode=source
 {{- end }}
 

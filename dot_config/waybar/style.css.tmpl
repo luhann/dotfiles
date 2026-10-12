@@ -8,8 +8,6 @@
 
 /*base background color of selections */
 @define-color bg_hover alpha({{ .colors.selection }}, 0.0);
-/*base background color of active elements */
-@define-color bg_active alpha({{ .colors.accent }}, 0.25);
 
 /*base border color*/
 @define-color border_main alpha({{ .colors.border }}, 0.0);
@@ -119,29 +117,6 @@ tooltip label {
 	color: @content_main;
 }
 
-#taskbar {}
-
-#taskbar button {
-	border-bottom: 3px solid alpha({{ .colors.teal }}, 0.3);
-	margin-left: 2px;
-	margin-right: 2px;
-	padding-left: 8px;
-	padding-right: 8px;
-	color: {{ .colors.text }};
-	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-#taskbar button.active {
-	border-bottom: 3px solid @content_main;
-	background: @bg_active;
-}
-
-#taskbar button:hover {
-	border-bottom: 3px solid @content_inactive;
-	background: @bg_hover;
-	color: @content_main;
-}
-
 #cpu,
 #disk,
 #memory {
@@ -160,12 +135,6 @@ tooltip label {
 	font-size: initial;
 	border-bottom: 3px dashed @warning_color;
 	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-#window {
-	border-radius: 10px;
-	margin-left: 20px;
-	margin-right: 20px;
 }
 
 #tray {
@@ -236,11 +205,6 @@ tooltip label {
 #network {
 	padding-left: 3px;
 	padding-right: 3px;
-}
-
-#language {
-	padding-left: 5px;
-	padding-right: 5px;
 }
 
 #clock {

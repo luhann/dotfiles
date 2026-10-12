@@ -1,5 +1,5 @@
 -- Window and workspace rules module
--- Loaded via require("rules") from hyprland.lua
+-- Loaded via require("hyprland/rules") from hyprland.lua
 --
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 -- See https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/

@@ -107,12 +107,11 @@ end)
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     render = {
-        cm_enabled = true,
-        cm_auto_hdr = true,
         direct_scanout = 2,
     },
 
     general = {
+        -- the default, kept beside the two SUPER+SHIFT+P restores it with
         gaps_in = 5,
         gaps_out = 10,
         border_size = 2,
@@ -123,8 +122,6 @@ hl.config({
         },
 
         resize_on_border = true,
-        allow_tearing = false,
-        layout = "dwindle",
     },
 
     cursor = {
@@ -133,14 +130,10 @@ hl.config({
 
     decoration = {
         rounding = 6,
-        active_opacity = 1.0,
         inactive_opacity = 0.9,
-        fullscreen_opacity = 1.0,
 
         shadow = {
             enabled = {{ if eq .chassis_type "laptop" }}false{{ else }}true{{ end }},
-            range = 4,
-            render_power = 3,
             color = "{{ .colors.base }}ee",
         },
 
@@ -150,33 +143,18 @@ hl.config({
         },
     },
 
-    animations = {
-        enabled = true,
-    },
-
     dwindle = {
         preserve_split = true,
     },
 
-    master = {
-        new_status = "slave",
-    },
-
     misc = {
-        force_default_wallpaper = -1,
         disable_hyprland_logo = true,
         enable_anr_dialog = false,
         vrr = 1,
     },
 
-    debug = {
-        disable_logs = true,
-        vfr = true,
-    },
-
     input = {
         scroll_factor = 1.95,
-        natural_scroll = false,
         {{- if eq .chassis_type "laptop" }}
         kb_variant = "colemak_dh",
         kb_options = "caps:super,compose:rctrl",

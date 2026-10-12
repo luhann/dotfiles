@@ -1,5 +1,5 @@
-{{- /* Gentoo is the only OS in the fleet; osRelease only exists on Linux, and
-       chezmoi only strips double quotes from os-release values (Gentoo uses ID='gentoo'). */ -}}
+{{- /* osRelease only exists on Linux, and chezmoi only strips double quotes
+       from os-release values (Gentoo uses ID='gentoo'). */ -}}
 {{- $osRelease := default (dict) (get .chezmoi "osRelease") -}}
 {{- $osId := trimAll `"` (trimAll "'" (default "" (get $osRelease "id"))) -}}
 {{- $isGentoo := or (eq $osId "gentoo") (contains "gentoo" (default "" (get $osRelease "idLike"))) -}}

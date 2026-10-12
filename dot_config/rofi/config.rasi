@@ -18,17 +18,7 @@ configuration {
     /* Display labels */
     display-window:    "window";
     display-drun:      "run";
-    display-windowcd:  "windowcd";
-    display-run:       "run";
-    display-ssh:       "ssh";
-    display-combi:     "combi";
-    display-keys:      "keys";
     display-filebrowser: "filebrowser";
-
-    /* Combi mode */
-    combi-modes: "window,drun";
-    combi-hide-mode-prefix: false;
-    combi-display-format: "<i>{mode}</i> {text}";
 
     /* Window mode */
     window-format: "<span fgalpha='65%'>[{w:-1}] </span><b>{c:-1}</b> <span weight='light' fgalpha='65%' size='small'>{t:-1}</span>";

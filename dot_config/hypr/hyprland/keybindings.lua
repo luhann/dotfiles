@@ -1,5 +1,5 @@
 -- Keybindings module
--- Loaded via require("keybindings") from hyprland.lua
+-- Loaded via require("hyprland/keybindings") from hyprland.lua
 -- Program variables and mainMod are provided by the HY global set in hyprland.lua
 --
 -- See https://wiki.hypr.land/Configuring/Basics/Binds/
