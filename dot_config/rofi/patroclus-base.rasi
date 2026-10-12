@@ -1,0 +1,139 @@
+/* patroclus — rofi theme.
+ *
+ * The dark screen palette, GENERATED from ../design.yaml by
+ * tools/gen_tokens.py (the pat-* block between the patroclus-tokens
+ * markers below). Change design.yaml and regenerate — never the block
+ * itself. Layout below the block is hand-maintained.
+ *
+ * gen_tokens.py copies this file into the dotfiles checkout as
+ * patroclus-base.rasi. There it is consumed by @import from
+ * ~/.config/rofi/patroclus.rasi, the chezmoi template that adds only the
+ * per-chassis window width, which keeps that one machine-varying property
+ * out of here.
+ */
+
+* {
+/* patroclus-tokens: begin */
+    pat-bg: #000000;
+    pat-surface: #0b0e12;
+    pat-surface-soft: #13171c;
+    pat-text: #abb2b9;
+    pat-headline: #f2efe9;
+    pat-muted: #8f969d;
+    pat-accent: #cf7d55;
+    pat-accent-cool: #669ac5;
+    pat-accent-meta: #a51c30;
+    pat-line: #2e333b;
+    pat-code-bg: #000000;
+    pat-window: #000000e6;
+    pat-selection: #cf7d5547;
+/* patroclus-tokens: end */
+
+    background-color: transparent;
+    font: "Iosevka Nerd Font 11";
+}
+
+window {
+    background-color: @pat-window;
+    border: 1px;
+    border-color: @pat-line;
+    border-radius: 14px;
+
+    location: center;
+    anchor: center;
+}
+
+mainbox {
+    padding: 5px 5px 5px 5px;
+    children: [ inputbar, message, listview];
+}
+
+/* Input bar (search pill) */
+inputbar {
+    background-color: @pat-surface-soft;
+    border-radius: 8px;
+    padding: 5px 5px;
+    spacing: 10px;
+    text-color: @pat-headline;
+    children: [ prompt, entry];
+}
+
+prompt {
+    text-color: @pat-accent;
+    font: "Iosevka Nerd Font Bold 12";
+}
+
+entry {
+    text-color: @pat-headline;
+    placeholder: "";
+    placeholder-color: @pat-muted;
+    cursor: text;
+}
+
+message {
+    text-color: @pat-text;
+}
+
+textbox {
+    text-color: @pat-text;
+}
+
+/* List view constraints */
+listview {
+    fixed-height: false;
+    lines: 7;
+    spacing: 4px;
+    scrollbar: false;
+    dynamic: true;
+}
+
+element {
+    padding: 0px 0px;
+    border-radius: 6px;
+    spacing: 12px;
+    children: [ element-icon, element-text];
+}
+
+element-icon {
+    size: 1.2em;
+    cursor: inherit;
+    background-color: inherit;
+    text-color: inherit;
+}
+
+element-text {
+    vertical-align: 0.5;
+    cursor: inherit;
+    background-color: inherit;
+    text-color: inherit;
+}
+
+/* State changes */
+element normal.normal {
+    background-color: transparent;
+    text-color: @pat-text;
+}
+
+element selected.normal {
+    background-color: @pat-selection;
+    text-color: @pat-headline;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @pat-text;
+}
+
+element normal.active {
+    text-color: @pat-accent-cool;
+}
+
+element selected.active {
+    background-color: @pat-selection;
+    text-color: @pat-accent-cool;
+}
+
+element alternate.active {
+    background-color: transparent;
+    text-color: @pat-text;
+}

@@ -1,17 +1,13 @@
 /*
  * patroclus — rofi.
  *
- * The theme proper lives in the patroclus repo, generated from its
- * design.yaml by tools/gen_tokens.py alongside the SCSS, LaTeX, Typst and
- * tridactyl consumers. This template only imports it and sets the one
- * property that varies by machine, so the palette keeps a single home and
- * regenerating it there is enough to retheme rofi.
- *
- * A missing checkout is not fatal: rofi warns and falls back to its own
- * defaults rather than failing to launch.
+ * The theme proper is patroclus-base.rasi beside this file: maintained in
+ * the patroclus repo and copied here by its tools/gen_tokens.py, alongside
+ * the SCSS, LaTeX, Typst and tridactyl consumers. This template only
+ * imports it and sets the one property that varies by machine.
  */
 
-@import "{{ .chezmoi.homeDir }}/dev/patroclus/rofi/patroclus.rasi"
+@import "patroclus-base"
 
 window {
     /* wider on the smaller laptop screen, 5-10% on desktop */
