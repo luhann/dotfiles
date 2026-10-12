@@ -73,3 +73,6 @@
   autoupdate = true
 [tag]
   sort = version:refname
+# Last, so it overrides [user] above
+[includeIf "gitdir:~/dev/void-packages/"]
+  path = ~/.config/git/void-packages
