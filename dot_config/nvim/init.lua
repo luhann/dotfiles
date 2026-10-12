@@ -304,6 +304,28 @@ vim.lsp.config("rust_analyzer", {
   capabilities = {
     experimental = { serverStatusNotification = true },
   },
+  commands = {
+    -- The Run and Test code lenses. Client-local, so it wins over the global
+    -- handler lspconfig installs, which blocks the UI until cargo exits.
+    ["rust-analyzer.runSingle"] = function(command)
+      local run = command.arguments[1].args
+      -- absent optional fields arrive as JSON null (vim.NIL), which is truthy
+      local function given(value, kind) return type(value) == kind and value or nil end
+      local cmd = vim.list_extend({ given(run.overrideCargo, "string") or "cargo" }, run.cargoArgs)
+      local args = given(run.executableArgs, "table")
+      if args and #args > 0 then
+        table.insert(cmd, "--")
+        vim.list_extend(cmd, args)
+      end
+      -- not interactive: no insert mode, and the output stays up on exit
+      Snacks.terminal.open(cmd, {
+        cwd = given(run.cwd, "string"),
+        env = given(run.environment, "table"),
+        interactive = false,
+        win = { position = "bottom" },
+      })
+    end,
+  },
   settings = {
     ["rust-analyzer"] = {
       cargo = {
@@ -321,8 +343,54 @@ vim.lsp.config("rust_analyzer", {
       inlayHints = {
         enable = true,
       },
+      -- Run and test lenses only. The debug and reference lenses call
+      -- client commands (debugSingle, showReferences) nothing here provides.
+      lens = {
+        debug = { enable = false },
+        implementations = { enable = false },
+        references = {
+          adt = { enable = false },
+          enumVariant = { enable = false },
+          method = { enable = false },
+          trait = { enable = false },
+        },
+      },
     }
   }
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("rust_analyzer", { clear = true }),
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if not client or client.name ~= "rust_analyzer" then return end
+
+    -- Both arrived in 0.12; older hosts go without. Lenses are enabled per
+    -- buffer, so other servers' lenses stay off.
+    if vim.lsp.codelens.enable then
+      vim.lsp.codelens.enable(true, { bufnr = ev.buf })
+    end
+    if vim.lsp.on_type_formatting then
+      vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
+    end
+
+    local function request(method, handler)
+      client:request(method, vim.lsp.util.make_position_params(0, client.offset_encoding), handler, ev.buf)
+    end
+    vim.keymap.set("n", "<leader>rd", function()
+      request("experimental/externalDocs", function(_, url)
+        -- a URL, or { web, local } from a server that knows of local docs
+        if url then vim.ui.open(type(url) == "table" and (url["local"] or url.web) or url) end
+      end)
+    end, { buffer = ev.buf, desc = "Rust: open docs for symbol" })
+    vim.keymap.set("n", "<leader>rm", function()
+      request("rust-analyzer/expandMacro", function(_, result)
+        if result then
+          vim.lsp.util.open_floating_preview(vim.split(result.expansion, "\n"), "rust", { border = "rounded" })
+        end
+      end)
+    end, { buffer = ev.buf, desc = "Rust: expand macro" })
+  end,
 })
 
 vim.lsp.config("texlab", {
