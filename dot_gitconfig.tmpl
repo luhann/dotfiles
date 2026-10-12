@@ -1,9 +1,7 @@
 [user]
-  email = git@luhann.com
-  name = Luke Hannan
-  # Trailing ! pins the [S] subkey. Without it gpg picks a signing key itself,
-  # which is how commits ended up signed by the old laptop key's primary.
-  signingKey = 804B7DFF994E58D5!
+  email = {{ .identity.email }}
+  name = {{ .identity.name }}
+  signingKey = {{ .identity.signing_key }}
 [gpg]
   # Sequoia's gpg chameleon where installed. Secrets still go through
   # gpg-agent and scdaemon, so the YubiKey works unchanged.

@@ -1,0 +1,7 @@
+# Commit identity, shared by git and jj.
+identity:
+  name: Luke Hannan
+  email: git@luhann.com
+  # Trailing ! pins the [S] subkey. Without it gpg picks a signing key itself,
+  # which is how commits ended up signed by the old laptop key's primary.
+  signing_key: "804B7DFF994E58D5!"
