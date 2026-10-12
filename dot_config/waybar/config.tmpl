@@ -23,6 +23,7 @@
     "spacing": 5,
     "passthrough": false,
     "height": 32,
+    "reload_style_on_change": true,
 {{- end -}}
 [
 {{- if $secondary }}
@@ -36,6 +37,7 @@
         "hyprland/workspaces"
     ],
     "modules-right": [
+        "custom/failed-units",
         "cpu",
         "temperature",
         "memory",
@@ -84,6 +86,7 @@
     ],
     "modules-right": [
         "tray",
+        "custom/failed-units",
         "cpu",
         "temperature",
         "memory",

@@ -172,5 +172,10 @@
         "format": "󰾆 {}",
         "exec": "writeback --daemon --min-mb 50",
         "tooltip": false
+    },
+    "custom/failed-units": {
+        "exec": "unitwatch --daemon",
+        "return-type": "json",
+        "on-click": "alacritty msg create-window --class floating -e sh -c 'systemctl --failed --no-pager; systemctl --user --failed --no-pager; read _'"
     }
 }
