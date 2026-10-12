@@ -412,6 +412,30 @@ vim.lsp.config("tinymist", {
   }
 })
 
+-- Format on save, for the servers whose output is the project's formatter.
+-- Everything else stays manual on <leader>lf.
+local format_on_save = { rust_analyzer = true, ruff = true, air = true }
+local format_group = vim.api.nvim_create_augroup("format_on_save", { clear = true })
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = format_group,
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if not (client and format_on_save[client.name]) then return end
+    -- one per buffer: a restarted server replaces its predecessor's
+    vim.api.nvim_clear_autocmds({ group = format_group, buffer = ev.buf })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = format_group,
+      buffer = ev.buf,
+      callback = function()
+        -- format() complains when the client has gone; just skip then
+        if vim.lsp.buf_is_attached(ev.buf, client.id) then
+          vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
+        end
+      end,
+    })
+  end,
+})
+
 vim.diagnostic.config({
   -- no `format`: supplying one deepcopies every diagnostic on each redraw,
   -- and the default already renders `message`
