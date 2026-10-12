@@ -16,8 +16,9 @@ update:
 {{- $codespaces:= env "CODESPACES" | not | not -}}
 
 {{- /* Per-host record lives in .chezmoitemplates/hosts/<hostname>.yaml,
-       which owns chassis, nvidia, temperature chip, and the monitor profile.
-       Unregistered machines fall back to hosts/_default.yaml. */ -}}
+       which lists what differs from hosts/_default.yaml: chassis, nvidia,
+       temperature chip, browser and monitors. Unregistered machines get the
+       defaults alone. */ -}}
 {{- $host := includeTemplate "hosts/_default.yaml" . | fromYaml }}
 {{- if stat (joinPath .chezmoi.sourceDir ".chezmoitemplates" "hosts" (printf "%s.yaml" .chezmoi.hostname)) }}
 {{-   $host = merge (includeTemplate (printf "hosts/%s.yaml" .chezmoi.hostname) . | fromYaml) $host }}
@@ -40,7 +41,10 @@ data:
   has_nvidia: {{ $host.has_nvidia }}
   hwmon_path: {{ $hwmon | quote }}
 
-  # Monitor layout is named by the host file; see .chezmoitemplates/monitors/.
-  monitor_profile: {{ $host.monitor_profile | quote }}
+{{- if $host.monitors }}
   monitors:
-{{ includeTemplate (printf "monitors/%s.yaml" $host.monitor_profile) . | trim | indent 4 }}
+{{ $host.monitors | toYaml | trim | indent 4 }}
+{{- else }}
+  monitors: []
+{{- end }}
+

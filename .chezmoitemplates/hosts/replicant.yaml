@@ -1,5 +1,14 @@
-chassis_type: desktop
-has_nvidia: false
 hwmon_chip: k10temp
-monitor_profile: desktop
-browser: firefox
+monitors:
+  - output: "DP-1"
+    mode: "2560x1440@165"
+    position: "auto"
+    scale: "auto"
+    bitdepth: 10
+    icc: "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"
+  - output: "DP-2"
+    mode: "2560x1440@165"
+    position: "auto-left"
+    scale: "auto"
+    bitdepth: 10
+    icc: "{{ .chezmoi.homeDir }}/desktop/dell_s2721.icc"

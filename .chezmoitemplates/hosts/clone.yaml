@@ -1,5 +1,13 @@
-chassis_type: desktop
-has_nvidia: false
+# Work desktop: 3840x1080 ultrawide on HDMI, 1920x1080 to its left on DP.
 hwmon_chip: coretemp
-monitor_profile: clone
-browser: firefox
+monitors:
+  - output: "HDMI-A-1"
+    mode: "3840x1080@60"
+    position: "auto"
+    scale: "auto"
+    bitdepth: 10
+  - output: "DP-1"
+    mode: "1920x1080@60"
+    position: "auto-left"
+    scale: "auto"
+    bitdepth: 10

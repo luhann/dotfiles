@@ -1,5 +1,9 @@
-{{- $primary := (index .monitors 0).output -}}
+{{- /* Named outputs, primary first; none on an unregistered host. */ -}}
+{{- $primary := "" -}}
 {{- $secondary := "" -}}
+{{- if .monitors -}}
+{{-   $primary = (index .monitors 0).output -}}
+{{- end -}}
 {{- if gt (len .monitors) 1 -}}
 {{-   $secondary = (index .monitors 1).output -}}
 {{- end -}}
@@ -86,7 +90,7 @@
         "disk",
         "wireplumber",
         "network",
-{{- if ne .chassis_type "desktop" }}
+{{- if eq .chassis_type "laptop" }}
         "battery",
 {{- end }}
         "clock"

@@ -7,6 +7,7 @@
 --------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+-- Named outputs come from the host file, primary first.
 local monitors = {
 {{- range .monitors }}
     {
@@ -27,6 +28,8 @@ local monitors = {
 for _, mon in ipairs(monitors) do
     hl.monitor(mon)
 end
+-- Anything else that gets plugged in
+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 
 
 ---------------------
@@ -47,33 +50,31 @@ local mainMod = "SUPER"
 ---- WORKSPACE RULES ---------
 ------------------------------
 
-if #monitors > 0 then
-    local primary = monitors[1].output
-    local secondaryOutput = monitors[2] and monitors[2].output or ""
-    local hasSecondary = secondaryOutput ~= ""
-    local secondary = hasSecondary and secondaryOutput or primary
+-- With no named outputs everything binds to "", whichever monitor is there.
+local primary = monitors[1] and monitors[1].output or ""
+local hasSecondary = monitors[2] ~= nil
+local secondary = hasSecondary and monitors[2].output or primary
 
-    -- Looping by name keeps default_name in sync with the table key
-    local workspaces = {
-        main     = { id = 1,  monitor = primary },
-        alt      = { id = 2,  monitor = primary },
-        term     = { id = 3,  monitor = primary },
-        dev      = { id = 4,  monitor = primary },
-        misc     = { id = 5,  monitor = primary },
-        alt_main = { id = 6,  monitor = secondary },
-        alt_misc = { id = 7,  monitor = secondary },
-        alt_term = { id = 8,  monitor = secondary },
-        alt_dev  = { id = 9,  monitor = secondary },
-        alt_ext  = { id = 10, monitor = secondary },
-    }
-    workspaces.main.default = true
-    if hasSecondary then
-        workspaces.alt_main.default = true
-    end
+-- Looping by name keeps default_name in sync with the table key
+local workspaces = {
+    main     = { id = 1,  monitor = primary },
+    alt      = { id = 2,  monitor = primary },
+    term     = { id = 3,  monitor = primary },
+    dev      = { id = 4,  monitor = primary },
+    misc     = { id = 5,  monitor = primary },
+    alt_main = { id = 6,  monitor = secondary },
+    alt_misc = { id = 7,  monitor = secondary },
+    alt_term = { id = 8,  monitor = secondary },
+    alt_dev  = { id = 9,  monitor = secondary },
+    alt_ext  = { id = 10, monitor = secondary },
+}
+workspaces.main.default = true
+if hasSecondary then
+    workspaces.alt_main.default = true
+end
 
-    for name, ws in pairs(workspaces) do
-        hl.workspace_rule({ workspace = ws.id, default_name = name, monitor = ws.monitor, default = ws.default })
-    end
+for name, ws in pairs(workspaces) do
+    hl.workspace_rule({ workspace = ws.id, default_name = name, monitor = ws.monitor, default = ws.default })
 end
 
 -------------------
@@ -176,7 +177,7 @@ hl.config({
     input = {
         scroll_factor = 1.95,
         natural_scroll = false,
-        {{- if ne .chassis_type "desktop" }}
+        {{- if eq .chassis_type "laptop" }}
         kb_variant = "colemak_dh",
         kb_options = "caps:super,compose:rctrl",
         {{- end }}

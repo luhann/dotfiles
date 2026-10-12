@@ -1,6 +1,9 @@
-# Fallback for unregistered hosts: bare desktop, no nvidia, no sensor.
+# Fallback for unregistered hosts: bare desktop, no nvidia, no sensor, no
+# named monitors. Host files list only what differs from this.
 chassis_type: desktop
 has_nvidia: false
 hwmon_chip: ""
-monitor_profile: default
 browser: firefox
+# Named outputs, primary first. Anything else connected gets Hyprland's
+# catch-all rule.
+monitors: []

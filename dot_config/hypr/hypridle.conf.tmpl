@@ -16,7 +16,7 @@ listener {
     on-resume = hyprctl dispatch 'hl.dsp.dpms({ action = "on" })'
 }
 
-{{ if ne .chassis_type "desktop" -}}
+{{ if eq .chassis_type "laptop" -}}
 listener {
     timeout = 1800                                # 30min
     on-timeout = systemctl suspend                # suspend pc
