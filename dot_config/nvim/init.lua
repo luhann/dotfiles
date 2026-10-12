@@ -91,6 +91,9 @@ require("lazy").setup({
           explorer = {
             -- the sidebar preset has a 40-column minimum; drop it so 15% applies
             layout = { layout = { width = 0.15, min_width = 20 } },
+            -- the list takes <C-j>/<C-k> to move by default; give them back
+            -- to window switching, as in every other window
+            win = { list = { keys = { ["<c-j>"] = false, ["<c-k>"] = false } } },
           },
         },
       },
