@@ -30,7 +30,6 @@ bin/prime-run # nouveau offload wrapper, only for the hybrid-GPU laptop
 .config/uwsm
 .config/waybar
 .config/wireplumber
-.config/xdg-desktop-portal
 .config/zathura
 .gnupg
 .local/share/wayland-sessions

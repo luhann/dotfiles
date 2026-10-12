@@ -8,3 +8,6 @@
 .config/mpv/scripts/autoload.lua
 # jarl's LSP config is in init.lua; this stray copy disagreed with it
 .config/nvim/lsp/jarl.lua
+# Only added a FileChooser backend (kde) that is not installed; without it
+# the file matched the one xdg-desktop-portal-hyprland ships.
+.config/xdg-desktop-portal/hyprland-portals.conf
